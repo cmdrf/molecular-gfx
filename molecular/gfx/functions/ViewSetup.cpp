@@ -1,0 +1,101 @@
+/*	ViewSetup.cpp
+	Copyright 2016 Fabian Herb
+
+	This file is part of Molecular Engine.
+*/
+
+#include "ViewSetup.h"
+#include "gfx/RenderContext.h"
+#include <util/Quaternion.h>
+#include <util/Matrix3.h>
+
+namespace Gfx
+{
+
+void ViewSetup::Execute()
+{
+	if(!mCallee)
+		return;
+
+	Binding<Output> glPosition("gl_Position"_H, this);
+	Binding<Output> fragmentColor("fragmentColor"_H, this);
+	Binding<Uniform<Vector2>> viewportSize("viewportSize"_H, this);
+	Binding<Uniform<Matrix4>> projectionMatrix("projectionMatrix"_H, this);
+	Binding<Uniform<Matrix4>> viewMatrix("viewMatrix"_H, this);
+
+	for(int eye = 0; eye < mRenderContext.GetNumEyes(); ++eye)
+	{
+		auto viewport = mRenderContext.GetViewport(eye);
+		auto renderTarget = mRenderContext.GetRenderTarget(eye);
+		**viewportSize = Vector2(viewport[2], viewport[3]);
+
+		static const Matrix4 defaultRotation = Matrix4::RotationX(-0.5f * kPi_f) * Matrix4::RotationZ(0.5f * kPi_f);
+		**viewMatrix = defaultRotation * (mCamera * mRenderContext.GetHeadToEyeTransform(eye)).Inverse();
+
+		mRenderer.SetBaseTarget(viewport, renderTarget);
+		mRenderer.SetTarget(nullptr);
+		mRenderer.Clear(true, true);
+
+		if(mRenderContext.HasProjectionMatrix(eye))
+		{
+			// Set projection matrix from RenderContext
+			**projectionMatrix = mRenderContext.GetProjectionMatrix(eye);
+		}
+		else
+		{
+			float viewportAspectRatio = float(viewport[2]) / viewport[3];
+			**projectionMatrix = CalculateProjectionMatrix(viewportAspectRatio);
+		}
+		mCallee->Execute();
+	}
+
+}
+
+void ViewSetup::SetProjectionPerspective(float fieldOfView, float nearPlane, float farPlane)
+{
+	mOrthographic = false;
+	mFieldOfView = fieldOfView;
+	mNear = nearPlane;
+	mFar = farPlane;
+}
+
+void ViewSetup::SetProjectionOrthographic(float width, float height, float nearPlane, float farPlane)
+{
+	mOrthographic = true;
+	mOrthographicWidth = width;
+	mOrthographicHeight = height;
+	mNear = nearPlane;
+	mFar = farPlane;
+}
+
+void ViewSetup::SetCamera(const Vector3& position, const Quaternion& orientation)
+{
+	mCamera = Matrix4::Translation(position[0], position[1], position[2]) * Matrix4(Matrix3(orientation));
+}
+
+
+Matrix4 ViewSetup::CalculateProjectionMatrix(float viewportAspectRatio)
+{
+	if(mOrthographic)
+	{
+		float requestedAspectRatio = mOrthographicWidth / mOrthographicHeight;
+		float width, height;
+		if(viewportAspectRatio > requestedAspectRatio)
+		{
+			height = mOrthographicHeight;
+			width = height * viewportAspectRatio;
+		}
+		else
+		{
+			width = mOrthographicWidth;
+			height = width / viewportAspectRatio;
+		}
+		return Matrix4::ProjectionOrthographic(width, height, mNear, mFar);
+	}
+	else
+	{
+		return Matrix4::ProjectionPerspective(mFieldOfView, viewportAspectRatio, mNear, mFar);
+	}
+}
+
+}

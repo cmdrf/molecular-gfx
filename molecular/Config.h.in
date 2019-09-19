@@ -1,0 +1,12 @@
+#ifndef MOLECULAR_CONFIG_H
+#define MOLECULAR_CONFIG_H
+
+#cmakedefine01 OPENGL_FOUND
+#cmakedefine01 MOLECULAR_ENABLE_VULKAN
+#define MOLECULAR_ASSETS_DEFAULT "@MOLECULAR_ASSETS_DEFAULT@"
+
+#ifdef _MSC_VER
+#pragma warning(disable: 4244)
+#endif
+
+#endif // MOLECULAR_CONFIG_H
