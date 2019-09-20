@@ -3,8 +3,11 @@
 */
 
 #include "Stream.h"
-#include "util/Vector3.h"
-#include "util/Quaternion.h"
+#include <molecular/util/Vector3.h>
+#include <molecular/util/Quaternion.h>
+
+namespace molecular
+{
 
 void WriteStream::Write(const Vector3& value, const AttributeInfo* info)
 {	
@@ -71,3 +74,4 @@ void ReadStream::Read(float values[], size_t count, const AttributeInfo* info)
 		Read(values[i]);
 }
 
+}

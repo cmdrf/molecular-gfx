@@ -1,10 +1,13 @@
-#ifndef POINTERVECTOR_H
-#define POINTERVECTOR_H
+#ifndef MOLECULAR_POINTERCONTAINER_H
+#define MOLECULAR_POINTERCONTAINER_H
 
 #include <vector>
 #include <map>
 #include <list>
 #include "NonCopyable.h"
+
+namespace molecular
+{
 
 template<class T>
 class PointerContainer : public T, NonCopyable
@@ -37,4 +40,6 @@ public:
 template <class T>
 class PointerList : public PointerContainer<std::list<T*> >
 {};
-#endif // POINTERVECTOR_H
+
+}
+#endif // MOLECULAR_POINTERCONTAINER_H
