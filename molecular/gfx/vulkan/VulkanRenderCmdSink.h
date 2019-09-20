@@ -9,11 +9,11 @@
 
 #include <vector>
 #include <list>
-#include "gfx/BufferInfo.h"
-#include "util/NonCopyable.h"
-#include "util/PixelFormat.h"
-#include "Logging.h"
-#include "gfx/RenderContext.h"
+#include <molecular/util/BufferInfo.h>
+#include <molecular/util/NonCopyable.h>
+#include <molecular/util/PixelFormat.h>
+#include <molecular/util/Logging.h>
+#include <molecular/gfx/RenderContext.h>
 #include <vulkan/vulkan.hpp>
 
 /// Interface to Vulkan

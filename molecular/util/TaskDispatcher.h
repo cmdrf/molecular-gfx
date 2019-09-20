@@ -13,16 +13,23 @@
 #define TASKDISPATCHER_H
 
 #if __APPLE__
-#include "util/GcdTaskDispatcher.h"
-#include "util/GcdAsyncFileLoader.h"
+#include <molecular/util/GcdTaskDispatcher.h>
+#include <molecular/util/GcdAsyncFileLoader.h>
+
+namespace molecular
+{
 typedef GcdTaskDispatcher TaskDispatcher;
 using FileLoader = GcdAsyncFileLoader;
+}
 #elif !defined(__MINGW32__) // No std::thread implementation on current MinGW
 #include <molecular/util/StdTaskQueue.h>
 #include <molecular/util/DummyFileLoader.h>
 
+namespace molecular
+{
 using TaskDispatcher = StdTaskQueue;
 using FileLoader = DummyFileLoader;
+}
 
 #else
 #include "util/DummyTaskDispatcher.h"

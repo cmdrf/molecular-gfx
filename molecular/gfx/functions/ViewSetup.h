@@ -7,9 +7,12 @@
 #ifndef VIEWSETUP_H
 #define VIEWSETUP_H
 
-#include "gfx/RenderFunction.h"
-#include "util/Matrix4.h"
+#include <molecular/gfx/RenderFunction.h>
+#include <molecular/util/Matrix4.h>
 
+
+namespace molecular
+{
 class Quaternion;
 class RenderContext;
 
@@ -61,6 +64,7 @@ private:
 	Matrix4 mCamera;
 };
 
+}
 }
 
 #endif // VIEWSETUP_H

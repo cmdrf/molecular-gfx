@@ -9,6 +9,9 @@
 
 #include <stdint.h>
 
+namespace molecular
+{
+
 struct FontAtlasDescriptionFile
 {
 	struct UtfOffset
@@ -84,5 +87,7 @@ struct FontAtlasDescriptionFile
 		return reinterpret_cast<const GlyphInfo*>(reinterpret_cast<const uint8_t*>(this) + asciiOffsets[charcode]);
 	}
 };
+
+}
 
 #endif // FONTATLASDESCRIPTIONFILE_H

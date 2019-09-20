@@ -12,6 +12,9 @@
 #include <molecular/gfx/Material.h>
 #include <molecular/gfx/MaterialManager.h>
 
+
+namespace molecular
+{
 struct MeshFile;
 class MeshDataSource;
 
@@ -42,12 +45,12 @@ public:
 
 	}
 
-	~DrawMeshData();
+	~DrawMeshData() override;
 
 	/** Draws meshes if they are loaded. Does nothing otherwise. */
 	void Execute() override;
 
-	AxisAlignedBox GetBounds() const override {return mBounds;}
+	util::AxisAlignedBox GetBounds() const override {return mBounds;}
 
 	/// Store mesh data in Renderer
 	/** Called by MeshLoader::StoreNmbMesh, MeshLoader::StoreObjMesh or
@@ -93,9 +96,10 @@ private:
 	std::vector<RenderCmdSink::IndexBuffer*> mIndexBuffers;
 
 	std::vector<Mesh> mMeshes;
-	AxisAlignedBox mBounds;
+	util::AxisAlignedBox mBounds;
 };
 
+}
 }
 
 #endif // DRAWMESH_H

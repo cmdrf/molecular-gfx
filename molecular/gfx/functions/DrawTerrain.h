@@ -7,6 +7,8 @@
 
 #include "DrawingFunction.h"
 
+namespace molecular
+{
 namespace Gfx
 {
 
@@ -21,7 +23,7 @@ public:
 	~DrawTerrain();
 
 	void Execute() override;
-	AxisAlignedBox GetBounds() const override;
+	util::AxisAlignedBox GetBounds() const override;
 
 	/** @todo Pass as parameter to SetHeightmapData(). */
 	void SetHeightScale(float scale) {mHeightScale = scale;}
@@ -93,6 +95,7 @@ DrawTerrain::DrawTerrain(TRenderManager& manager) :
 	std::cerr << "GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS: " << std::dec << num << std::endl;*/
 }
 
+}
 }
 
 #endif // DRAWTERRAIN_H

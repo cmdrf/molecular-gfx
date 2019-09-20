@@ -14,6 +14,8 @@
 #include "TextureManager.h"
 #include "Scoping.h"
 
+namespace molecular
+{
 namespace Gfx
 {
 
@@ -74,6 +76,7 @@ void MaterialManager::ReadMtlFile(TStorage& file)
 	ReadFile(mtlFile);
 }
 
+}
 }
 
 #endif // MATERIALMANAGER_H

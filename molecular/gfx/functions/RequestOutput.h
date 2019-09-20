@@ -9,6 +9,8 @@
 
 #include <molecular/gfx/RenderFunction.h>
 
+namespace molecular
+{
 namespace Gfx
 {
 
@@ -34,6 +36,7 @@ private:
 	Hash mOutput;
 };
 
+}
 }
 
 #endif // REQUESTFRAGMENTOUTPUT_H

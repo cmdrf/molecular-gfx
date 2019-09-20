@@ -7,9 +7,12 @@
 #ifndef RENDERCONTEXT_H
 #define RENDERCONTEXT_H
 
-#include "util/Vector.h"
-#include "util/Matrix4.h"
+#include <molecular/util/Vector.h>
+#include <molecular/util/Matrix4.h>
 #include <cassert>
+
+namespace molecular
+{
 
 /// Provides a context for the Renderer to draw to
 class RenderContext
@@ -24,5 +27,7 @@ public:
 	virtual bool HasProjectionMatrix(int eye) {assert(eye == 0); return false;}
 	virtual Matrix4 GetProjectionMatrix(int eye) {assert(false); return Matrix4::Identity();}
 };
+
+}
 
 #endif // RENDERCONTEXT_H

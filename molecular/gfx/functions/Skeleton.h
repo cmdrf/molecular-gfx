@@ -7,9 +7,11 @@
 #ifndef SKELETON_H
 #define SKELETON_H
 
-#include "gfx/RenderFunction.h"
-#include "CharacterAnimation.h"
+#include <molecular/gfx/RenderFunction.h>
+#include <molecular/gfx/CharacterAnimation.h>
 
+namespace molecular
+{
 namespace Gfx
 {
 
@@ -20,7 +22,7 @@ public:
 	Skeleton(TRenderManager& manager);
 
 	void Execute() override;
-	AxisAlignedBox GetBounds() const override {return mCallee->GetBounds();}
+	util::AxisAlignedBox GetBounds() const override {return mCallee->GetBounds();}
 
 	void SetJoints(const Matrix4 joints[CharacterAnimation::kBoneCount]);
 	void SetBindPose(const Matrix4 inverseBindPoseMatrices[CharacterAnimation::kBoneCount]);
@@ -38,6 +40,7 @@ Skeleton::Skeleton(TRenderManager& manager) :
 
 }
 
+}
 }
 
 #endif // SKELETON_H

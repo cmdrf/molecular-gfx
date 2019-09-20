@@ -11,13 +11,15 @@
 #include <molecular/util/BufferInfo.h>
 #include <molecular/util/AxisAlignedBox.h>
 
+namespace molecular
+{
 /// Interface to a source of mesh data
 /** @deprecated Better compile to MeshFile directly. */
 class MeshDataSource
 {
 public:
 	MeshDataSource() : mVertexDataSets(1) {}
-	virtual ~MeshDataSource(){}
+	virtual ~MeshDataSource() = default;
 
 	enum LayoutHint
 	{
@@ -52,7 +54,7 @@ public:
 		@returns Pointer to the index buffer data. */
 	virtual const void* IndexBufferData(int buffer) = 0;
 
-	virtual AxisAlignedBox GetBounds() const = 0;
+	virtual util::AxisAlignedBox GetBounds() const = 0;
 
 	unsigned int GetNumVertexDataSets() const {return unsigned(mVertexDataSets.size());}
 	const std::vector<VertexAttributeInfo>& GetVertexBufferInfos(unsigned int vertexDataSet = 0) const {return mVertexDataSets.at(vertexDataSet).vertexBufferInfos;}
@@ -79,5 +81,7 @@ private:
 
 	std::vector<IndexBufferInfo> mIndexBufferInfos;
 };
+
+}
 
 #endif // MESHDATASOURCE_H

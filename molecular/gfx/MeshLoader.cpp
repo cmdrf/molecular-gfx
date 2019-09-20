@@ -4,7 +4,10 @@
 	This file is part of Molecular Engine.
 */
 
-#include "gfx/MeshLoader.h"
+#include "MeshLoader.h"
+
+namespace molecular
+{
 
 Hash MakeHash(const MeshLocator& locator)
 {
@@ -15,4 +18,6 @@ Hash MakeHash(const MeshLocator& locator)
 		hash = HashUtils::Combine(hash, HashUtils::MakeHash(reinterpret_cast<const char*>(&target.weight), sizeof(float)));
 	}
 	return hash;
+}
+
 }

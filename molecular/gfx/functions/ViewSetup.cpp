@@ -5,10 +5,12 @@
 */
 
 #include "ViewSetup.h"
-#include "gfx/RenderContext.h"
-#include <util/Quaternion.h>
-#include <util/Matrix3.h>
+#include <molecular/gfx/RenderContext.h>
+#include <molecular/util/Quaternion.h>
+#include <molecular/util/Matrix3.h>
 
+namespace molecular
+{
 namespace Gfx
 {
 
@@ -98,4 +100,5 @@ Matrix4 ViewSetup::CalculateProjectionMatrix(float viewportAspectRatio)
 	}
 }
 
+}
 }

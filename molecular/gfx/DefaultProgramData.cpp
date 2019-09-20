@@ -6,6 +6,9 @@
 
 #include "DefaultProgramData.h"
 
+namespace molecular
+{
+
 void DefaultProgramData::FeedToGenerator(ProgramGenerator& generator)
 {
 	ProgramGenerator::Function specularArray;
@@ -78,4 +81,6 @@ void DefaultProgramData::FeedToGenerator(ProgramGenerator& generator)
 	generator.AddVariable("diffuseLighting", "vec3");
 	generator.AddVariable("specularLighting", "vec3");
 	generator.AddVariable("fragmentColor", "vec4", false, ProgramGenerator::VariableInfo::Usage::kOutput);
+}
+
 }

@@ -6,6 +6,8 @@
 
 #include "RequestOutput.h"
 
+namespace molecular
+{
 namespace Gfx
 {
 
@@ -18,4 +20,5 @@ void RequestOutput::Execute()
 		mCallee->Execute();
 }
 
+}
 }

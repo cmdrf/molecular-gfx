@@ -62,7 +62,7 @@ public:
 	~ParticleSystem();
 
 	void Execute() override;
-	AxisAlignedBox GetBounds() const override {return AxisAlignedBox();}
+	util::AxisAlignedBox GetBounds() const override {return util::AxisAlignedBox();}
 
 private:
 	struct Particle

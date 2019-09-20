@@ -10,6 +10,8 @@
 #include <molecular/gfx/RenderFunction.h>
 #include "DrawMeshData.h"
 
+namespace molecular
+{
 namespace Gfx
 {
 
@@ -69,6 +71,7 @@ HumanSkin::HumanSkin(TRenderManager& manager, unsigned int dimensions) :
 //	mDrawQuad.Load(quadSource);
 }
 
+}
 }
 
 #endif // HUMANSKIN_H

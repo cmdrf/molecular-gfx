@@ -10,7 +10,7 @@
 //#pragma warning(disable: 4267)
 
 #include "GlFunctions.h"
-#include <molecular/gfx/BufferInfo.h>
+#include <molecular/util/BufferInfo.h>
 #include <molecular/util/NonCopyable.h>
 #include <molecular/util/PixelFormat.h>
 #include <molecular/util/Logging.h>

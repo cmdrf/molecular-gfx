@@ -7,7 +7,7 @@
 #ifndef OPENGLPREREQUISITES_H
 #define OPENGLPREREQUISITES_H
 
-#include <molecular/gfx/Config.h>
+#include <molecular/Config.h>
 
 #if OPENGL_FOUND
 	#if __APPLE__

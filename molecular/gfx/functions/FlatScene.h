@@ -23,7 +23,7 @@ public:
 	explicit FlatScene(TRenderManager& manager) : RenderFunction(manager) {}
 
 	void Execute() override;
-	AxisAlignedBox GetBounds() const override;
+	util::AxisAlignedBox GetBounds() const override;
 	bool BoundsChangedSince(int framecounter) const override;
 
 	Leaf* Insert(RenderFunction* function) {mFunctions.insert(function); return function;}

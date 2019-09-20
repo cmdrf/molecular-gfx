@@ -6,6 +6,8 @@
 #include <molecular/gfx/DefaultProgramData.h>
 #include <molecular/util/Matrix4.h>
 
+namespace molecular
+{
 namespace Gfx
 {
 
@@ -62,9 +64,9 @@ void DrawTerrain::Execute()
 	}
 }
 
-AxisAlignedBox DrawTerrain::GetBounds() const
+util::AxisAlignedBox DrawTerrain::GetBounds() const
 {
-	return AxisAlignedBox(0, mMinHeight * mHeightScale, 0, mXSize, mMaxHeight * mHeightScale, mYSize);
+	return util::AxisAlignedBox(0, mMinHeight * mHeightScale, 0, mXSize, mMaxHeight * mHeightScale, mYSize);
 }
 
 void DrawTerrain::SetSize(float xSize, float ySize)
@@ -197,4 +199,5 @@ void DrawTerrain::BuildIndices(int lodLevel, std::vector<uint16_t>& indices, Ind
 	}
 }
 
+}
 }

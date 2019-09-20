@@ -9,10 +9,14 @@
 
 #include <molecular/programgenerator/ProgramGenerator.h>
 
+namespace molecular
+{
 class TextureSplattingData
 {
 public:
 	static void FeedToGenerator(ProgramGenerator& generator);
 };
+
+}
 
 #endif // TEXTURESPLATTINGDATA_H

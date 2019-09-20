@@ -1,8 +1,8 @@
 #ifndef NMBMESHDATASOURCE_H
 #define NMBMESHDATASOURCE_H
 
-#include "gfx/MeshDataSource.h"
-#include "util/NmbFile.h"
+#include <molecular/gfx/MeshDataSource.h>
+#include <molecular/util/NmbFile.h>
 
 class NmbMeshDataSource : public MeshDataSource
 {

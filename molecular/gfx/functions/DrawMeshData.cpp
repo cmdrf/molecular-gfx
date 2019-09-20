@@ -10,6 +10,8 @@
 #include <molecular/gfx/Material.h>
 #include <molecular/meshfile/MeshFile.h>
 
+namespace molecular
+{
 namespace Gfx
 {
 
@@ -129,7 +131,7 @@ void DrawMeshData::Load(const MeshFile& file)
 			mIndexBuffers[i]->Store(file.GetBufferData(i), file.buffers[i].size);
 		}
 	}
-	mBounds = AxisAlignedBox(file.boundsMin, file.boundsMax);
+	mBounds = util::AxisAlignedBox(file.boundsMin, file.boundsMax);
 }
 
 void DrawMeshData::Unload()
@@ -178,4 +180,5 @@ void DrawMeshData::BindAttributesAndDraw(Mesh& mesh, std::vector<VertexAttribute
 	}
 }
 
+}
 }

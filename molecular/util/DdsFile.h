@@ -9,8 +9,12 @@
 
 #include "PixelFormat.h"
 #include "NonCopyable.h"
+#include "LittleEndianStream.h"
 #include <stdexcept>
 #include <vector>
+
+namespace molecular
+{
 
 /// Four character code string literal
 /** Little Endian. */
@@ -253,6 +257,8 @@ void DdsFile::ReadHeader(Storage& storage)
 		throw std::runtime_error("No texture data present");
 
 	mFacesMipmapLevels.resize(mNumFaces * mHeader.mipMapCount);
+}
+
 }
 
 #endif // DDSFILE_H

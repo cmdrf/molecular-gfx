@@ -34,7 +34,7 @@ public:
 	~DrawDebugMesh();
 
 	void Execute() override;
-	AxisAlignedBox GetBounds() const override {return mBounds;}
+	util::AxisAlignedBox GetBounds() const override {return mBounds;}
 
 	void DrawLine(const Vector3& from, const Vector3& to, const Vector3& color);
 	void DrawText(const std::string& text, const Vector3& position);
@@ -52,7 +52,7 @@ private:
 	typename RenderCmdSink::VertexBuffer* mTextTexCoordBuffer;
 	VertexAttributeInfo mVector3Info;
 	VertexAttributeInfo mVector2Info;
-	AxisAlignedBox mBounds;
+	util::AxisAlignedBox mBounds;
 
 	/** @todo Move to some central place */
 	Blob mFontDescriptionData;
@@ -129,7 +129,7 @@ inline void DrawDebugMesh::Execute()
 	mLineColorData.clear();
 	mTextVertexData.clear();
 	mTextTexCoordData.clear();
-	mBounds = AxisAlignedBox();
+	mBounds = util::AxisAlignedBox();
 }
 
 //template<class TRenderManager>

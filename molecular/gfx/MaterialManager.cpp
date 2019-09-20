@@ -10,6 +10,8 @@
 #include <molecular/util/MemoryStreamStorage.h>
 #include <molecular/util/Logging.h>
 
+namespace molecular
+{
 namespace Gfx
 {
 
@@ -161,4 +163,5 @@ void MaterialManager::AddVariable(Material* material, Hash key, const std::strin
 	}
 }
 
+}
 }

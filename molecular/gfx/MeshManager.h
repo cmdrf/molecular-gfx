@@ -7,8 +7,11 @@
 #ifndef GFX_MESHMANAGER_H
 #define GFX_MESHMANAGER_H
 
-#include "AssetManager.h"
+#include <molecular/util/AssetManager.h>
 #include "MeshLocator.h"
+
+namespace molecular
+{
 
 /// Modified hashing function that hashes MeshLocator
 /** Includes the file name and morph targets with their respective weights. */
@@ -21,7 +24,8 @@ class DrawMeshData;
 
 typedef AssetManager<DrawMeshData*, 1, false, MeshLocator> MeshManager;
 
-}
+} // gfx
+} // molecular
 
 #endif // GFX_MESHMANAGER_H
 

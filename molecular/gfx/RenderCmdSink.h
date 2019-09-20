@@ -7,7 +7,7 @@
 #ifndef RENDERCMDSINK_H
 #define RENDERCMDSINK_H
 
-#include <molecular/gfx/Config.h>
+#include <molecular/Config.h>
 
 #if MOLECULAR_ENABLE_VULKAN
 #include "vulkan/VulkanRenderCmdSink.h"

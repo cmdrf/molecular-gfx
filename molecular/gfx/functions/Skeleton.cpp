@@ -7,6 +7,8 @@
 #include "Skeleton.h"
 #include <array>
 
+namespace molecular
+{
 namespace Gfx
 {
 
@@ -40,4 +42,5 @@ void Skeleton::SetBindPose(const Matrix4 inverseBindPoseMatrices[CharacterAnimat
 	std::copy(inverseBindPoseMatrices, inverseBindPoseMatrices + CharacterAnimation::kBoneCount, mBindPose);
 }
 
+}
 }

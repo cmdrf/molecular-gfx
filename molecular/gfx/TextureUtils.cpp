@@ -2,6 +2,8 @@
 #include <algorithm>
 #include "TextureUtils.h"
 
+namespace molecular
+{
 namespace Gfx
 {
 namespace TextureUtils
@@ -51,5 +53,6 @@ RenderCmdSink::Texture* SpotTexture(RenderCmdSink& renderer, unsigned int width,
 	return out;
 }
 
+}
 }
 }

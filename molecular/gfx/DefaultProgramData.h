@@ -9,6 +9,9 @@
 
 #include <molecular/programgenerator/ProgramGenerator.h>
 
+namespace molecular
+{
+
 /// Contains default data for ProgramGenerator
 class DefaultProgramData
 {
@@ -16,4 +19,5 @@ public:
 	static void FeedToGenerator(molecular::ProgramGenerator& generator);
 };
 
+}
 #endif // DEFAULTPROGRAMDATA_H

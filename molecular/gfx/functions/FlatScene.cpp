@@ -7,6 +7,7 @@
 #include "FlatScene.h"
 #include <molecular/util/Matrix4.h>
 #include <molecular/util/Frustum.h>
+#include <molecular/util/Plane.h>
 
 namespace molecular
 {
@@ -27,7 +28,7 @@ void FlatScene::Execute()
 	for(auto func: mFunctions)
 	{
 		auto bounds = func->GetBounds(); // TODO: Cache
-		if(frustum.Check(bounds) != Plane::kOutside)
+		if(frustum.Check(bounds) != util::Plane::kOutside)
 			func->Execute();
 	}
 }

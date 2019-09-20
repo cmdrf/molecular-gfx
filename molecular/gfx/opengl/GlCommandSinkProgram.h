@@ -12,6 +12,7 @@
 #include <unordered_set>
 #include <molecular/util/Vector4.h>
 #include <molecular/util/Matrix.h>
+#include <molecular/util/Hash.h>
 
 namespace molecular
 {

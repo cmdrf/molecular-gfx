@@ -4,8 +4,11 @@
 	This file is part of Molecular Engine.
 */
 
-#include "gfx/TextureSplattingData.h"
-#include "gfx/DefaultProgramData.h"
+#include "TextureSplattingData.h"
+#include "DefaultProgramData.h"
+
+namespace molecular
+{
 
 void TextureSplattingData::FeedToGenerator(ProgramGenerator& generator)
 {
@@ -38,4 +41,5 @@ void TextureSplattingData::FeedToGenerator(ProgramGenerator& generator)
 			"\t\t+ texture(splattingTexturesArray[4], scaledCoord).rgb * cov1.y\n"
 			"\t\t+ texture(splattingTexturesArray[5], scaledCoord).rgb * cov1.z);";
 	generator.AddFunction(rgb2);
+}
 }

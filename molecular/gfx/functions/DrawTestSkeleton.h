@@ -22,7 +22,7 @@ public:
 	DrawTestSkeleton(TRenderManager& manager);
 
 	void Execute() override;
-	AxisAlignedBox GetBounds() const override {return AxisAlignedBox();}
+	util::AxisAlignedBox GetBounds() const override {return util::AxisAlignedBox();}
 
 	void SetJoints(const Matrix4 joints[CharacterAnimation::kBoneCount]);
 

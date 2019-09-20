@@ -5,8 +5,10 @@
 */
 
 #include "HumanSkin.h"
-#include "gfx/DefaultProgramData.h"
+#include <molecular/gfx/DefaultProgramData.h>
 
+namespace molecular
+{
 namespace Gfx
 {
 
@@ -120,4 +122,5 @@ void HumanSkin::Blur(BlurStage& from, BlurStage& to, bool y, float width, bool n
 	mDrawQuad.Execute();
 }
 
+}
 }

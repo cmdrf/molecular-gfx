@@ -7,11 +7,13 @@
 #ifndef MESHLOADER_H
 #define MESHLOADER_H
 
-#include "util/TaskDispatcher.h"
-#include "gfx/functions/DrawMeshData.h"
 #include "MeshManager.h"
-#include "util/FileTypeIdentification.h"
+#include <molecular/util/TaskDispatcher.h>
+#include <molecular/gfx/functions/DrawMeshData.h>
+#include <molecular/util/FileTypeIdentification.h>
 
+namespace molecular
+{
 namespace Gfx
 {
 
@@ -112,6 +114,7 @@ void MeshLoader<TRenderManager>::StoreCompiledMesh(MeshManager::Asset& destinati
 	}
 }
 
+}
 }
 
 #endif // MESHLOADER_H
