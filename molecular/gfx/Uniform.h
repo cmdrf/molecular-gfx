@@ -31,7 +31,7 @@ SOFTWARE.
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 /// Variable that can be fed to Renderer::Program

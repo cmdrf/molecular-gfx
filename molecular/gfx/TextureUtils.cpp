@@ -29,7 +29,7 @@ SOFTWARE.
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 namespace TextureUtils
 {

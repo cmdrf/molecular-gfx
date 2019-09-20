@@ -30,7 +30,7 @@ SOFTWARE.
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 /// Declare an output variable that influences shader program generation

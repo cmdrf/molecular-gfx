@@ -30,7 +30,7 @@ SOFTWARE.
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 class FlatScene : public RenderFunction

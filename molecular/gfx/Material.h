@@ -13,7 +13,7 @@
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 /// Collection of variables
@@ -23,7 +23,7 @@ public:
 	template<class TRenderManager>
 	explicit Material(TRenderManager& renderManager) : mTextureManager(renderManager.GetTextureManager()), mScoping(renderManager.GetScoping()) {}
 
-	Material(TextureManager& textureManager, Gfx::Scoping& scoping) : mTextureManager(textureManager), mScoping(scoping) {}
+	Material(TextureManager& textureManager, gfx::Scoping& scoping) : mTextureManager(textureManager), mScoping(scoping) {}
 	~Material();
 
 	template<class T>
@@ -31,7 +31,7 @@ public:
 	{
 		assert(!mBound);
 		int index = FindEntry(hash);
-		using Binding = Gfx::Scoping::ManualBinding<Uniform<T>>;
+		using Binding = gfx::Scoping::ManualBinding<Uniform<T>>;
 		if(index == -1)
 		{
 			Binding* binding = new Binding(hash, mScoping);
@@ -53,11 +53,11 @@ private:
 	struct Entry
 	{
 		Entry(){}
-		Entry(Hash n, Gfx::Scoping::SkeletalManualBinding* b, TextureManager::Asset* t = nullptr) :
+		Entry(Hash n, gfx::Scoping::SkeletalManualBinding* b, TextureManager::Asset* t = nullptr) :
 			name(n), binding(b), texture(t){}
 
 		Hash name = 0;
-		std::unique_ptr<Gfx::Scoping::SkeletalManualBinding> binding;
+		std::unique_ptr<gfx::Scoping::SkeletalManualBinding> binding;
 		TextureManager::Asset* texture = nullptr;
 	};
 
@@ -65,7 +65,7 @@ private:
 
 	std::vector<Entry> mUniforms;
 	TextureManager& mTextureManager;
-	Gfx::Scoping& mScoping;
+	gfx::Scoping& mScoping;
 	bool mBound = false;
 };
 

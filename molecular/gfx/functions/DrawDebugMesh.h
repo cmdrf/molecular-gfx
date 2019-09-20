@@ -34,7 +34,7 @@ SOFTWARE.
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 /// Draws lines and text
@@ -50,7 +50,7 @@ public:
 	template<class TRenderManager>
 	DrawDebugMesh(TRenderManager& renderManager);
 
-	~DrawDebugMesh();
+	~DrawDebugMesh() override;
 
 	void Execute() override;
 	util::AxisAlignedBox GetBounds() const override {return mBounds;}

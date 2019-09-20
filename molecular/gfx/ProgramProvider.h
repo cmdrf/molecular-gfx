@@ -14,7 +14,7 @@
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 /// Caches programs from the ProgramGenerator

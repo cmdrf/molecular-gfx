@@ -12,7 +12,7 @@
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 class Transform : public SingleCalleeRenderFunction

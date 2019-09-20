@@ -13,7 +13,7 @@
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 const Matrix<3, 9> TetrahedronInterpolation::kZeros = Matrix<3, 9>::Zeros();

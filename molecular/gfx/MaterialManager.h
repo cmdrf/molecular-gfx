@@ -35,7 +35,7 @@ SOFTWARE.
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 // Includes not possible here due to circular dependency
@@ -48,7 +48,7 @@ public:
 	template<class TRenderManager>
 	MaterialManager(TRenderManager& renderManager)  : mTextureManager(renderManager.GetTextureManager()), mScoping(renderManager.GetScoping()) {}
 
-	MaterialManager(TextureManager& textureManager, Gfx::Scoping& scoping) : mTextureManager(textureManager), mScoping(scoping) {}
+	MaterialManager(TextureManager& textureManager, gfx::Scoping& scoping) : mTextureManager(textureManager), mScoping(scoping) {}
 	~MaterialManager();
 
 	template<class TStorage>
@@ -72,7 +72,7 @@ private:
 	void AddVariable(Material* material, Hash key, const std::string& value);
 
 	TextureManager& mTextureManager;
-	Gfx::Scoping& mScoping;
+	gfx::Scoping& mScoping;
 
 	std::unordered_map<Hash, std::unique_ptr<Material>> mMaterials;
 };

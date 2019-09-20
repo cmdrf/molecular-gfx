@@ -1,16 +1,38 @@
 /*	PortalZoneSceneImpl.h
-	Copyright 2017 Fabian Herb
 
-	This file is part of Molecular Engine.
+MIT License
+
+Copyright (c) 2019 Fabian Herb
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
-#ifndef PORTALZONESCENEIMPL_H
-#define PORTALZONESCENEIMPL_H
+#ifndef MOLECULAR_PORTALZONESCENEIMPL_H
+#define MOLECULAR_PORTALZONESCENEIMPL_H
 
 #include "PortalZoneScene.h"
-#include "util/PlaneSet.h"
+#include <molecular/util/PlaneSet.h>
+#include <molecular/util/Frustum.h>
 
-namespace Gfx
+namespace molecular
+{
+namespace gfx
 {
 
 template<class TRenderManager, class TZoneKey>
@@ -23,7 +45,7 @@ void PortalZoneScene<TRenderManager, TZoneKey>::Execute()
 		return;
 
 	Matrix4 viewProjectionMatrix = **projMatrix * **viewMatrix;
-	Frustum frustum(viewProjectionMatrix);
+	util::Frustum frustum(viewProjectionMatrix);
 	auto planes = frustum.GetPlanes();
 
 	Vector3 cameraPos = Matrix4((**viewMatrix).Inverse()).GetTranslation();
@@ -38,7 +60,7 @@ void PortalZoneScene<TRenderManager, TZoneKey>::Execute()
 	for(auto func: mFunctions)
 	{
 		auto bounds = func->GetBounds(); // TODO: Cache
-		if(frustum.Check(bounds) != Plane::kOutside)
+		if(frustum.Check(bounds) != util::Plane::kOutside)
 			func->Execute();
 	}
 
@@ -49,10 +71,10 @@ void PortalZoneScene<TRenderManager, TZoneKey>::Execute()
 }
 
 template<class TRenderManager, class TZoneKey>
-AxisAlignedBox PortalZoneScene<TRenderManager, TZoneKey>::GetBounds() const
+util::AxisAlignedBox PortalZoneScene<TRenderManager, TZoneKey>::GetBounds() const
 {
 	// TODO
-	return AxisAlignedBox();
+	return util::AxisAlignedBox();
 }
 
 template<class TRenderManager, class TZoneKey>
@@ -180,7 +202,7 @@ void PortalZoneScene<TRenderManager, TZoneKey>::DrawZone(Zone& zone, PlaneIterat
 		auto& nextZone = nextZoneIt->second;
 
 		std::array<Vector3, 128> clippedPortal;
-		auto clippedPortalEnd = PlaneSet::ClipPolygon(planesBegin, planesEnd, portal.points, portal.points + portal.numPoints, clippedPortal.begin());
+		auto clippedPortalEnd = util::PlaneSet::ClipPolygon(planesBegin, planesEnd, portal.points, portal.points + portal.numPoints, clippedPortal.begin());
 		auto numPoints = clippedPortalEnd - clippedPortal.begin();
 		if(numPoints == 0 || numPoints >= clippedPortal.size() - 2)
 			continue;
@@ -188,15 +210,16 @@ void PortalZoneScene<TRenderManager, TZoneKey>::DrawZone(Zone& zone, PlaneIterat
 		for(unsigned int i = 0; i < numPoints; i++)
 			mDebugMesh.DrawLine(clippedPortal[i], clippedPortal[(i + 1) % numPoints], Vector3(1, 0, 0));
 
-		std::array<Plane, 128> clippedPlanes;
+		std::array<util::Plane, 128> clippedPlanes;
 		auto clippedPlanesBegin = std::copy(planesBegin, planesBegin + 2, clippedPlanes.begin()); // Copy near and far plane TODO: Use portal as near plane
-		auto clippedPlanesEnd = PlaneSet::CreateCullingPlanes(viewPos, clippedPortal.begin(), clippedPortalEnd, clippedPlanesBegin);
+		auto clippedPlanesEnd = util::PlaneSet::CreateCullingPlanes(viewPos, clippedPortal.begin(), clippedPortalEnd, clippedPlanesBegin);
 
 		assert(clippedPlanesEnd - clippedPlanes.begin() == numPoints + 2);
 		DrawZone(nextZone, clippedPlanes.begin(), clippedPlanesEnd, viewPos);
 	}
 }
 
+}
 }
 
 #endif // PORTALZONESCENEIMPL_H

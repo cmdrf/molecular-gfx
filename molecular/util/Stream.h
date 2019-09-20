@@ -27,7 +27,6 @@ SOFTWARE.
 #define MOLECULAR_STREAM_H
 
 #include "StreamBase.h"
-#include "AttributeInfo.h"
 #include <molecular/util/Vector3.h>
 #include <vector>
 
@@ -43,22 +42,13 @@ class WriteStream : public WriteStreamBase
 {
 public:
 	
-	virtual void Write(const Vector3& value, const AttributeInfo* info = nullptr);
-	virtual void Write(const Quaternion& value, const AttributeInfo* info = nullptr);
+	virtual void Write(const Vector3& value);
+	virtual void Write(const Quaternion& value);
 
 	// Make overloaded inherited functions visible:
 	using WriteStreamBase::Write;
 
-	/// This allows passing a string instead of an AttributeInfo object to most Write() functions
-	template<typename T>
-	void Write(const T& value, const char* description)
-	{
-		AttributeInfo info(description);
-		Write(value, &info);
-	}
-
-	virtual	void WriteListBegin(const uint16_t numItems, const AttributeInfo* info = nullptr);
-	void WriteListBegin(const uint16_t numItems, const char* description);
+	virtual	void WriteListBegin(const uint16_t numItems);
 	virtual	void WriteItemBegin(){}
 	virtual	void WriteListEnd(){}
 	virtual	void WriteItemEnd(){}
@@ -66,60 +56,40 @@ public:
 	/// Convenience Write method for vectors of structs
 	/** Calls a Write method in every struct. */
 	template<class T>
-	void WriteStructVector(const typename std::vector<T>& elements, const char* description);
+	void WriteStructVector(const typename std::vector<T>& elements);
 
 	/// Write array of float values
-	virtual void Write(const float values[], size_t count, const AttributeInfo* info);
-	void Write(const float values[], size_t count, const char* description)
-	{
-		AttributeInfo info(description);
-		Write(values, count, &info);
-	}
+	virtual void Write(const float values[], size_t count);
 };
 
 class ReadStream : public ReadStreamBase
 {
 public:
-	virtual	void Read(Vector3&	value, const AttributeInfo* info = nullptr);
-	virtual	void Read(Quaternion&	value, const AttributeInfo* info = nullptr);
+	virtual	void Read(Vector3& value);
+	virtual	void Read(Quaternion& value);
 
 	// Make overloaded inherited functions visible:
 	using ReadStreamBase::Read;
-	
-	/// This allow passing a string instead of an AttributeInfo object to most Read() functions
-	template<typename T>
-	void Read(T& value, const char* description)
-	{
-		AttributeInfo info(description);
-		Read(value, &info);
-	}
 
-	virtual	void ReadListBegin(uint16_t& numItems, const AttributeInfo* info = nullptr);
-	void ReadListBegin(uint16_t& numItems, const char* description);
+	virtual	void ReadListBegin(uint16_t& numItems);
 
 	virtual	void ReadItemBegin() {}
 	virtual	void ReadListEnd() {}
 	virtual	void ReadItemEnd() {}
 
 	template<class T>
-	void ReadStructVector(std::vector<T>& elements, const char* description);
+	void ReadStructVector(std::vector<T>& elements);
 
 	/// Read array of float values
-	virtual void Read(float values[], size_t count, const AttributeInfo* info);
-	void Read(float values[], size_t count, const char* description)
-	{
-		AttributeInfo info(description);
-		Read(values, count, &info);
-	}
-
+	virtual void Read(float values[], size_t count);
 };
 
 /*****************************************************************************/
 
 template<class T>
-void WriteStream::WriteStructVector(const std::vector<T>& elements, const char* description)
+void WriteStream::WriteStructVector(const std::vector<T>& elements)
 {
-	WriteListBegin(uint16_t(elements.size()), description);
+	WriteListBegin(uint16_t(elements.size()));
 	for(size_t i = 0; i < elements.size(); ++i)
 	{
 		WriteItemBegin();
@@ -130,10 +100,10 @@ void WriteStream::WriteStructVector(const std::vector<T>& elements, const char* 
 }
 
 template<class T>
-void ReadStream::ReadStructVector(std::vector<T>& elements, const char* description)
+void ReadStream::ReadStructVector(std::vector<T>& elements)
 {
 	uint16_t numItems;
-	ReadListBegin(numItems, description);
+	ReadListBegin(numItems);
 	elements.resize(numItems);
 	for(size_t i = 0; i < elements.size(); ++i)
 	{

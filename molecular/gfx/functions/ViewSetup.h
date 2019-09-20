@@ -35,7 +35,7 @@ namespace molecular
 class Quaternion;
 class RenderContext;
 
-namespace Gfx
+namespace gfx
 {
 
 class ViewSetup : public SingleCalleeRenderFunction

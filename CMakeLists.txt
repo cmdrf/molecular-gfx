@@ -25,32 +25,25 @@ add_library(molecular-gfx
 	molecular/gfx/Scoping.h
 	molecular/gfx/MeshLocator.h
 	molecular/gfx/Uniform.cpp
-	molecular/gfx/functions/DrawMeshData.h
-	molecular/gfx/functions/Transform.cpp
-	molecular/gfx/functions/SetShCoefficients.h
-	molecular/gfx/functions/DrawTestSkeleton.h
-	molecular/gfx/functions/SceneSetup.h
-	molecular/gfx/functions/ApplyTextures.h
-	molecular/gfx/functions/FullscreenEffect.h
-	molecular/gfx/functions/SetUniforms.cpp
-	molecular/gfx/functions/SceneSetup.cpp
-#	molecular/gfx/functions/RTreeScene.cpp
-#	molecular/gfx/functions/RTreeScene.h
 
     molecular/gfx/functions/ApplyTextures.cpp
+	molecular/gfx/functions/ApplyTextures.h
 	molecular/gfx/functions/CpuParticleSystemImpl.h
 	molecular/gfx/functions/CpuParticleSystem.h
 	molecular/gfx/functions/DrawDebugMesh.h
 	molecular/gfx/functions/DrawingFunction.h
 	molecular/gfx/functions/DrawMesh.h
 	molecular/gfx/functions/DrawMeshData.cpp
+	molecular/gfx/functions/DrawMeshData.h
 	molecular/gfx/functions/DrawSkyDome.h
 	molecular/gfx/functions/DrawTerrain.cpp
 	molecular/gfx/functions/DrawTerrain.h
 	molecular/gfx/functions/DrawTestSkeleton.cpp
+	molecular/gfx/functions/DrawTestSkeleton.h
 	molecular/gfx/functions/FlatScene.cpp
 	molecular/gfx/functions/FlatScene.h
 	molecular/gfx/functions/FullscreenEffect.cpp
+	molecular/gfx/functions/FullscreenEffect.h
 	molecular/gfx/functions/HumanSkin.cpp
 	molecular/gfx/functions/HumanSkin.h
 	molecular/gfx/functions/ParticleSystem.h
@@ -59,12 +52,21 @@ add_library(molecular-gfx
 	molecular/gfx/functions/PortalZoneSceneImpl.h
 	molecular/gfx/functions/RequestOutput.cpp
 	molecular/gfx/functions/RequestOutput.h
+	#molecular/gfx/functions/RTreeScene.cpp
+	#molecular/gfx/functions/RTreeScene.h
+	molecular/gfx/functions/SceneSetup.cpp
+	molecular/gfx/functions/SceneSetup.h
 	molecular/gfx/functions/SetShCoefficients.cpp
+	molecular/gfx/functions/SetShCoefficients.h
+	molecular/gfx/functions/SetUniforms.cpp
 	molecular/gfx/functions/SetUniforms.h
+	molecular/gfx/functions/ShadowMapping.cpp
+	molecular/gfx/functions/ShadowMapping.h
 	molecular/gfx/functions/Skeleton.h
 	molecular/gfx/functions/Skeleton.cpp
 	molecular/gfx/functions/TextureSplatting.cpp
 	molecular/gfx/functions/TextureSplatting.h
+	molecular/gfx/functions/Transform.cpp
 	molecular/gfx/functions/Transform.h
 	molecular/gfx/functions/ViewSetup.h
 	molecular/gfx/functions/ViewSetup.cpp
@@ -122,8 +124,6 @@ add_library(molecular-gfx
 
     molecular/util/AssetManager.h
 	molecular/util/AtomicCounter.h
-	molecular/util/AttributeInfo.cpp
-	molecular/util/AttributeInfo.h
 	molecular/util/Blob.h
 	molecular/util/BlobFunctionTask.h
 	molecular/util/Box.cpp
@@ -173,7 +173,6 @@ add_library(molecular-gfx
 	molecular/util/TaskDispatcher.h
 	molecular/util/TextStream.h
 	molecular/util/TgaFile.h
-	molecular/util/Types.h
 )
 
 if(APPLE)

@@ -7,7 +7,6 @@
 #ifndef STREAMSTORAGE_H
 #define STREAMSTORAGE_H
 
-#include "Types.h" // uint8_t
 #include <stdlib.h> // size_t
 
 /// Base class for data storage to be read from

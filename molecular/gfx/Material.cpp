@@ -8,7 +8,7 @@
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 Material::~Material()
@@ -23,7 +23,7 @@ void Material::SetTexture(Hash hash, Hash textureFileName)
 	RenderCmdSink::Texture* texture = asset->GetAsset();
 //	texture->SetParameter(Renderer::Texture::kMinFilter, Renderer::Texture::kLinear);
 //	texture->SetParameter(Renderer::Texture::kMagFilter, Renderer::Texture::kLinear);
-	using TextureBinding = Gfx::Scoping::ManualBinding<Uniform<RenderCmdSink::Texture*>>;
+	using TextureBinding = gfx::Scoping::ManualBinding<Uniform<RenderCmdSink::Texture*>>;
 	int index = FindEntry(hash);
 	if(index == -1)
 	{

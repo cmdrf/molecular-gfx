@@ -8,7 +8,7 @@
 #define NODEFACTORY_H
 
 #include "RenderFunction.h"
-namespace Gfx
+namespace gfx
 {
 
 template<class TRenderManager>

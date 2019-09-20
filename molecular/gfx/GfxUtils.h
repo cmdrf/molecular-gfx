@@ -10,7 +10,7 @@
 #include "util/Vector3.h"
 #include "util/Matrix4.h"
 
-namespace Gfx
+namespace gfx
 {
 /// Convert screen coordinates to world coordinates
 /** Similar to gluUnProject().

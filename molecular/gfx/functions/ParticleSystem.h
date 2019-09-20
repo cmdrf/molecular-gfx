@@ -32,7 +32,7 @@ SOFTWARE.
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 class ParticleSystem : public RenderFunction

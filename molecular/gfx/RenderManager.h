@@ -1,33 +1,55 @@
 /*	RenderManager.h
-	Copyright 2012-2017 Fabian Herb
 
-	This file is part of Molecular Engine.
+MIT License
+
+Copyright (c) 2019 Fabian Herb
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
-#ifndef RENDERMANAGER_H
-#define RENDERMANAGER_H
+#ifndef MOLECULAR_RENDERMANAGER_H
+#define MOLECULAR_RENDERMANAGER_H
 
-#include "util/DynamicScoping.h"
 #include "RenderCmdSink.h"
-#include "gfx/Uniform.h"
-#include "gfx/TextureManager.h"
-#include "gfx/ProgramGenerator.h"
-#include "gfx/ProgramProvider.h"
-#include "gfx/MeshLoader.h"
-#include "gfx/MaterialManager.h"
-#include "util/ThreadSafeQueue.h"
 #include "Scoping.h"
 #include "RenderFunction.h"
-#include "ProgramFile.h"
-#include "gfx/DefaultProgramData.h"
-#include "gfx/MaterialManager.h"
-#include "util/ManualTaskQueue.h"
-#include "util/MemoryStreamStorage.h"
 #include "MeshBoundsCollectionFile.h"
+
+#include <molecular/util/DynamicScoping.h>
+#include <molecular/gfx/Uniform.h>
+#include <molecular/gfx/TextureManager.h>
+#include <molecular/programgenerator/ProgramGenerator.h>
+#include <molecular/gfx/ProgramProvider.h>
+#include <molecular/gfx/MeshLoader.h>
+#include <molecular/gfx/MaterialManager.h>
+#include <molecular/util/ThreadSafeQueue.h>
+#include <molecular/programgenerator/ProgramFile.h>
+#include <molecular/gfx/DefaultProgramData.h>
+#include <molecular/gfx/MaterialManager.h>
+#include <molecular/util/ManualTaskQueue.h>
+#include <molecular/util/MemoryStreamStorage.h>
 
 class RenderContext;
 
-namespace Gfx
+namespace molecular
+{
+namespace gfx
 {
 
 /// Encloses all objects needed for rendering
@@ -38,9 +60,9 @@ public:
 	typedef RenderManagerT Self;
 	typedef TFileServer FileServer;
 	using TaskQueue = TTaskQueue;
-	using Renderer = Gfx::RenderCmdSink;
-	using RenderCmdSink = Gfx::RenderCmdSink;
-	typedef Gfx::TextureManager TextureManager;
+	using Renderer = gfx::RenderCmdSink;
+	using RenderCmdSink = gfx::RenderCmdSink;
+	typedef gfx::TextureManager TextureManager;
 	typedef ManualTaskQueue<typename TaskQueue::Mutex> GlTaskQueue;
 
 	/// Constructor
@@ -57,7 +79,7 @@ public:
 	GlTaskQueue& GetGlTaskQueue() {return mGlTaskQueue;}
 
 	inline int GetFramecounter() const {return mFramecounter;}
-	Gfx::Scoping& GetScoping() {return mScoping;}
+	gfx::Scoping& GetScoping() {return mScoping;}
 	RenderContext& GetRenderContext() {return mRenderContext;}
 	RenderCmdSink& GetRenderCmdSink() {return mRenderer;}
 
@@ -69,13 +91,13 @@ public:
 	MaterialManager& GetMaterialManager() {return mMaterialManager;}
 
 	void SetMeshBoundsFileData(Blob&& fileData);
-	const AxisAlignedBox& GetMeshFileBounds(Hash meshFile);
+	const util::AxisAlignedBox& GetMeshFileBounds(Hash meshFile);
 
 private:
 	RenderContext& mRenderContext;
 	RenderCmdSink& mRenderer;
 	int mFramecounter;
-	Gfx::Scoping mScoping;
+	gfx::Scoping mScoping;
 
 	FileServer& mFileServer;
 
@@ -157,12 +179,13 @@ void RenderManagerT<TFileServer, TTaskQueue>::SetMeshBoundsFileData(Blob&& fileD
 }
 
 template<class TFileServer, class TTaskQueue>
-const AxisAlignedBox& RenderManagerT<TFileServer, TTaskQueue>::GetMeshFileBounds(Hash meshFile)
+const util::AxisAlignedBox& RenderManagerT<TFileServer, TTaskQueue>::GetMeshFileBounds(Hash meshFile)
 {
 	assert(mMeshBoundsCollectionFileData.GetData());
 	return static_cast<const MeshBoundsCollectionFile*>(mMeshBoundsCollectionFileData.GetData())->GetBounds(meshFile);
 }
 
-}
+} // gfx
+} // molecular
 
-#endif // RENDERMANAGER_H
+#endif // MOLECULAR_RENDERMANAGER_H

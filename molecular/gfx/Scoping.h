@@ -8,7 +8,7 @@
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 typedef DynamicScoping<Hash, Variable> Scoping;
 }

@@ -27,11 +27,9 @@ SOFTWARE.
 #include <molecular/util/SphericalHarmonics.h>
 #include <molecular/gfx/TetrahedronInterpolation.h>
 
-using namespace molecular;
-
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 void SetShCoefficients::Execute()

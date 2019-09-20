@@ -12,7 +12,7 @@
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 class TextureSplatting : public SingleCalleeRenderFunction

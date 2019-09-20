@@ -28,7 +28,7 @@ SOFTWARE.
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 void HumanSkin::Execute()

@@ -31,7 +31,7 @@ SOFTWARE.
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 MaterialManager::~MaterialManager()

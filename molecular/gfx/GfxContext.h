@@ -13,7 +13,7 @@
 #include "functions/ViewSetup.h"
 #include "GfxFile.h"
 
-namespace Gfx
+namespace gfx
 {
 
 /// Loads GFX setup text files

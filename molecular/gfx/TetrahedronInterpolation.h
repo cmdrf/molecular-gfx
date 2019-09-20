@@ -13,7 +13,7 @@
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 using molecular::Vector4;

@@ -27,7 +27,7 @@ SOFTWARE.
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 void RequestOutput::Execute()

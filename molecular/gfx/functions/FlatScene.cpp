@@ -30,7 +30,7 @@ SOFTWARE.
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 void FlatScene::Execute()

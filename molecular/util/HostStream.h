@@ -39,11 +39,11 @@ class HostWriteStream : public WriteStream
 public:
 	HostWriteStream(Storage& streamStorage);
 	
-	void Write(const uint8_t value, const AttributeInfo* info = nullptr) override;
-	void Write(const uint16_t value, const AttributeInfo* info = nullptr) override;
-	void Write(const uint32_t value, const AttributeInfo* info = nullptr) override;
-	void Write(const uint64_t value, const AttributeInfo* info = nullptr) override;
-	void Write(const void* ptr, const size_t size, const AttributeInfo* info = nullptr) override;
+	void Write(const uint8_t value) override;
+	void Write(const uint16_t value) override;
+	void Write(const uint32_t value) override;
+	void Write(const uint64_t value) override;
+	void Write(const void* ptr, const size_t size) override;
 
 	using WriteStream::Write;
 
@@ -57,11 +57,11 @@ class HostReadStream : public ReadStream
 {
 public:
 	HostReadStream(Storage& storage) : mStorage(storage){}
-	void Read(uint8_t&	value, const AttributeInfo* info = nullptr) override;
-	void Read(uint16_t&	value, const AttributeInfo* info = nullptr) override;
-	void Read(uint32_t&	value, const AttributeInfo* info = nullptr) override;
-	void Read(uint64_t&	value, const AttributeInfo* info = nullptr) override;
-	void Read(void*	ptr, const size_t size, const AttributeInfo* info = nullptr) override;
+	void Read(uint8_t&	value) override;
+	void Read(uint16_t&	value) override;
+	void Read(uint32_t&	value) override;
+	void Read(uint64_t&	value) override;
+	void Read(void*	ptr, const size_t size) override;
 
 	using ReadStream::Read;
 
@@ -79,31 +79,31 @@ HostWriteStream<Storage>::HostWriteStream(Storage& streamStorage) :
 }
 
 template<class Storage>
-void HostWriteStream<Storage>::Write(const uint8_t value, const AttributeInfo* /*info*/)
+void HostWriteStream<Storage>::Write(const uint8_t value)
 {
 	mStreamStorage.Write(&value, 1);
 }
 
 template<class Storage>
-void HostWriteStream<Storage>::Write(const uint16_t value, const AttributeInfo* /*info*/)
+void HostWriteStream<Storage>::Write(const uint16_t value)
 {
 	mStreamStorage.Write(&value, 2);
 }
 
 template<class Storage>
-void HostWriteStream<Storage>::Write(const uint32_t value, const AttributeInfo* /*info*/)
+void HostWriteStream<Storage>::Write(const uint32_t value)
 {
 	mStreamStorage.Write(&value, 4);
 }
 
 template<class Storage>
-void HostWriteStream<Storage>::Write(const uint64_t value, const AttributeInfo* /*info*/)
+void HostWriteStream<Storage>::Write(const uint64_t value)
 {
 	mStreamStorage.Write(&value, 8);
 }
 
 template<class Storage>
-void HostWriteStream<Storage>::Write(const void* ptr, const size_t size, const AttributeInfo* /*info*/)
+void HostWriteStream<Storage>::Write(const void* ptr, const size_t size)
 {
 	mStreamStorage.Write(ptr, size);
 }
@@ -111,31 +111,31 @@ void HostWriteStream<Storage>::Write(const void* ptr, const size_t size, const A
 /*****************************************************************************/
 
 template<class Storage>
-void HostReadStream<Storage>::Read(uint8_t& value, const AttributeInfo* /*info*/)
+void HostReadStream<Storage>::Read(uint8_t& value)
 {
 	mStorage.Read(&value, 1);
 }
 
 template<class Storage>
-void HostReadStream<Storage>::Read(uint16_t& value, const AttributeInfo* /*info*/)
+void HostReadStream<Storage>::Read(uint16_t& value)
 {
 	mStorage.Read(&value, 2);
 }
 
 template<class Storage>
-void HostReadStream<Storage>::Read(uint32_t& value, const AttributeInfo* /*info*/)
+void HostReadStream<Storage>::Read(uint32_t& value)
 {
 	mStorage.Read(&value, 4);
 }
 
 template<class Storage>
-void HostReadStream<Storage>::Read(uint64_t& value, const AttributeInfo* /*info*/)
+void HostReadStream<Storage>::Read(uint64_t& value)
 {
 	mStorage.Read(&value, 8);
 }
 
 template<class Storage>
-void HostReadStream<Storage>::Read(void* ptr, const size_t size, const AttributeInfo* /*info*/)
+void HostReadStream<Storage>::Read(void* ptr, const size_t size)
 {
 	mStorage.Read(ptr, size);
 }

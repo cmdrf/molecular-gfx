@@ -37,7 +37,7 @@ namespace molecular
 struct MeshFile;
 class MeshDataSource;
 
-namespace Gfx
+namespace gfx
 {
 
 /// RenderFunction that draws a group of meshes

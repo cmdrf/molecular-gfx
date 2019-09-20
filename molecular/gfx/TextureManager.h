@@ -24,7 +24,7 @@
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 typedef AssetManager<RenderCmdSink::Texture*, 10, true, Hash> TextureManager;

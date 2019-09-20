@@ -36,7 +36,7 @@ namespace molecular
 /** Includes the file name and morph targets with their respective weights. */
 Hash MakeHash(const MeshLocator& locator);
 
-namespace Gfx
+namespace gfx
 {
 
 class DrawMeshData;

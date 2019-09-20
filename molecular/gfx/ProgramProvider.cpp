@@ -9,7 +9,7 @@
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 ProgramProvider::ProgramProvider(RenderCmdSink& renderer, ProgramGenerator& generator) :

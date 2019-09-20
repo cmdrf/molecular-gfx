@@ -8,7 +8,7 @@
 
 namespace molecular
 {
-void Gfx::SetUniforms::Execute()
+void gfx::SetUniforms::Execute()
 {
 	if(mCallee)
 	{

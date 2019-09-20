@@ -10,7 +10,7 @@
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 void Transform::Execute()

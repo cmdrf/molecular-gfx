@@ -30,7 +30,7 @@ SOFTWARE.
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 /** @todo Frustum culling

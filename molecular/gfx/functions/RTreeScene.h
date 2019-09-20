@@ -1,13 +1,33 @@
 /*	RTreeScene.h
-	Copyright 2012-2014 Fabian Herb
 
-	This file is part of Molecular Engine.
+MIT License
+
+Copyright (c) 2019 Fabian Herb
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
-#ifndef RTREESCENE_H
-#define RTREESCENE_H
+#ifndef MOLECULAR_RTREESCENE_H
+#define MOLECULAR_RTREESCENE_H
 
 #include <molecular/gfx/RenderFunction.h>
+#include <molecular/gfx/RenderManager.h>
 #include <molecular/util/RTree.h>
 #include <molecular/util/Frustum.h>
 
@@ -15,7 +35,7 @@ namespace molecular
 {
 class Matrix4;
 
-namespace Gfx
+namespace gfx
 {
 
 /** @bug Frustum visibility check does not work and is commented out. */
@@ -28,7 +48,7 @@ private:
 		RenderFunction* function;
 	};
 
-	typedef RTree<LeafData> Tree;
+	typedef util::RTree<LeafData> Tree;
 
 public:
 	typedef Tree::Leaf Leaf;
@@ -36,7 +56,7 @@ public:
 	RTreeScene(RenderManager& manager);
 
 	void Execute() override;
-	AxisAlignedBox GetBounds() const override;
+	util::AxisAlignedBox GetBounds() const override;
 	bool BoundsChangedSince(int framecounter) const override;
 
 
@@ -51,7 +71,7 @@ private:
 	class AllAcceptor
 	{
 	public:
-		Tree::AcceptorOutput operator() (const AxisAlignedBox& box)
+		Tree::AcceptorOutput operator() (const util::AxisAlignedBox& box)
 		{
 			return Tree::kAccept;
 		}
@@ -60,20 +80,20 @@ private:
 	class FrustumAcceptor
 	{
 	public:
-		FrustumAcceptor(const Frustum& frustum) : mFrustum(frustum) {}
-		Tree::AcceptorOutput operator() (const AxisAlignedBox& box) const
+		FrustumAcceptor(const util::Frustum& frustum) : mFrustum(frustum) {}
+		Tree::AcceptorOutput operator() (const util::AxisAlignedBox& box) const
 		{
-			Plane::IntersectStatus result = mFrustum.Check(box);
-			if(result == Plane::kInside)
+			util::Plane::IntersectStatus result = mFrustum.Check(box);
+			if(result == util::Plane::kInside)
 				return Tree::kAccept;
-			else if(result == Plane::kOutside)
+			else if(result == util::Plane::kOutside)
 				return Tree::kDiscard;
 			else
 				return Tree::kDescend;
 		}
 
 	private:
-		const Frustum& mFrustum;
+		const util::Frustum& mFrustum;
 	};
 
 	class UpdateVisitor : public Tree::Visitor

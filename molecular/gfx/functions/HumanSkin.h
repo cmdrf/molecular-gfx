@@ -31,7 +31,7 @@ SOFTWARE.
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 class HumanSkin : public SingleCalleeRenderFunction

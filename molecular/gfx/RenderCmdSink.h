@@ -48,7 +48,7 @@ using RenderCmdSink = VulkanRenderCmdSink;
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 using RenderCmdSink = GlCommandSink;
