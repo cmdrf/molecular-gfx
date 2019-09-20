@@ -9,6 +9,9 @@
 
 #include <cstddef>
 
+namespace molecular
+{
+
 /// Functions for identifying file types from files contents
 namespace FileTypeIdentification
 {
@@ -33,6 +36,8 @@ bool IsPackage(const void* data, size_t size);
 bool IsMeshBoundsCollection(const void* data, size_t size);
 
 FileType Identify(const void* data, std::size_t size);
+
+}
 
 }
 

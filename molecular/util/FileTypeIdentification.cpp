@@ -8,6 +8,8 @@
 #include <cstdint>
 #include <cstring>
 
+namespace molecular
+{
 namespace FileTypeIdentification
 {
 
@@ -101,4 +103,5 @@ FileType Identify(const void* data, size_t size)
 	return kUnknown;
 }
 
+}
 }

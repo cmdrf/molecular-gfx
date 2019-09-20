@@ -11,20 +11,39 @@ add_library(molecular-gfx
 	molecular/gfx/GfxFile.cpp
 	molecular/gfx/GfxFile.h
 	molecular/gfx/GfxUtils.h
-
-	molecular/gfx/Material.cpp
 	molecular/gfx/MeshBoundsCollectionFile.h
-	molecular/gfx/Uniform.h
-	molecular/gfx/RenderFunction.h
-	molecular/gfx/SkinProgramData.cpp
-	molecular/gfx/RenderManager.h
 	molecular/gfx/MeshManager.h
-	molecular/gfx/TetrahedronInterpolation.cpp
-	molecular/gfx/ProgramProvider.h
-	molecular/gfx/Picking.h
-	molecular/gfx/Scoping.h
+	molecular/gfx/Material.cpp
+	molecular/gfx/Material.h
+	molecular/gfx/MaterialManager.cpp
+	molecular/gfx/MaterialManager.h
+	molecular/gfx/MeshDataSource.h
+	molecular/gfx/MeshLoader.cpp
+	molecular/gfx/MeshLoader.h
 	molecular/gfx/MeshLocator.h
+	molecular/gfx/NodeFactory.h
+	#molecular/gfx/NmbMeshDataSource.cpp
+	#molecular/gfx/NmbMeshDataSource.h
+	molecular/gfx/Picking.h
+	molecular/gfx/ProgramProvider.cpp
+	molecular/gfx/ProgramProvider.h
+	molecular/gfx/RenderCmdSink.h
+	molecular/gfx/RenderContext.h
+	molecular/gfx/RenderFunction.h
+	molecular/gfx/RenderManager.h
+	molecular/gfx/Scoping.h
+	molecular/gfx/SkinProgramData.cpp
+	molecular/gfx/SkinProgramData.h
+	molecular/gfx/TetrahedronInterpolation.cpp
+	molecular/gfx/TetrahedronInterpolation.h
+	molecular/gfx/TetrahedronSpaceFile.h
+	molecular/gfx/TextureManager.h
+	molecular/gfx/TextureUtils.cpp
+	molecular/gfx/TextureUtils.h
+	molecular/gfx/TextureSplattingData.cpp
+	molecular/gfx/TextureSplattingData.h
 	molecular/gfx/Uniform.cpp
+	molecular/gfx/Uniform.h
 
     molecular/gfx/functions/ApplyTextures.cpp
 	molecular/gfx/functions/ApplyTextures.h
@@ -70,29 +89,6 @@ add_library(molecular-gfx
 	molecular/gfx/functions/Transform.h
 	molecular/gfx/functions/ViewSetup.h
 	molecular/gfx/functions/ViewSetup.cpp
-
-	molecular/gfx/NodeFactory.h
-
-	molecular/gfx/TextureUtils.cpp
-	molecular/gfx/TetrahedronInterpolation.h
-	molecular/gfx/TetrahedronSpaceFile.h
-	molecular/gfx/ProgramProvider.cpp
-	molecular/gfx/MeshDataSource.h
-	molecular/gfx/MaterialManager.h
-	molecular/gfx/MeshLoader.h
-	molecular/gfx/MaterialManager.cpp
-	molecular/gfx/SkinProgramData.h
-	molecular/gfx/RenderCmdSink.h
-	molecular/gfx/MeshLoader.cpp
-	molecular/gfx/Material.h
-	molecular/gfx/RenderContext.h
-
-	#molecular/gfx/NmbMeshDataSource.cpp
-	#molecular/gfx/NmbMeshDataSource.h
-	molecular/gfx/TextureManager.h
-	molecular/gfx/TextureUtils.h
-	molecular/gfx/TextureSplattingData.cpp
-	molecular/gfx/TextureSplattingData.h
 
 	molecular/gfx/opengl/Egl.cpp
 	molecular/gfx/opengl/Egl.h
@@ -174,6 +170,7 @@ add_library(molecular-gfx
 	molecular/util/TextStream.h
 	molecular/util/TgaFile.h
 )
+add_library(molecular::gfx ALIAS molecular-gfx)
 
 if(APPLE)
 	target_compile_definitions(molecular-gfx PUBLIC GL_SILENCE_DEPRECATION)
@@ -194,3 +191,7 @@ target_link_libraries(molecular-gfx PUBLIC
 	molecular::meshfile
 	Eigen3::Eigen
 )
+
+if(BUILD_TESTING)
+	add_subdirectory(tests)
+endif()

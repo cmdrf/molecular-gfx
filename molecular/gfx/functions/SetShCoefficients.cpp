@@ -42,7 +42,7 @@ void SetShCoefficients::Execute()
 		Matrix3 modelRotationInv = (**modelMatrix).GetUpperLeft3x3().GetRotation().Transposed();
 		Matrix<3, 9> coeffs = mInterpolation.GetShCoefficients(position, mTetrahedronIndex);
 
-		float factor = 0.5f / kPi_f;// std::sqrt(kPi_f);
+		float factor = 0.5f / Math::kPi_f;// std::sqrt(kPi_f);
 		coeffs *= factor;
 		float redTransformedCoeffs[9] = {0};
 		float greenTransformedCoeffs[9] = {0};

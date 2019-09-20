@@ -27,6 +27,7 @@ SOFTWARE.
 #include <molecular/gfx/RenderContext.h>
 #include <molecular/util/Quaternion.h>
 #include <molecular/util/Matrix3.h>
+#include <molecular/util/Math.h>
 
 namespace molecular
 {
@@ -50,7 +51,7 @@ void ViewSetup::Execute()
 		auto renderTarget = mRenderContext.GetRenderTarget(eye);
 		**viewportSize = Vector2(viewport[2], viewport[3]);
 
-		static const Matrix4 defaultRotation = Matrix4::RotationX(-0.5f * kPi_f) * Matrix4::RotationZ(0.5f * kPi_f);
+		static const Matrix4 defaultRotation = Matrix4::RotationX(-0.5f * Math::kPi_f) * Matrix4::RotationZ(0.5f * Math::kPi_f);
 		**viewMatrix = defaultRotation * (mCamera * mRenderContext.GetHeadToEyeTransform(eye)).Inverse();
 
 		mRenderer.SetBaseTarget(viewport, renderTarget);
