@@ -1,4 +1,6 @@
-find_package(OpenGL)
+include(CheckIncludeFile)
+check_include_file("filesystem" HAS_FILESYSTEM)
+check_include_file("experimental/filesystem" HAS_EXPERIMENTAL_FILESYSTEM)
 
 configure_file(molecular/Config.h.in molecular/Config.h)
 
@@ -44,6 +46,18 @@ add_library(molecular-gfx
 	molecular/gfx/TextureSplattingData.h
 	molecular/gfx/Uniform.cpp
 	molecular/gfx/Uniform.h
+
+	molecular/gfx/glfw/GlfwContext.cpp
+	molecular/gfx/glfw/GlfwContext.h
+	molecular/gfx/glfw/GlfwFileLoader.h
+	molecular/gfx/glfw/GlfwOpenGlWindow.cpp
+	molecular/gfx/glfw/GlfwOpenGlWindow.h
+	molecular/gfx/glfw/GlfwPrerequisites.h
+	molecular/gfx/glfw/GlfwRenderManager.cpp
+	molecular/gfx/glfw/GlfwRenderManager.h
+#	molecular/gfx/glfw/GlfwVulkanWindow.cpp
+#	molecular/gfx/glfw/GlfwVulkanWindow.h
+    molecular/gfx/glfw/GlfwWindow.h
 
     molecular/gfx/functions/ApplyTextures.cpp
 	molecular/gfx/functions/ApplyTextures.h
@@ -128,6 +142,7 @@ add_library(molecular-gfx
 	molecular/util/DdsFile.h
 	molecular/util/DummyFileLoader.h
 	molecular/util/DynamicScoping.h
+	molecular/util/FileServer.h
 	molecular/util/FileTypeIdentification.cpp
 	molecular/util/FileTypeIdentification.h
 	molecular/util/FontAtlasDescriptionFile.h
@@ -165,6 +180,8 @@ add_library(molecular-gfx
 	molecular/util/StreamBase.h
 	molecular/util/StreamStorage.cpp
 	molecular/util/StreamStorage.h
+	molecular/util/StringStore.cpp
+	molecular/util/StringStore.h
 	molecular/util/Task.h
 	molecular/util/TaskDispatcher.h
 	molecular/util/TextStream.h
@@ -193,8 +210,11 @@ target_link_libraries(molecular-gfx PUBLIC
 	molecular::programgenerator
 	molecular::meshfile
 	Eigen3::Eigen
+	OpenGL::GL
+	glfw
 )
 
+add_subdirectory(examples)
 if(BUILD_TESTING)
 	add_subdirectory(tests)
 endif()

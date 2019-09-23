@@ -45,25 +45,26 @@ SOFTWARE.
 #include <molecular/util/ManualTaskQueue.h>
 #include <molecular/util/MemoryStreamStorage.h>
 
-class RenderContext;
 
 namespace molecular
 {
 namespace gfx
 {
 
+class RenderContext;
+
 /// Encloses all objects needed for rendering
 template<class TFileServer, class TTaskQueue>
 class RenderManagerT
 {
 public:
-	typedef RenderManagerT Self;
-	typedef TFileServer FileServer;
+	using Self = RenderManagerT;
+	using FileServer = TFileServer;
 	using TaskQueue = TTaskQueue;
 	using Renderer = gfx::RenderCmdSink;
 	using RenderCmdSink = gfx::RenderCmdSink;
-	typedef gfx::TextureManager TextureManager;
-	typedef ManualTaskQueue<typename TaskQueue::Mutex> GlTaskQueue;
+	using TextureManager = TextureManager;
+	using GlTaskQueue = ManualTaskQueue<typename TaskQueue::Mutex>;
 
 	/// Constructor
 	RenderManagerT(RenderContext& context, FileServer& fileServer, TaskQueue& queue, RenderCmdSink& commandSink);
@@ -79,7 +80,7 @@ public:
 	GlTaskQueue& GetGlTaskQueue() {return mGlTaskQueue;}
 
 	inline int GetFramecounter() const {return mFramecounter;}
-	gfx::Scoping& GetScoping() {return mScoping;}
+	Scoping& GetScoping() {return mScoping;}
 	RenderContext& GetRenderContext() {return mRenderContext;}
 	RenderCmdSink& GetRenderCmdSink() {return mRenderer;}
 
@@ -97,7 +98,7 @@ private:
 	RenderContext& mRenderContext;
 	RenderCmdSink& mRenderer;
 	int mFramecounter;
-	gfx::Scoping mScoping;
+	Scoping mScoping;
 
 	FileServer& mFileServer;
 
@@ -150,8 +151,8 @@ bool RenderManagerT<TFileServer, TTaskQueue>::LoadProgramFile(const Blob& fileCo
 {
 	try
 	{
-		MemoryReadStorage storage(fileContents.GetData(), fileContents.GetSize());
-		ProgramFile progFile(storage);
+		char* fileBegin =  const_cast<char*>(static_cast<const char*>(fileContents.GetData()));
+		ProgramFile progFile(fileBegin, fileBegin + fileContents.GetSize());
 
 		for(auto& it: progFile.GetVariables())
 		{

@@ -55,7 +55,7 @@ private:
 
 	void SetTextureUniforms(TextureMap::const_iterator it);
 
-	TextureManager mTextureManager;
+	TextureManager& mTextureManager;
 	TextureMap mTextures;
 };
 

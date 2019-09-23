@@ -1,4 +1,4 @@
-/*	DdsTestData.h
+/*	GlfwFileLoader.h
 
 MIT License
 
@@ -23,18 +23,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef DDSTESTDATA_H
-#define DDSTESTDATA_H
+#ifndef MOLECULAR_GLFWFILELOADER_H
+#define MOLECULAR_GLFWFILELOADER_H
 
-#include <cstdint>
-
-namespace DdsTestData
+#if __APPLE__
+#include <molecular/util/GcdAsyncFileLoader.h>
+namespace molecular
 {
-
-extern const uint8_t ddsBct1[180];
-extern const uint8_t ddsRgb[320];
-extern const uint8_t ddsDxt1[160];
-
+using GlfwFileLoader = GcdAsyncFileLoader;
 }
+#else
+#include <molecular/util/DummyFileLoader.h>
+namespace molecular
+{
+using GlfwFileLoader = DummyFileLoader;
+}
+#endif
 
-#endif // DDSTESTDATA_H
+#endif // MOLECULAR_GLFWFILELOADER_H

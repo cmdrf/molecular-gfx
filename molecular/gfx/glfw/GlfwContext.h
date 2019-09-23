@@ -1,4 +1,4 @@
-/*	DdsTestData.h
+/*	GlfwContext.h
 
 MIT License
 
@@ -23,18 +23,28 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef DDSTESTDATA_H
-#define DDSTESTDATA_H
+#ifndef MOLECULAR_GLFWCONTEXT_H
+#define MOLECULAR_GLFWCONTEXT_H
 
-#include <cstdint>
+#include <molecular/gfx/RenderContext.h>
 
-namespace DdsTestData
+struct GLFWwindow;
+
+namespace molecular
 {
+/// Provides viewport dimensions when using the GLFW library
+class GlfwContext : public gfx::RenderContext
+{
+public:
+	/// Constructor
+	/** Throws exceptions on failure. */
+	GlfwContext(GLFWwindow* window);
 
-extern const uint8_t ddsBct1[180];
-extern const uint8_t ddsRgb[320];
-extern const uint8_t ddsDxt1[160];
+	IntVector4 GetViewport(int eye) override;
+
+private:
+	GLFWwindow* mWindow = nullptr;
+};
 
 }
-
-#endif // DDSTESTDATA_H
+#endif // MOLECULAR_GLFWCONTEXT_H

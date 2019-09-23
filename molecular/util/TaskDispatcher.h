@@ -53,8 +53,11 @@ using FileLoader = DummyFileLoader;
 #else
 #include "util/DummyTaskDispatcher.h"
 #include "util/DummyFileLoader.h"
+namespace molecular
+{
 typedef DummyTaskDispatcher TaskDispatcher;
 using FileLoader = DummyFileLoader;
+}
 #endif
 
 #endif // MOLECULAR_TASKDISPATCHER_H

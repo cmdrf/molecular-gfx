@@ -57,18 +57,11 @@ void ShadowMapping::Execute()
 	{
 		Binding<Uniform<Matrix4> > viewMatrix("viewMatrix"_H, this);
 		Binding<Uniform<Matrix4> > projMatrix("projectionMatrix"_H, this);
-		Matrix4 viewProjMatrix = **projMatrix * **viewMatrix;
-		Matrix4 viewProjMatrixInverse = viewProjMatrix.Inverse();
-		Vector4 nearHom = viewProjMatrixInverse * Vector4(0, 0, -1, 1);
-		Vector3 nearCenter = nearHom.Xyz() / nearHom[3];
 
 		if(const Uniform<Vector3>* lightDirection0 = GetVariable<Uniform<Vector3>>("lightDirection0"_H))
 		{
-			Matrix4 lightProjection = Matrix4::ProjectionOrthographic(20, 20, -10, 10);
-			Matrix4 lightView = Matrix4(Matrix3::LookAtZ(**lightDirection0 * -1).Transposed()) * Matrix4::Translation(nearCenter * -1.0);
-//			Matrix4 warp = TrapezoidalShadowMapping::LightProjection(viewProjMatrix, lightProjection * lightView);
-	//		**projMatrix = warp * lightProjection;
-			**viewMatrix = lightView;
+			**viewMatrix = Matrix4(Matrix3::LookAtZ(**lightDirection0 * -1).Transposed());
+			**projMatrix = Matrix4::ProjectionOrthographic(10, 10, -5, 5);
 		}
 		else // Point or spot light
 		{

@@ -1,4 +1,4 @@
-/*	DdsTestData.h
+/*	GlfwPrerequisites.h
 
 MIT License
 
@@ -23,18 +23,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef DDSTESTDATA_H
-#define DDSTESTDATA_H
+#ifndef MOLECULAR_GLFWPREREQUISITES_H
+#define MOLECULAR_GLFWPREREQUISITES_H
 
-#include <cstdint>
+#include <molecular/Config.h>
+#if MOLECULAR_ENABLE_VULKAN
+#define GLFW_INCLUDE_VULKAN
+#else
+#define GLFW_INCLUDE_GLCOREARB
+#endif
+#include <GLFW/glfw3.h>
 
-namespace DdsTestData
-{
 
-extern const uint8_t ddsBct1[180];
-extern const uint8_t ddsRgb[320];
-extern const uint8_t ddsDxt1[160];
-
-}
-
-#endif // DDSTESTDATA_H
+#endif

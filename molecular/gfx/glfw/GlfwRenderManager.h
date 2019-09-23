@@ -1,4 +1,4 @@
-/*	DdsTestData.h
+/*	GlfwRenderManager.h
 
 MIT License
 
@@ -23,18 +23,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef DDSTESTDATA_H
-#define DDSTESTDATA_H
+#ifndef MOLECULAR_GLFWRENDERMANAGER_H
+#define MOLECULAR_GLFWRENDERMANAGER_H
 
-#include <cstdint>
+#include "GlfwFileLoader.h"
+#include <molecular/gfx/RenderManager.h>
+#include <molecular/util/FileServer.h>
 
-namespace DdsTestData
+namespace molecular
 {
-
-extern const uint8_t ddsBct1[180];
-extern const uint8_t ddsRgb[320];
-extern const uint8_t ddsDxt1[160];
-
+typedef gfx::RenderManagerT<FileServer<GlfwFileLoader>, TaskDispatcher> GlfwRenderManager;
+extern template class gfx::RenderManagerT<FileServer<GlfwFileLoader>, TaskDispatcher>;
 }
 
-#endif // DDSTESTDATA_H
+#endif
