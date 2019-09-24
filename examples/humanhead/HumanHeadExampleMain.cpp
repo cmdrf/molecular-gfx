@@ -55,6 +55,8 @@ using RenderManager = GlfwRenderManager;
 
 void Run(int argc, char** argv)
 {
+	molecular:: Logging::Initialize(argc, argv);
+
 	CommandLineParser cmd;
 	CommandLineParser::Option<std::string> assetDir(cmd, "asset-dir", "Asset directory", "assets");
 	cmd.Parse(argc, argv);
