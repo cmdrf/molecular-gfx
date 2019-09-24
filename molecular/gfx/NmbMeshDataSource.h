@@ -45,7 +45,7 @@ public:
 	unsigned int IndexBufferSize(int buffer);
 	const void* VertexBufferData(int buffer);
 	const void* IndexBufferData(int buffer);
-	AxisAlignedBox GetBounds() const;
+	util::AxisAlignedBox GetBounds() const;
 
 private:
 	NmbFile& mFile;

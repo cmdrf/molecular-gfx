@@ -24,7 +24,7 @@ SOFTWARE.
 */
 
 #include "NmbMeshDataSource.h"
-#include "Logging.h"
+#include <molecular/util/Logging.h>
 
 namespace molecular
 {
@@ -132,7 +132,7 @@ const void* NmbMeshDataSource::IndexBufferData(int buffer)
 
 util::AxisAlignedBox NmbMeshDataSource::GetBounds() const
 {
-	return AxisAlignedBox(); // TODO
+	return util::AxisAlignedBox(); // TODO
 }
 
 }

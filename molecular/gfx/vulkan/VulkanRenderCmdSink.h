@@ -35,6 +35,9 @@ SOFTWARE.
 #include <molecular/gfx/RenderContext.h>
 #include <vulkan/vulkan.hpp>
 
+namespace molecular
+{
+
 /// Interface to Vulkan
 class VulkanRenderCmdSink : NonCopyable
 {
@@ -268,5 +271,7 @@ public:
 	unsigned int GetWidth() const {}
 	unsigned int GetHeight() const {}
 };
+
+}
 
 #endif // MOLECULAR_VULKANRENDERCMDSINK_H

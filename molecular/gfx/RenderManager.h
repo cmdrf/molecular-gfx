@@ -63,7 +63,6 @@ public:
 	using TaskQueue = TTaskQueue;
 	using Renderer = gfx::RenderCmdSink;
 	using RenderCmdSink = gfx::RenderCmdSink;
-	using TextureManager = TextureManager;
 	using GlTaskQueue = ManualTaskQueue<typename TaskQueue::Mutex>;
 
 	/// Constructor

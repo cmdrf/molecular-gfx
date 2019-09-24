@@ -9,9 +9,6 @@ add_library(molecular-gfx
 	molecular/gfx/DefaultProgramData.h
 	molecular/gfx/DrawText.cpp
 	molecular/gfx/DrawText.h
-	molecular/gfx/GfxContext.h
-	molecular/gfx/GfxFile.cpp
-	molecular/gfx/GfxFile.h
 	molecular/gfx/GfxUtils.h
 	molecular/gfx/MeshBoundsCollectionFile.h
 	molecular/gfx/MeshManager.h
@@ -23,9 +20,8 @@ add_library(molecular-gfx
 	molecular/gfx/MeshLoader.cpp
 	molecular/gfx/MeshLoader.h
 	molecular/gfx/MeshLocator.h
-	molecular/gfx/NodeFactory.h
-	#molecular/gfx/NmbMeshDataSource.cpp
-	#molecular/gfx/NmbMeshDataSource.h
+	molecular/gfx/NmbMeshDataSource.cpp
+	molecular/gfx/NmbMeshDataSource.h
 	molecular/gfx/Picking.h
 	molecular/gfx/ProgramProvider.cpp
 	molecular/gfx/ProgramProvider.h
@@ -148,9 +144,6 @@ add_library(molecular-gfx
 	molecular/util/FontAtlasDescriptionFile.h
 	molecular/util/Frustum.cpp
 	molecular/util/Frustum.h
-	molecular/util/GcdAsyncFileLoader.h
-	molecular/util/GcdTaskDispatcher.cpp
-	molecular/util/GcdTaskDispatcher.h
 	molecular/util/HostStream.h
 	molecular/util/IniFile.cpp
 	molecular/util/IniFile.h
@@ -164,6 +157,7 @@ add_library(molecular-gfx
 	molecular/util/MemoryStreamStorage.h
 	molecular/util/MtlFile.cpp
 	molecular/util/MtlFile.h
+	molecular/util/NmbFile.h
 	molecular/util/NonCopyable.h
 	molecular/util/PixelFormat.cpp
 	molecular/util/PixelFormat.h
@@ -194,6 +188,11 @@ add_library(molecular::gfx ALIAS molecular-gfx)
 
 if(APPLE)
 	target_compile_definitions(molecular-gfx PUBLIC GL_SILENCE_DEPRECATION)
+	target_sources(molecular-gfx PRIVATE
+		molecular/util/GcdAsyncFileLoader.h
+		molecular/util/GcdTaskDispatcher.cpp
+		molecular/util/GcdTaskDispatcher.h
+	)
 endif()
 
 target_include_directories(molecular-gfx PUBLIC
@@ -212,6 +211,7 @@ target_link_libraries(molecular-gfx PUBLIC
 	Eigen3::Eigen
 	OpenGL::GL
 	glfw
+	Threads::Threads
 )
 
 add_subdirectory(examples)
