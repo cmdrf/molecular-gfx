@@ -26,7 +26,7 @@ SOFTWARE.
 #ifndef MOLECULAR_TEXTUREMANAGER_H
 #define MOLECULAR_TEXTUREMANAGER_H
 
-#include <molecular/util/AssetManager.h>
+#include "AssetManager.h"
 #include <molecular/util/TaskDispatcher.h>
 #include <molecular/util/DdsFile.h>
 #include "RenderCmdSink.h"

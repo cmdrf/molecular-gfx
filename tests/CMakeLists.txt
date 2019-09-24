@@ -1,8 +1,8 @@
 add_executable(molecular-gfx-tests
+	DdsTestData.cpp
 	KtxTestData.cpp
 	TgaTestData.cpp
 
-	DdsTestData.cpp
 	TestBox.cpp
 	TestDdsFile.cpp
 	TestFileTypeIdentification.cpp
@@ -10,10 +10,9 @@ add_executable(molecular-gfx-tests
 	TestIniFile.cpp
 	TestIteratorAdapters.cpp
 	TestKtxFile.cpp
-
 	TestPlane.cpp
 	TestPlaneSet.cpp
-
+	TestQuaternion.cpp
 	TestTgaFile.cpp
 )
 

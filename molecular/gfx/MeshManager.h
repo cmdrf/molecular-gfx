@@ -26,7 +26,7 @@ SOFTWARE.
 #ifndef MOLECULAR_GFX_MESHMANAGER_H
 #define MOLECULAR_GFX_MESHMANAGER_H
 
-#include <molecular/util/AssetManager.h>
+#include "AssetManager.h"
 #include "MeshLocator.h"
 
 namespace molecular

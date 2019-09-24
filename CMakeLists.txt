@@ -5,6 +5,7 @@ check_include_file("experimental/filesystem" HAS_EXPERIMENTAL_FILESYSTEM)
 configure_file(molecular/Config.h.in molecular/Config.h)
 
 add_library(molecular-gfx
+	molecular/gfx/AssetManager.h
 	molecular/gfx/DefaultProgramData.cpp
 	molecular/gfx/DefaultProgramData.h
 	molecular/gfx/DrawText.cpp
@@ -128,7 +129,6 @@ add_library(molecular-gfx
 #	molecular/gfx/vulkan/VulkanRenderCmdSinkProgram.cpp
 #	molecular/gfx/vulkan/VulkanRenderCmdSinkProgram.h
 
-    molecular/util/AssetManager.h
 	molecular/util/AtomicCounter.h
 	molecular/util/Blob.h
 	molecular/util/BlobFunctionTask.h
