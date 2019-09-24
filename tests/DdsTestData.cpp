@@ -25,6 +25,8 @@ SOFTWARE.
 
 #include "DdsTestData.h"
 
+namespace molecular
+{
 namespace DdsTestData
 {
 const uint8_t ddsDxt1[160] = {
@@ -169,4 +171,5 @@ const uint8_t ddsBct1[180] = {
 		0x10, 0x44, 0x11, 0x84
 };
 
+}
 }

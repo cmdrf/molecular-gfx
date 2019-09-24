@@ -23,11 +23,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef DDSTESTDATA_H
-#define DDSTESTDATA_H
+#ifndef MOLECULAR_DDSTESTDATA_H
+#define MOLECULAR_DDSTESTDATA_H
 
 #include <cstdint>
 
+namespace molecular
+{
 namespace DdsTestData
 {
 
@@ -35,6 +37,7 @@ extern const uint8_t ddsBct1[180];
 extern const uint8_t ddsRgb[320];
 extern const uint8_t ddsDxt1[160];
 
+}
 }
 
 #endif // DDSTESTDATA_H
