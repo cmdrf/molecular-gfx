@@ -79,6 +79,8 @@ public:
 
 namespace molecular
 {
+namespace gfx
+{
 
 class GlFunctions :
 	public GlFunctionsNative,
@@ -86,6 +88,7 @@ class GlFunctions :
 	public GlConstants
 {};
 
+}
 } // namespace
 
 #elif defined(OPENGL_ES3)
@@ -94,6 +97,8 @@ class GlFunctions :
 #include "GlFunctionsGles2Native.h"
 
 namespace molecular
+{
+namespace gfx
 {
 /// Acquires procedure pointers through eglGetProcAddress
 /** Relies on the EGL_KHR_get_all_proc_addresses EGL extension. */
@@ -119,6 +124,7 @@ class GlFunctions :
 	public GlConstants
 {};
 
+}
 } // namespace
 
 #else // Linux
@@ -127,6 +133,8 @@ class GlFunctions :
 #include "GlFunctionsGles2Native.h"
 
 namespace molecular
+{
+namespace gfx
 {
 
 struct GlFunctionsInitializerGlx
@@ -151,6 +159,7 @@ class GlFunctions :
 	public GlConstants
 {};
 
+}
 } // namespace
 
 #endif // defined(OPENGL_ES3) && !defined(__APPLE__)

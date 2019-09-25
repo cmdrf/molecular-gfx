@@ -34,6 +34,8 @@ namespace molecular
 namespace gfx
 {
 
+/// Sets arbitrary uniform variables before calling the callee
+/** Variables are stored as a Material. */
 class SetUniforms : public SingleCalleeRenderFunction
 {
 public:

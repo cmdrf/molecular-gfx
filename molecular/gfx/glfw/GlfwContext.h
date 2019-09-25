@@ -32,8 +32,11 @@ struct GLFWwindow;
 
 namespace molecular
 {
+namespace gfx
+{
+
 /// Provides viewport dimensions when using the GLFW library
-class GlfwContext : public gfx::RenderContext
+class GlfwContext : public RenderContext
 {
 public:
 	/// Constructor
@@ -46,5 +49,6 @@ private:
 	GLFWwindow* mWindow = nullptr;
 };
 
+}
 }
 #endif // MOLECULAR_GLFWCONTEXT_H

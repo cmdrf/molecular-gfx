@@ -32,12 +32,14 @@ SOFTWARE.
 #include "GlfwVulkanWindow.h"
 namespace molecular
 {
+/// Selects Vulkan or OpenGL window, depending on configuration
 using GlfwWindow = GlfwVulkanWindow;
 }
 #else
 #include "GlfwOpenGlWindow.h"
 namespace molecular
 {
+/// Selects Vulkan or OpenGL window, depending on configuration
 using GlfwWindow = GlfwOpenGlWindow;
 }
 #endif

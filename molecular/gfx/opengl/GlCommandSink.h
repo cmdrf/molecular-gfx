@@ -38,6 +38,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Interface to OpenGL
 /** The constructor can be called outside the renderer thread. After construction, Init() must be
@@ -395,6 +397,7 @@ private:
 	GLuint mQuery = 0;
 };
 
+}
 }
 
 #endif // MOLECULAR_GLCOMMANDSINK_H

@@ -29,6 +29,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 GlfwContext::GlfwContext(GLFWwindow* window) :
 	mWindow(window)
@@ -46,4 +48,5 @@ IntVector4 GlfwContext::GetViewport(int eye)
 	return {0, 0, x, y};
 }
 
+}
 }

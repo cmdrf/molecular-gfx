@@ -34,7 +34,7 @@ namespace molecular
 namespace gfx
 {
 
-/// Variable that can be fed to Renderer::Program
+/// %Variable that can be fed to Renderer::Program
 class Variable
 {
 public:
@@ -46,7 +46,7 @@ public:
 	virtual unsigned int GetArraySize() const {return 0;}
 };
 
-/// Uniform variable that can be fed to a Renderer::Program
+/// %Uniform variable that can be fed to a Renderer::Program
 template<class T, int arraySize = 1>
 class Uniform : public Variable
 {
@@ -95,7 +95,7 @@ private:
 	/// Offset to the first element in the buffer, measured in bytes
 	int mOffset;
 
-	/// Offset from one entry to the next
+	/// Offset from the beginning of one entry to the next
 	/** Measured in bytes. 0 means entries are tightly packed. */
 	int mStride;
 };

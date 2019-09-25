@@ -28,6 +28,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 void GlCommandSink::Program::Store(const std::string& vertexShaderSource, const std::string& pixelShaderSource)
 {
@@ -342,4 +344,5 @@ bool GlCommandSink::Program::IsIntType(GLenum type)
 	}
 }
 
+}
 }

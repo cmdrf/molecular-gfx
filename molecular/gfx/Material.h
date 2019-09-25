@@ -35,7 +35,7 @@ namespace molecular
 namespace gfx
 {
 
-/// Collection of variables
+/// Collection of uniform variables
 class Material
 {
 public:
@@ -65,7 +65,12 @@ public:
 
 	void SetTexture(Hash hash, Hash textureFileName);
 
+	/// Binds alls material variables to the current DynamicScoping scope
+	/** Use MaterialBinding for automatic binding! */
 	void Bind(int lodLevel = 0);
+
+	/// Unbinds alls material variables from the current DynamicScoping scope
+	/** Use MaterialBinding for automatic binding! */
 	void Unbind();
 
 private:
@@ -88,6 +93,7 @@ private:
 	bool mBound = false;
 };
 
+/// Binds alls material variables to the current DynamicScoping scope
 class MaterialBinding
 {
 public:

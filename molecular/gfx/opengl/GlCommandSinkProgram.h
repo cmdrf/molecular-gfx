@@ -35,6 +35,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Compiled shader program
 /** @see Renderer::CreateProgram
@@ -263,6 +265,7 @@ inline GLint GlCommandSink::Program::GetUniformLocation(Hash hash) const
 		return it->second;
 }
 
+}
 }
 
 #endif // MOLECULAR_GLCOMMANDSINKPROGRAM_H

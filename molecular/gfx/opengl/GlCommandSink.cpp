@@ -31,6 +31,9 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
+
 GlFunctions GlCommandSink::gl;
 
 void GlCommandSink::Init()
@@ -636,4 +639,5 @@ GlCommandSink::RenderTarget::~RenderTarget()
 	gl.DeleteFramebuffers(1, &mFramebuffer);
 }
 
+}
 }

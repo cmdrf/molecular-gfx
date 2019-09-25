@@ -30,12 +30,14 @@ SOFTWARE.
 #include <molecular/util/GcdAsyncFileLoader.h>
 namespace molecular
 {
+/// Selects file loader, depending on OS
 using GlfwFileLoader = GcdAsyncFileLoader;
 }
 #else
 #include <molecular/util/DummyFileLoader.h>
 namespace molecular
 {
+/// Selects file loader, depending on OS
 using GlfwFileLoader = DummyFileLoader;
 }
 #endif
