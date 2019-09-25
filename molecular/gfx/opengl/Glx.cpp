@@ -39,5 +39,5 @@ ProcAddress GetProcAddress(const char* procname) {return glXGetProcAddress(reint
 }
 
 #else
-Glx::ProcAddress molecular::Glx::GetProcAddress(const char*) {assert(false); return nullptr;}
+molecular::Glx::ProcAddress molecular::Glx::GetProcAddress(const char*) {assert(false); return nullptr;}
 #endif

@@ -30,7 +30,7 @@ SOFTWARE.
 #include "GlConstants.h"
 #include <stdexcept>
 
-#if _WIN32
+#ifdef _WIN32
 
 #include "GlFunctionsGl10Native.h"
 #include "GlFunctionsGles2ProcAddresses.h"
@@ -86,11 +86,15 @@ class GlFunctions :
 	public GlConstants
 {};
 
+} // namespace
+
 #elif defined(OPENGL_ES3)
 
 #include "Egl.h"
 #include "GlFunctionsGles2Native.h"
 
+namespace molecular
+{
 /// Acquires procedure pointers through eglGetProcAddress
 /** Relies on the EGL_KHR_get_all_proc_addresses EGL extension. */
 struct GlFunctionsInitializerEgl
@@ -115,7 +119,7 @@ class GlFunctions :
 	public GlConstants
 {};
 
-}
+} // namespace
 
 #else // Linux
 
@@ -147,7 +151,7 @@ class GlFunctions :
 	public GlConstants
 {};
 
-}
+} // namespace
 
 #endif // defined(OPENGL_ES3) && !defined(__APPLE__)
 
