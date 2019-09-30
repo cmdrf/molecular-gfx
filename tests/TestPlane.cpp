@@ -28,6 +28,7 @@ SOFTWARE.
 #include <molecular/util/Plane.h>
 #include <array>
 
+using namespace molecular;
 using namespace molecular::util;
 
 TEST_CASE("TestPlane")

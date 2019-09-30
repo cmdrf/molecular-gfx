@@ -72,6 +72,8 @@ public:
 	/** @see StringStoreFile */
 	void LoadFromFile(const void* fileData, size_t fileSize);
 
+	void LoadFromText(const char* text, size_t size);
+
 	/// Get string corresponding to the given hash
 	/** Throws if string was not found. */
 	const char* GetString(uint32_t hash) const;

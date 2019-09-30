@@ -1,0 +1,9 @@
+shaderdata/default.txt
+shaderdata/skin.txt
+nv/geo_Skin1.nmb
+nv/AdrianSpec.tga
+nv/AdrianAlbedo.tga
+nv/rho_d.tga
+nv/dia_conv.tga
+nv/FaceStretchXY.tga
+nv/AdrianFinalNormal.tga

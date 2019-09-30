@@ -28,6 +28,7 @@ SOFTWARE.
 #include <catch.hpp>
 #include <molecular/testbed/Matchers.h>
 
+using namespace molecular;
 using namespace molecular::util;
 
 TEST_CASE("TestPlaneSetClipPolygon")

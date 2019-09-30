@@ -28,8 +28,6 @@ SOFTWARE.
 
 #cmakedefine01 OPENGL_FOUND
 #cmakedefine01 MOLECULAR_ENABLE_VULKAN
-#cmakedefine01 HAS_FILESYSTEM
-#cmakedefine01 HAS_EXPERIMENTAL_FILESYSTEM
 
 #ifdef _MSC_VER
 #pragma warning(disable: 4244)

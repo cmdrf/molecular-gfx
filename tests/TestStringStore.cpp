@@ -55,3 +55,18 @@ TEST_CASE("TestStringStore")
 	CHECK_THAT(store.GetString("tuedelue"_H), Equals("tuedelue"));
 	CHECK_THAT(store.GetString("laber"_H), Equals("laber"));
 }
+
+TEST_CASE("TestStringStoreLoadFromText")
+{
+	const char text[] = R"(lalla
+blabla;;;lalala
+asdasd)";
+
+	StringStore store;
+	store.LoadFromText(text, sizeof(text));
+
+	CHECK_THAT(store.GetString("lalla"_H), Equals("lalla"));
+	CHECK_THAT(store.GetString("blabla"_H), Equals("blabla"));
+	CHECK_THAT(store.GetString("lalala"_H), Equals("lalala"));
+	CHECK_THAT(store.GetString("asdasd"_H), Equals("asdasd"));
+}

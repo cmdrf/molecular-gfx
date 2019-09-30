@@ -24,6 +24,9 @@ SOFTWARE.
 */
 
 #include "StringStore.h"
+
+#include <molecular/util/Hash.h>
+
 #include <stdexcept>
 
 namespace molecular
@@ -50,6 +53,33 @@ void StringStore::LoadFromFile(const void* fileData, size_t fileSize)
 	mOffsets.insert(file->entries, file->entries + file->count);
 	const char* stringList = static_cast<const char*>(fileData) + headerAndEntriesSize;
 	mStringList.assign(stringList, file->stringListSize);
+}
+
+void StringStore::LoadFromText(const char* text, size_t size)
+{
+	const char* delimiters = ";\r\n";
+	mStringList.reserve(size + 1);
+	mStringList.assign(text, size);
+	size_t currentBegin = 0;
+	while(true)
+	{
+		size_t currentEnd = mStringList.find_first_of(delimiters, currentBegin);
+		if(currentEnd == std::string::npos)
+		{
+			mStringList.push_back(0);
+			Hash hash = HashUtils::MakeHash(mStringList.data() + currentBegin);
+			mOffsets[hash] = currentBegin;
+			break;
+		}
+		else
+		{
+			Hash hash = HashUtils::MakeHash(mStringList.data() + currentBegin, mStringList.data() + currentEnd);
+			mOffsets[hash] = currentBegin;
+			currentBegin = mStringList.find_first_not_of(delimiters, currentEnd);
+			mStringList[currentEnd] = 0;
+		}
+		currentBegin = currentEnd + 1;
+	}
 }
 
 const char* StringStore::GetString(uint32_t hash) const

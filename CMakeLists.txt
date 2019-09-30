@@ -1,7 +1,3 @@
-include(CheckIncludeFile)
-check_include_file("filesystem" HAS_FILESYSTEM)
-check_include_file("experimental/filesystem" HAS_EXPERIMENTAL_FILESYSTEM)
-
 configure_file(molecular/Config.h.in molecular/Config.h)
 
 add_library(molecular-gfx

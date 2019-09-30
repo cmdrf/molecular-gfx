@@ -28,6 +28,7 @@ SOFTWARE.
 
 #include <molecular/Config.h>
 #include <molecular/util/Blob.h>
+#include <molecular/util/FileStreamStorage.h>
 #include <molecular/util/SyncFileLoad.h>
 #include <molecular/util/StringStore.h>
 #include <molecular/util/Hash.h>
@@ -39,12 +40,6 @@ SOFTWARE.
 #include <functional>
 #include <cassert>
 #include <string>
-
-#if HAS_FILESYSTEM
-#include <filesystem>
-#elif HAS_EXPERIMENTAL_FILESYSTEM
-#include <experimental/filesystem>
-#endif
 
 namespace molecular
 {
@@ -67,14 +62,18 @@ public:
 			Blob contentsFile = SyncFileLoad((mRoot + "contents.mss").c_str(), fileLoader, backgroundQueue);
 			mDirectoryContents.LoadFromFile(contentsFile.GetData(), contentsFile.GetSize());
 		}
-		catch(std::exception& e)
+		catch(std::exception&)
 		{
-#if HAS_FILESYSTEM || HAS_EXPERIMENTAL_FILESYSTEM
-			for(auto& p: fs::recursive_directory_iterator(root))
-				std::cout << p.path() << '\n'; // TODO
-#else
-			LOG(WARNING) << "Loading directory contents file failed: " << e.what();
-#endif
+			try
+			{
+				FileReadStorage storage(mRoot + "contents.txt");
+				auto fileContents = StringUtils::FromStorage(storage);
+				mDirectoryContents.LoadFromText(fileContents.data(), fileContents.size());
+			}
+			catch (std::exception& e)
+			{
+				LOG(WARNING) << "Loading directory contents file failed: " << e.what();
+			}
 		}
 	}
 
