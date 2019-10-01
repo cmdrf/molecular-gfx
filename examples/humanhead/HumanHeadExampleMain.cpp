@@ -126,6 +126,7 @@ void Run(int argc, char** argv)
 		glfwMakeContextCurrent(window.GetWindow());
 		renderManager.DrawOneFrame(sceneSetup);
 		glfwSwapBuffers(window.GetWindow());
+		glfwPollEvents();
 
 		GLenum error = glGetError();
 		if(error)
