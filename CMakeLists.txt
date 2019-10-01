@@ -192,10 +192,6 @@ target_include_directories(molecular-gfx PUBLIC
 	${CMAKE_CURRENT_BINARY_DIR}
 )
 
-target_include_directories(molecular-gfx PUBLIC SYSTEM
-	3rdparty/easyloggingpp
-)
-
 target_link_libraries(molecular-gfx PUBLIC
 	molecular::util
 	molecular::programgenerator
