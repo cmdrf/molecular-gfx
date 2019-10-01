@@ -1,5 +1,5 @@
 fragment
-vec3 normal(sampler2D normalMapObjectSpaceTexture, mat4 modelMatrix, attr vec2 vertexUv0)
+vec3 normal(sampler2D normalMapObjectSpaceTexture, mat4 modelMatrix, vec2 vertexUv0)
 {
 	vec3 objNormal = texture( normalMapObjectSpaceTexture, vertexUv0).rgb * vec3( 2.0, 2.0, 2.0 ) - vec3( 1.0, 1.0, 1.0 );
 	normal = normalize((modelMatrix * vec4(objNormal, 0)).xyz);
@@ -12,14 +12,14 @@ float albedoGamma()
 }
 
 fragment
-vec3 albedo(vec4 diffuseColor, float albedoGamma)
+vec3 albedo(vec3 diffuseColor, float albedoGamma)
 {
-//	albedo = diffuseColor.rgb;
-	albedo = pow(diffuseColor.rgb, vec3(albedoGamma) );
+//	albedo = diffuseColor;
+    albedo = pow(diffuseColor, vec3(albedoGamma) );
 }
 
 fragment
-float occlusion(vec4 diffuseColor)
+float occlusion(vec3 diffuseColor)
 {
 	occlusion = diffuseColor.w;
 }
@@ -36,13 +36,13 @@ vec3 diffuseSkinLighting(
 	vec3 normal,
 	vec3 lightDirection0,
 	vec3 incomingLight0,
-	vec4 specularColor,
+	vec3 specularColor,
 	sampler2D blur2Texture,
 	sampler2D blur4Texture,
 	sampler2D blur8Texture,
 	sampler2D blur16Texture,
 	sampler2D blur32Texture,
-	attr vec2 vertexUv0)
+	vec2 vertexUv0)
 {{
 	float bumpDot0 = dot(normal, -lightDirection0);
 
@@ -64,7 +64,7 @@ vec3 diffuseSkinLighting(
 	vec3 diffuseColorTweak = vec3(0.802322, 1.31096, 0.877971);
 
 	diffuseSkinLighting *= pow( vec3( 141.0 / 255.0, 97.0 / 255.0, 70.0 / 255.0 ), vec3(2.2) );
-	diffuseSkinLighting *= mix( albedo / specularColor.xyz, vec3(1.0), albedoLerp );
+	diffuseSkinLighting *= mix( albedo / specularColor, vec3(1.0), albedoLerp );
 	diffuseSkinLighting *= diffuseColorTweak * diffuseColorBrightness;
 	float finalScale = 1.0 / 3.141592653589793238;
 	diffuseSkinLighting *= finalScale;
@@ -78,7 +78,7 @@ vec3 specularSkinLighting(
 	sampler2D rhoDTexture,
 	sampler2D specularTexture,
 	vec3 incomingLight0,
-	attr vec2 vertexUv0)
+	vec2 vertexUv0)
 {{
 	float bumpDot0 = dot(normal, -lightDirection0);
 	if(bumpDot0 > 0.0)
@@ -122,7 +122,7 @@ out vec4 fragmentColor(vec3 diffuseSkinLighting, vec3 specularSkinLighting)
 }
 
 fragment prio=1
-out vec4 fragmentColor(sampler2D stretchTexture, sampler2D blurSourceTexture, float gaussWidthX, attr vec2 vertexUv0)
+out vec4 fragmentColor(sampler2D stretchTexture, sampler2D blurSourceTexture, float gaussWidthX, vec2 vertexUv0)
 {
 	float inv_1024 = gaussWidthX * texture(stretchTexture, vertexUv0).x / 1024.0; // stretch the offsets by the inverse of the UV stretching
 
@@ -159,7 +159,7 @@ out vec4 fragmentColor(sampler2D stretchTexture, sampler2D blurSourceTexture, fl
 }
 
 fragment prio=1
-out vec4 fragmentColor(sampler2D stretchTexture, sampler2D blurSourceTexture, float gaussWidthY, attr vec2 vertexUv0)
+out vec4 fragmentColor(sampler2D stretchTexture, sampler2D blurSourceTexture, float gaussWidthY, vec2 vertexUv0)
 {
 	float inv_1024 = gaussWidthY * texture(stretchTexture, vertexUv0).y / 1024.0; // stretch the offsets by the inverse of the UV stretching
 
@@ -203,7 +203,7 @@ out vec4 fragmentColor(
 	vec3 incomingLight0,
 	sampler2D rhoDTexture,
 	sampler2D specularTexture,
-	attr vec2 vertexUv0)
+	vec2 vertexUv0)
 {
 	float bumpDot_L1 = dot(normal, -lightDirection0);
 	vec4 specTap = texture(specularTexture, vertexUv0); // specular amount in R, G, B, and roughness
