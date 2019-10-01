@@ -175,9 +175,6 @@ add_library(molecular-gfx
 	molecular/util/TaskDispatcher.h
 	molecular/util/TextStream.h
 	molecular/util/TgaFile.h
-
-	3rdparty/easyloggingpp/easylogging++.cc
-	3rdparty/easyloggingpp/easylogging++.h
 )
 add_library(molecular::gfx ALIAS molecular-gfx)
 
