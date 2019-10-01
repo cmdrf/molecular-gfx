@@ -55,7 +55,7 @@ public:
 	template<class TQueue>
 	FileServer(FileLoader& fileLoader, const std::string& root, TQueue& backgroundQueue) :
 		mFileLoader(fileLoader),
-		mRoot(root)
+		mRoot(root + "/")
 	{
 		try
 		{
