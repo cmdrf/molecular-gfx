@@ -147,7 +147,6 @@ add_library(molecular-gfx
 	molecular/util/KtxFile.cpp
 	molecular/util/KtxFile.h
 	molecular/util/LittleEndianStream.h
-	molecular/util/Logging.cpp
 	molecular/util/Logging.h
 	molecular/util/MemoryStreamStorage.cpp
 	molecular/util/MemoryStreamStorage.h

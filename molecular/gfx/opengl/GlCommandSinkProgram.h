@@ -33,6 +33,8 @@ SOFTWARE.
 #include <molecular/util/Matrix.h>
 #include <molecular/util/Hash.h>
 
+#include <vector>
+
 namespace molecular
 {
 namespace gfx

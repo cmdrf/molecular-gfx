@@ -36,6 +36,8 @@ SOFTWARE.
 #include "GlConstantString.h"
 #include <molecular/util/Vector.h>
 
+#include <vector>
+
 namespace molecular
 {
 namespace gfx
