@@ -181,8 +181,10 @@ void RenderManagerT<TFileServer, TTaskQueue>::SetMeshBoundsFileData(Blob&& fileD
 template<class TFileServer, class TTaskQueue>
 const util::AxisAlignedBox& RenderManagerT<TFileServer, TTaskQueue>::GetMeshFileBounds(Hash meshFile)
 {
-	assert(mMeshBoundsCollectionFileData.GetData());
-	return static_cast<const MeshBoundsCollectionFile*>(mMeshBoundsCollectionFileData.GetData())->GetBounds(meshFile);
+	if(mMeshBoundsCollectionFileData.GetData())
+		return static_cast<const MeshBoundsCollectionFile*>(mMeshBoundsCollectionFileData.GetData())->GetBounds(meshFile);
+	else
+		return util::AxisAlignedBox::kDefault;
 }
 
 } // gfx
