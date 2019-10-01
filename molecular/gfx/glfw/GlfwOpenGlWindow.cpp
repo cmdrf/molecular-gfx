@@ -24,6 +24,7 @@ SOFTWARE.
 */
 
 #include "GlfwOpenGlWindow.h"
+#include <molecular/gfx/opengl/OpenGlPrerequisites.h>
 #include <stdexcept>
 
 namespace molecular
@@ -55,7 +56,7 @@ GlfwOpenGlWindow::GlfwOpenGlWindow(const char* title)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_SRGB_CAPABLE, GL_TRUE);
 
-	mWindow = glfwCreateWindow(videoMode->width, videoMode->height, title, monitor, nullptr);
+	mWindow = glfwCreateWindow(1024, 768, title, nullptr, nullptr);
 	if(!mWindow)
 	{
 		glfwTerminate();
@@ -64,6 +65,9 @@ GlfwOpenGlWindow::GlfwOpenGlWindow(const char* title)
 
 	glfwMakeContextCurrent(mWindow);
 	glfwSwapInterval(1); // VSync on
+
+	// Clear at least once to work around driver bugs:
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 GlfwOpenGlWindow::~GlfwOpenGlWindow()
