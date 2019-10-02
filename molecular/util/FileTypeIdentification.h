@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef FILETYPEIDENTIFICATION_H
-#define FILETYPEIDENTIFICATION_H
+#ifndef MOLECULAR_FILETYPEIDENTIFICATION_H
+#define MOLECULAR_FILETYPEIDENTIFICATION_H
 
 #include <cstddef>
 
@@ -47,6 +47,11 @@ bool IsTga(const void* data, size_t size); ///< Checks if given file is a Targa 
 bool IsDds(const void* data, size_t size); ///< Checks if given file is a DirectDraw Surface texture file
 bool IsKtx(const void* data, size_t size); ///< Checks if given file is a Khronos texture file
 bool IsCompiledMesh(const void* data, size_t size);
+
+/// NVidia Mesh Binary (probably)
+/** @see NmbFile */
+bool IsNmb(const void* data, size_t size);
+
 bool IsWav(const void* data, size_t size);
 bool IsOpus(const void* data, size_t size);
 bool IsHashSet(const void* data, size_t size);
@@ -60,4 +65,4 @@ FileType Identify(const void* data, std::size_t size);
 
 }
 
-#endif // FILETYPEIDENTIFICATION_H
+#endif // MOLECULAR_FILETYPEIDENTIFICATION_H

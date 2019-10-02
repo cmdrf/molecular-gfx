@@ -73,6 +73,11 @@ bool IsCompiledMesh(const void* data, size_t size)
 	return HasMagicNumber(data, size, 0x8e8e54f1);
 }
 
+bool IsNmb(const void* data, size_t size)
+{
+	return HasMagicNumber(data, size, 1);
+}
+
 bool IsWav(const void* data, size_t size)
 {
 	return HasMagicNumber(data, size, 0x46464952); // "RIFF"

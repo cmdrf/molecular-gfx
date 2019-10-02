@@ -27,9 +27,14 @@ SOFTWARE.
 #define MOLECULAR_MESHLOADER_H
 
 #include "MeshManager.h"
-#include <molecular/util/TaskDispatcher.h>
+
 #include <molecular/gfx/functions/DrawMeshData.h>
+#include <molecular/gfx/NmbMeshDataSource.h>
+
 #include <molecular/util/FileTypeIdentification.h>
+#include <molecular/util/MemoryStreamStorage.h>
+#include <molecular/util/NmbFile.h>
+#include <molecular/util/TaskDispatcher.h>
 
 namespace molecular
 {
@@ -55,6 +60,7 @@ private:
 	static void StoreMesh(MeshManager::Asset& destination, Blob& blob);
 
 	static void StoreCompiledMesh(MeshManager::Asset& destination, Blob& blob);
+	static void StoreNmb(MeshManager::Asset& destination, Blob& blob);
 
 	RenderManager& mRenderManager;
 };
@@ -114,6 +120,8 @@ void MeshLoader<TRenderManager>::StoreMesh(MeshManager::Asset& destination, Blob
 {
 	if(FileTypeIdentification::IsCompiledMesh(blob.GetData(), blob.GetSize()))
 		StoreCompiledMesh(destination, blob);
+	else if(FileTypeIdentification::IsNmb(blob.GetData(), blob.GetSize()))
+		StoreNmb(destination, blob);
 }
 
 template<class TRenderManager>
@@ -128,6 +136,26 @@ void MeshLoader<TRenderManager>::StoreCompiledMesh(MeshManager::Asset& destinati
 	catch(std::exception& e)
 	{
 		LOG(ERROR) << "StoreCompiledMesh failed: " << e.what();
+		destination.GetAsset()->Unload();
+		destination.SetState(0, MeshManager::Asset::kFailed);
+	}
+}
+
+
+template<class TRenderManager>
+void MeshLoader<TRenderManager>::StoreNmb(MeshManager::Asset& destination, Blob& blob)
+{
+	MemoryReadStorage storage(blob.GetData(), blob.GetSize());
+	try
+	{
+		NmbFile nmb(storage);
+		NmbMeshDataSource source(nmb);
+		destination.GetAsset()->Load(source);
+		destination.SetState(0, MeshManager::Asset::kLoaded);
+	}
+	catch(std::exception& e)
+	{
+		LOG(ERROR) << "StoreNmb failed: " << e.what();
 		destination.GetAsset()->Unload();
 		destination.SetState(0, MeshManager::Asset::kFailed);
 	}
