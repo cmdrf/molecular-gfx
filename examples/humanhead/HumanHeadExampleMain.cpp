@@ -27,7 +27,6 @@ SOFTWARE.
 #include <molecular/gfx/glfw/GlfwFileLoader.h>
 #include <molecular/gfx/glfw/GlfwRenderManager.h>
 #include <molecular/gfx/glfw/GlfwWindow.h>
-#include <molecular/gfx/DefaultProgramData.h>
 #include <molecular/gfx/SkinProgramData.h>
 #include <molecular/gfx/functions/DrawMesh.h>
 #include <molecular/gfx/functions/Transform.h>
@@ -67,6 +66,8 @@ void Run(int argc, char** argv)
 	GlfwContext context(window.GetWindow());
 	RenderCmdSink commandSink;
 	RenderManager renderManager(context, fileServer, dispatcher, commandSink);
+
+	SkinProgramData::FeedToGenerator(renderManager.GetProgramGenerator());
 
 	Blob shaderDataFile = fileServer.ReadFileSync("shaderdata/default.txt"_H, dispatcher);
 	renderManager.LoadProgramFile(shaderDataFile);
@@ -125,7 +126,7 @@ void Run(int argc, char** argv)
 		transform.SetTransform(Matrix4::Scale(0.001f) * Matrix4::Translation(0,-0.65f, 0.0) * Matrix4::RotationY(angle));
 		glfwMakeContextCurrent(window.GetWindow());
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		renderManager.DrawOneFrame(sceneSetup);
+		renderManager.DrawOneFrame(viewSetup);
 		glfwSwapBuffers(window.GetWindow());
 		glfwPollEvents();
 

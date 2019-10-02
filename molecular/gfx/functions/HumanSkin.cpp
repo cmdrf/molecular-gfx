@@ -127,8 +127,8 @@ void HumanSkin::Blur(BlurStage& from, BlurStage& to, bool y, float width, bool n
 {
 	Hash gaussWidthVar = y ? "gaussWidthY"_H : "gaussWidthX"_H;
 
-	Binding<Uniform<RenderCmdSink::Texture*> > sourceTexture("blurSourceTexture", this);
-	Binding<Uniform<RenderCmdSink::Texture*> > stretchTexture("stretchTexture", this);
+	Binding<Uniform<RenderCmdSink::Texture*> > sourceTexture("blurSourceTexture"_H, this);
+	Binding<Uniform<RenderCmdSink::Texture*> > stretchTexture("stretchTexture"_H, this);
 	Binding<Uniform<float> > gaussWidth(gaussWidthVar, this);
 
 	**sourceTexture = from.GetTexture();
