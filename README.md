@@ -30,3 +30,29 @@ At the leafs of the tree, where actual rendering takes place, all variables defi
 to a shader generator. The shader generator attempts to use as many of the defined variables as possible to build a
 complete shader program out of individual functions. See [its project page](https://github.com/cmdrf/molecular-programgenerator)
 for more information.
+
+A simple render graph could look like this (pseudocode!):
+
+```c++
+void Render()
+{
+    Matrix4 projection = PerpectiveProjection();
+    Matrix4 view = LookTo(Vector3(1, 2, 3), Vector3(2, 3, 4));
+    RenderMesh1();
+    RenderMesh2();
+}
+
+void RenderMesh1()
+{
+    Vector3 diffuseColor(1, 0, 0);
+    VertexBuffer vertexPosition = LoadMesh("cube.obj");
+    DrawMesh(); // Shader generator generates program using projection, view, diffuseColor and vertexPosition
+}
+
+void RenderMesh2()
+{
+    Texture diffuseTexture = LoadTexture("car.jpg");
+    VertexBuffer vertexPosition = LoadMesh("car.obj");
+    DrawMesh(); // Shader generator generates program using projection, view, diffuseTexture and vertexPosition
+}
+```
