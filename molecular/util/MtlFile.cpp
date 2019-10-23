@@ -72,10 +72,10 @@ MtlFile::MtlFile(const char* begin, const char* end)
 	using Kd = Keyword2<'K', 'd'>;
 	using Ks = Keyword2<'K', 's'>;
 	using Illum = Keyword5<'i', 'l', 'l', 'u', 'm'>;
-	using MapKa = Keyword6<'m', 'a', 'p', '_', 'K', 'a'>;
-	using MapKd = Keyword6<'m', 'a', 'p', '_', 'K', 'd'>;
-	using MapKs = Keyword6<'m', 'a', 'p', '_', 'K', 's'>;
-	using MapNs = Keyword6<'m', 'a', 'p', '_', 'N', 's'>;
+//	using MapKa = Keyword6<'m', 'a', 'p', '_', 'K', 'a'>;
+//	using MapKd = Keyword6<'m', 'a', 'p', '_', 'K', 'd'>;
+//	using MapKs = Keyword6<'m', 'a', 'p', '_', 'K', 's'>;
+//	using MapNs = Keyword6<'m', 'a', 'p', '_', 'N', 's'>;
 	using TrD = Alternation<Keyword2<'T', 'r'>, Char<'d'>>;
 
 	using NewmtlDecl = Concatenation<Newmtl, Whitespace, Action<String, kNewmtlValue>>;

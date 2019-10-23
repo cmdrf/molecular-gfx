@@ -58,7 +58,7 @@ util::AxisAlignedBox FlatScene::GetBounds() const
 	return util::AxisAlignedBox();
 }
 
-bool FlatScene::BoundsChangedSince(int framecounter) const
+bool FlatScene::BoundsChangedSince(int /*framecounter*/) const
 {
 	// TODO
 	return false;

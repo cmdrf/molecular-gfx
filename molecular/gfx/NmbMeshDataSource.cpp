@@ -100,7 +100,7 @@ NmbMeshDataSource::NmbMeshDataSource(NmbFile& file, const std::string& submesh) 
 	}
 }
 
-int NmbMeshDataSource::PrepareVertexData(LayoutHint layout)
+int NmbMeshDataSource::PrepareVertexData(LayoutHint /*layout*/)
 {
 	return mVertexBuffers.size();
 }

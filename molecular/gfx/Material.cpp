@@ -58,7 +58,6 @@ void Material::SetTexture(Hash hash, Hash textureFileName)
 
 void Material::Bind(int lodLevel)
 {
-	assert(this);
 	assert(!mBound);
 	for(auto& uniform: mUniforms)
 	{

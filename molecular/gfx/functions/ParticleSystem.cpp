@@ -97,7 +97,6 @@ void ParticleSystem::InitProgram(RenderCmdSink::Program* program, const std::str
 
 void ParticleSystem::InitParticleBuffers()
 {
-	assert(this);
 	std::vector<Particle> p(kMaxParticles); // Do not use array on stack!
 	memset(p.data(), 0, kMaxParticles * sizeof(Particle));
 
@@ -216,7 +215,7 @@ void ParticleSystem::DrawParticles()
 
 void ParticleSystem::MoveEmitters()
 {
-	for(int n = 0; n < mEmittersCount; n++)
+	for(unsigned n = 0; n < mEmittersCount; n++)
 	{
 		Particle& p = mEmitters[n];
 		if(!mParams.freezeEmitters)
@@ -245,7 +244,7 @@ void ParticleSystem::SeedEmitters(unsigned int num)
 	mEmittersCount = std::min(num, +kMaxEmitters);
 
 	memset(mEmitters, 0, mEmittersCount * sizeof(Particle));
-	for(int n = 0; n < mEmittersCount; n++)
+	for(unsigned n = 0; n < mEmittersCount; n++)
 	{
 		mEmitters[n].color[0] = rand() & 255;
 		mEmitters[n].color[1] = rand() & 255;

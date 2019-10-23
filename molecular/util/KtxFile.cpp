@@ -74,9 +74,9 @@ std::pair<const void*, std::size_t> KtxFile::GetImageData(int mipmapLevel, int f
 {
 	const unsigned int numberOfArrayElements = std::max(1u, GetNumberOfArrayElements());
 	const unsigned int numberOfFaces = GetNumberOfFaces();
-	assert(mipmapLevel == 0 || mipmapLevel < GetNumberOfMipmapLevels());
-	assert(face == 0 || face < numberOfFaces);
-	assert(arrayElement < numberOfArrayElements);
+	assert(mipmapLevel == 0 || static_cast<unsigned>(mipmapLevel) < GetNumberOfMipmapLevels());
+	assert(face == 0 || static_cast<unsigned>(face) < numberOfFaces);
+	assert(static_cast<unsigned>(arrayElement) < numberOfArrayElements);
 
 	size_t singleImageSize = mMipLevels[mipmapLevel].imageSize;
 	if(numberOfFaces != 6 || numberOfArrayElements != 0)

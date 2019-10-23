@@ -37,7 +37,7 @@ namespace molecular
 
 /// Four character code string literal
 /** Little Endian. */
-constexpr uint32_t operator"" _4CC(const char* str, size_t length)
+constexpr uint32_t operator"" _4CC(const char* str, size_t /*length*/)
 {
 //	static_assert(length == 4, "Only four characters allowed");
 	return  uint32_t(str[0]) |
