@@ -58,6 +58,8 @@ add_library(molecular-gfx
 	molecular/gfx/functions/ApplyTextures.h
 	molecular/gfx/functions/CpuParticleSystemImpl.h
 	molecular/gfx/functions/CpuParticleSystem.h
+	molecular/gfx/functions/Demultiplexer.cpp
+	molecular/gfx/functions/Demultiplexer.h
 	molecular/gfx/functions/DrawDebugMesh.h
 	molecular/gfx/functions/DrawingFunction.h
 	molecular/gfx/functions/DrawMesh.h

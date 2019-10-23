@@ -124,6 +124,7 @@ public:
 
 	/// @todo implement
 	molecular::util::AxisAlignedBox GetBounds() const override {return molecular::util::AxisAlignedBox(0, 0, 0, 0, 0, 0);}
+	/// @todo implement
 	bool BoundsChangedSince(int /*framecounter*/) const override {return true;}
 
 	void AppendCallee(RenderFunction* callee) {mCallees.insert(callee);}

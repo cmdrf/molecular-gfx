@@ -8,7 +8,9 @@ namespace molecular
 namespace gfx
 {
 
-
+/**
+ * @brief The Demultiplexer class is a utility class for cases where more than one output is required.
+ */
 class Demultiplexer : public MultipleCalleeRenderFunction
 {
 public:
@@ -19,7 +21,9 @@ public:
 
 	void Execute();
 
+	/// @todo implement
 	util::AxisAlignedBox GetBounds() const {return molecular::util::AxisAlignedBox(0, 0, 0, 0, 0, 0);}
+	/// @todo implement
 	bool BoundsChangedSince(int) const {return false;}
 };
 
