@@ -117,7 +117,7 @@ void TextureLoader<TRenderManager>::StartLoad(TextureManager::Asset& asset, unsi
 }
 
 template<class TRenderManager>
-void TextureLoader<TRenderManager>::Unload(RenderCmdSink::Texture*& asset, unsigned int minLevel, unsigned int maxLevel)
+void TextureLoader<TRenderManager>::Unload(RenderCmdSink::Texture*& /*asset*/, unsigned int /*minLevel*/, unsigned int /*maxLevel*/)
 {
 	// TODO
 }
@@ -149,7 +149,7 @@ void TextureLoader<TRenderManager>::StoreTexture(TextureManager::Asset& target, 
 }
 
 template<class TRenderManager>
-void TextureLoader<TRenderManager>::StoreTgaTexture(TextureManager::Asset& target, Blob& blob, unsigned int minLevel, unsigned int maxLevel)
+void TextureLoader<TRenderManager>::StoreTgaTexture(TextureManager::Asset& target, Blob& blob, unsigned int /*minLevel*/, unsigned int /*maxLevel*/)
 {
 	TgaFile2 file(blob.GetData(), blob.GetSize());
 	if(file.IsUpsideDown())

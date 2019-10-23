@@ -181,7 +181,7 @@ uint32_t ToGlInternalFormat(PixelFormat format)
 	}
 }
 
-PixelFormat ToPixelFormat(uint32_t glType, uint32_t glFormat, uint32_t glInternalFormat)
+PixelFormat ToPixelFormat(uint32_t /*glType*/, uint32_t /*glFormat*/, uint32_t glInternalFormat)
 {
 	switch(glInternalFormat)
 	{

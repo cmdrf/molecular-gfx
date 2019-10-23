@@ -74,7 +74,7 @@ public:
 	virtual molecular::util::AxisAlignedBox GetBounds() const = 0;
 	virtual bool BoundsChangedSince(int /*framecounter*/) const {return false;}
 
-	virtual void Set(Hash variable, bool value) {throw std::runtime_error("This RenderFunction does not have bool parameters");}
+	virtual void Set(Hash /*variable*/, bool /*value*/) {throw std::runtime_error("This RenderFunction does not have bool parameters");}
 
 protected:
 	/// Convenience shortcut to a variable pointer from the dynamic scope

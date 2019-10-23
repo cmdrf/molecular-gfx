@@ -54,7 +54,7 @@ Matrix<3, 9> TetrahedronInterpolation::GetShCoefficients(const Vector3& position
 		return kZeros;
 	Vector4 weights = GetLightProbeInterpolationWeights(position, tetIndex);
 	const TetrahedronSpaceFile* file = static_cast<const TetrahedronSpaceFile*>(mFileData.GetData());
-	if (tetIndex < 0 || tetIndex >= file->numTetrahedrons)
+	if (tetIndex < 0 || static_cast<uint32_t>(tetIndex) >= file->numTetrahedrons)
 		return kZeros;
 	auto& tet = file->tetrahedra[tetIndex];
 	auto verts = file->GetVertices();
@@ -77,7 +77,7 @@ void TetrahedronInterpolation::GetTetrahedronCorners(int tetIndex, Vector3 outCo
 	}
 
 	const TetrahedronSpaceFile* file = static_cast<const TetrahedronSpaceFile*>(mFileData.GetData());
-	if(tetIndex >= 0 && tetIndex < file->numTetrahedrons)
+	if(tetIndex >= 0 && tetIndex < static_cast<int>(file->numTetrahedrons))
 	{
 		auto& tet = file->tetrahedra[tetIndex];
 		auto verts = file->GetVertices();

@@ -101,9 +101,10 @@ struct FontAtlasDescriptionFile
 
 	const GlyphInfo* GetGlyph(char charcode) const
 	{
-		if(asciiOffsets[charcode] < sizeof(FontAtlasDescriptionFile))
+		uint8_t code = static_cast<uint8_t>(charcode);
+		if(asciiOffsets[code] < sizeof(FontAtlasDescriptionFile))
 			return nullptr;
-		return reinterpret_cast<const GlyphInfo*>(reinterpret_cast<const uint8_t*>(this) + asciiOffsets[charcode]);
+		return reinterpret_cast<const GlyphInfo*>(reinterpret_cast<const uint8_t*>(this) + asciiOffsets[code]);
 	}
 };
 

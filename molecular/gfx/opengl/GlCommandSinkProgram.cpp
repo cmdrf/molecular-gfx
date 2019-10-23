@@ -95,7 +95,7 @@ void GlCommandSink::Program::SetUniform(Hash key, const Texture* const* textures
 			break;
 	}
 
-	for(size_t i = 0; i < count && i < mTextureUnits.size() - unit; ++i)
+	for(size_t i = 0; i < static_cast<size_t>(count) && i < mTextureUnits.size() - unit; ++i)
 	{
 		if(textures[i] && mTextureUnits[unit + i] == key)
 		{
