@@ -91,9 +91,9 @@ void Run(int argc, char** argv)
 	humanSkin.SetCallee(&drawMesh);
 
 	// Parameters:
-	viewSetup.SetCamera(Vector3(0, 0, 0.4f), Quaternion::kIdentity);
+	viewSetup.SetCamera(Vector3(-1.f, 0, 0.f), Quaternion::kIdentity);
 	sceneSetup.SetDirectionalLight(true, Vector3(1,-1,-1));
-	viewSetup.SetProjectionPerspective(0.3f * Math::kPi_f, 1, 0.1f);
+	viewSetup.SetProjectionPerspective(0.3f * Math::kPi_f, 0.1, 10.f);
 
 	drawMesh.SetMeshFile("nv/geo_Skin1.nmb"_H);
 
