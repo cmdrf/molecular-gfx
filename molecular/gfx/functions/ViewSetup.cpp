@@ -55,7 +55,6 @@ void ViewSetup::Execute()
 		**viewMatrix = defaultRotation * (mCamera * mRenderContext.GetHeadToEyeTransform(eye)).Inverse();
 
 		mRenderer.SetBaseTarget(viewport, renderTarget);
-		mRenderer.SetTarget(nullptr);
 		mRenderer.Clear(true, true);
 
 		if(mRenderContext.HasProjectionMatrix(eye))
