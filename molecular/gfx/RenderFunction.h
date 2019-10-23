@@ -112,6 +112,29 @@ protected:
 
 };
 
+/// RenderFunction that calls multiple other RenderFunctions
+class MultipleCalleeRenderFunction : public RenderFunction
+{
+public:
+public:
+	template<class TRenderManager>
+	MultipleCalleeRenderFunction (TRenderManager& manager) : RenderFunction(manager) {}
+
+	MultipleCalleeRenderFunction (gfx::Scoping& scoping, RenderCmdSink& renderer) : RenderFunction(scoping, renderer){}
+
+	/// @todo implement
+	molecular::util::AxisAlignedBox GetBounds() const override {return molecular::util::AxisAlignedBox(0, 0, 0, 0, 0, 0);}
+	bool BoundsChangedSince(int /*framecounter*/) const override {return true;}
+
+	void AppendCallee(RenderFunction* callee) {mCallees.insert(callee);}
+	void RemoveCallee(RenderFunction* callee) {mCallees.erase(callee);}
+	void ClearCallees() {mCallees.clear();}
+
+protected:
+	std::unordered_set<RenderFunction*> mCallees;
+
+};
+
 }
 }
 
