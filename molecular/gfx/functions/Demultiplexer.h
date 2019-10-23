@@ -20,11 +20,6 @@ public:
 	{}
 
 	void Execute();
-
-	/// @todo implement
-	util::AxisAlignedBox GetBounds() const {return molecular::util::AxisAlignedBox(0, 0, 0, 0, 0, 0);}
-	/// @todo implement
-	bool BoundsChangedSince(int) const {return false;}
 };
 
 
