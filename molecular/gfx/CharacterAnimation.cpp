@@ -218,7 +218,7 @@ Sqt Interpolate(const Sqt& prev, const Sqt& next, float t)
 
 int GetBoneIndex(Hash hash)
 {
-	for(int i = 0; i < sizeof(kBoneNameToIndex); i++)
+	for(unsigned i = 0; i < sizeof(kBoneNameToIndex); i++)
 	{
 		if(kBoneNameToIndex[i] == hash)
 			return i;
