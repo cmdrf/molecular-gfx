@@ -2,6 +2,8 @@ configure_file(molecular/Config.h.in molecular/Config.h)
 
 add_library(molecular-gfx
 	molecular/gfx/AssetManager.h
+	molecular/gfx/CharacterAnimation.cpp
+	molecular/gfx/CharacterAnimation.h
 	molecular/gfx/DefaultProgramData.cpp
 	molecular/gfx/DefaultProgramData.h
 	molecular/gfx/DrawText.cpp
