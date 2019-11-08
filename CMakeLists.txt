@@ -1,3 +1,5 @@
+find_package(GLFW QUIET)
+
 configure_file(molecular/Config.h.in molecular/Config.h)
 
 add_library(molecular-gfx
@@ -41,18 +43,6 @@ add_library(molecular-gfx
 	molecular/gfx/TextureSplattingData.h
 	molecular/gfx/Uniform.cpp
 	molecular/gfx/Uniform.h
-
-	molecular/gfx/glfw/GlfwContext.cpp
-	molecular/gfx/glfw/GlfwContext.h
-	molecular/gfx/glfw/GlfwFileLoader.h
-	molecular/gfx/glfw/GlfwOpenGlWindow.cpp
-	molecular/gfx/glfw/GlfwOpenGlWindow.h
-	molecular/gfx/glfw/GlfwPrerequisites.h
-	molecular/gfx/glfw/GlfwRenderManager.cpp
-	molecular/gfx/glfw/GlfwRenderManager.h
-#	molecular/gfx/glfw/GlfwVulkanWindow.cpp
-#	molecular/gfx/glfw/GlfwVulkanWindow.h
-    molecular/gfx/glfw/GlfwWindow.h
 
     molecular/gfx/functions/ApplyTextures.cpp
 	molecular/gfx/functions/ApplyTextures.h
@@ -180,6 +170,22 @@ add_library(molecular-gfx
 )
 add_library(molecular::gfx ALIAS molecular-gfx)
 
+if(GLFW_FOUND)
+	target_sources(molecular-gfx PUBLIC
+		molecular/gfx/glfw/GlfwContext.cpp
+		molecular/gfx/glfw/GlfwContext.h
+		molecular/gfx/glfw/GlfwFileLoader.h
+		molecular/gfx/glfw/GlfwOpenGlWindow.cpp
+		molecular/gfx/glfw/GlfwOpenGlWindow.h
+		molecular/gfx/glfw/GlfwPrerequisites.h
+		molecular/gfx/glfw/GlfwRenderManager.cpp
+		molecular/gfx/glfw/GlfwRenderManager.h
+		#	molecular/gfx/glfw/GlfwVulkanWindow.cpp
+		#	molecular/gfx/glfw/GlfwVulkanWindow.h
+		molecular/gfx/glfw/GlfwWindow.h
+	)
+endif(GLFW_FOUND)
+
 if(APPLE)
 	target_compile_definitions(molecular-gfx PUBLIC GL_SILENCE_DEPRECATION)
 	target_sources(molecular-gfx PRIVATE
@@ -200,9 +206,12 @@ target_link_libraries(molecular-gfx PUBLIC
 	molecular::meshfile
 	Eigen3::Eigen
 	OpenGL::GL
-	glfw
 	Threads::Threads
 )
+
+if(GLFW_FOUND)
+	target_link_libraries(molecular-gfx PUBLIC glfw)
+endif(GLFW_FOUND)
 
 add_subdirectory(examples)
 if(BUILD_TESTING)
