@@ -1,11 +1,11 @@
-#include "Demultiplexer.h"
+#include "Group.h"
 
 namespace molecular
 {
 namespace gfx
 {
 
-void Demultiplexer::Execute()
+void Group::Execute()
 {
 	for(auto& func: mCallees)
 		func->Execute();

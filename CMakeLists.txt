@@ -58,8 +58,6 @@ add_library(molecular-gfx
 	molecular/gfx/functions/ApplyTextures.h
 	molecular/gfx/functions/CpuParticleSystemImpl.h
 	molecular/gfx/functions/CpuParticleSystem.h
-	molecular/gfx/functions/Demultiplexer.cpp
-	molecular/gfx/functions/Demultiplexer.h
 	molecular/gfx/functions/DrawDebugMesh.h
 	molecular/gfx/functions/DrawingFunction.h
 	molecular/gfx/functions/DrawMesh.h
@@ -74,6 +72,8 @@ add_library(molecular-gfx
 	molecular/gfx/functions/FlatScene.h
 	molecular/gfx/functions/FullscreenEffect.cpp
 	molecular/gfx/functions/FullscreenEffect.h
+	molecular/gfx/functions/Group.cpp
+	molecular/gfx/functions/Group.h
 	molecular/gfx/functions/HumanSkin.cpp
 	molecular/gfx/functions/HumanSkin.h
 	molecular/gfx/functions/ParticleSystem.h

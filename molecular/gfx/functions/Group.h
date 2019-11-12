@@ -11,11 +11,11 @@ namespace gfx
 /**
  * @brief The Demultiplexer class is a utility class for cases where more than one output is required.
  */
-class Demultiplexer : public MultipleCalleeRenderFunction
+class Group : public MultipleCalleeRenderFunction
 {
 public:
 	template<class TRenderManager>
-	Demultiplexer(TRenderManager& manager):
+	Group(TRenderManager& manager):
 		MultipleCalleeRenderFunction (manager)
 	{}
 
