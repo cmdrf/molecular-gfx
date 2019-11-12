@@ -72,6 +72,8 @@ add_library(molecular-gfx
 	molecular/gfx/functions/FlatScene.h
 	molecular/gfx/functions/FullscreenEffect.cpp
 	molecular/gfx/functions/FullscreenEffect.h
+	molecular/gfx/functions/Group.cpp
+	molecular/gfx/functions/Group.h
 	molecular/gfx/functions/HumanSkin.cpp
 	molecular/gfx/functions/HumanSkin.h
 	molecular/gfx/functions/ParticleSystem.h
