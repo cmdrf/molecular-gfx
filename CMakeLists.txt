@@ -96,8 +96,10 @@ add_library(molecular-gfx
 	molecular/gfx/functions/TextureSplatting.h
 	molecular/gfx/functions/Transform.cpp
 	molecular/gfx/functions/Transform.h
-	molecular/gfx/functions/ViewSetup.h
 	molecular/gfx/functions/ViewSetup.cpp
+	molecular/gfx/functions/ViewSetup.h
+	molecular/gfx/functions/Visibility.cpp
+	molecular/gfx/functions/Visibility.h
 
 	molecular/gfx/opengl/Egl.cpp
 	molecular/gfx/opengl/Egl.h
