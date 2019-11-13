@@ -178,7 +178,7 @@ void DrawMeshData::Draw(Mesh& mesh)
 	}
 
 	PrepareProgram();
-	if(mIndexBuffers.size() < (mesh.info.buffer + 1))
+	if(mIndexBuffers.empty())
 		mRenderer.Draw(mesh.info.mode, mesh.info.count);
 	else
 		mRenderer.Draw(mIndexBuffers.at(mesh.info.buffer), mesh.info);
