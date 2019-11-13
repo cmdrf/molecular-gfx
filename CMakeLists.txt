@@ -149,13 +149,11 @@ add_library(molecular-gfx
 	molecular/util/PixelFormat.cpp
 	molecular/util/PixelFormat.h
 	molecular/util/Plane.h
+	molecular/util/ReadStream.cpp
+	molecular/util/ReadStream.h
 	molecular/util/StdTaskQueue.cpp
 	molecular/util/StdTaskQueue.h
 	molecular/util/StdThread.h
-	molecular/util/Stream.cpp
-	molecular/util/Stream.h
-	molecular/util/StreamBase.cpp
-	molecular/util/StreamBase.h
 	molecular/util/StreamStorage.cpp
 	molecular/util/StreamStorage.h
 	molecular/util/StringStore.cpp

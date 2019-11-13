@@ -1,4 +1,4 @@
-/*	StreamBase.cpp
+/*	ReadStream.cpp
 
 MIT License
 
@@ -23,12 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "StreamBase.h"
+#include "ReadStream.h"
 
 namespace molecular
 {
 
-void ReadStreamBase::Read(int& value, const int precision)
+void ReadStream::Read(int& value, const int precision)
 {
 	if(precision > 16)
 	{
@@ -50,17 +50,17 @@ void ReadStreamBase::Read(int& value, const int precision)
 	}
 }
 
-void ReadStreamBase::Read(float& value)
+void ReadStream::Read(float& value)
 {
 	Read(reinterpret_cast<int32_t&>(value));
 }
 
-void ReadStreamBase::Read(double& value)
+void ReadStream::Read(double& value)
 {
 	Read(reinterpret_cast<uint64_t&>(value));
 }
 
-void ReadStreamBase::Read(bool& value)
+void ReadStream::Read(bool& value)
 {
 	int8_t valueChar;
 	Read(valueChar);
@@ -70,7 +70,7 @@ void ReadStreamBase::Read(bool& value)
 		value = false;
 }
 
-void ReadStreamBase::Read(std::string& value)
+void ReadStream::Read(std::string& value)
 {
 	int8_t byte;
 	value.clear();
@@ -83,7 +83,7 @@ void ReadStreamBase::Read(std::string& value)
 	}
 }
 
-void ReadStreamBase::Read(void* ptr, const size_t size)
+void ReadStream::Read(void* ptr, const size_t size)
 {
 	for(size_t i = 0; i < size; i++)
 		Read(((uint8_t*)ptr)[i]);

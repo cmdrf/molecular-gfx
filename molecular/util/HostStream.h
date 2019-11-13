@@ -26,7 +26,7 @@ SOFTWARE.
 #ifndef MOLECULAR_HOSTSTREAM_H
 #define MOLECULAR_HOSTSTREAM_H
 
-#include "Stream.h"
+#include "ReadStream.h"
 #include "StreamStorage.h"
 
 namespace molecular

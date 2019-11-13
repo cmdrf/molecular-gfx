@@ -1,4 +1,4 @@
-/*	Stream.h
+/*	ReadStream.h
 
 MIT License
 
@@ -23,59 +23,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_STREAM_H
-#define MOLECULAR_STREAM_H
+#ifndef MOLECULAR_STREAMBASE_H
+#define MOLECULAR_STREAMBASE_H
 
-#include "StreamBase.h"
-#include <molecular/util/Vector3.h>
-#include <vector>
+#include <string>
 
 namespace molecular
 {
 
-class Quaternion;
-
 /// Abstract base class for data storage streams
-/** This has extensions over StreamBase specific to Molecular Engine.
-	@deprecated Data should be read without endianess conversion etc. */
-class ReadStream : public ReadStreamBase
+/** @deprecated Most subsystems around molecular now cast file contents to a struct. */
+class ReadStream
 {
 public:
-	virtual	void Read(Vector3& value);
-	virtual	void Read(Quaternion& value);
+	virtual ~ReadStream() = default;
 
-	// Make overloaded inherited functions visible:
-	using ReadStreamBase::Read;
+	virtual	void	Read(uint8_t&	value) = 0;
+	virtual	void	Read(uint16_t&	value) = 0;
+	virtual	void	Read(uint32_t&	value) = 0;
+	virtual	void	Read(uint64_t&	value) = 0;
 
-	virtual	void ReadListBegin(uint16_t& numItems);
+	virtual	void	Read(int& value, const int precision);
+	virtual	void	Read(float& value);
+	virtual	void	Read(double& value);
+	virtual	void	Read(bool& value);
 
-	virtual	void ReadItemBegin() {}
-	virtual	void ReadListEnd() {}
-	virtual	void ReadItemEnd() {}
+	/// Read an array.
+	virtual void	Read(void*	ptr, const size_t size);
 
-	template<class T>
-	void ReadStructVector(std::vector<T>& elements);
-
-	/// Read array of float values
-	virtual void Read(float values[], size_t count);
+	virtual void Read(int8_t&  value) {Read(reinterpret_cast<uint8_t&>(value));} ///< Signed conversion.
+	virtual void Read(int16_t& value) {Read(reinterpret_cast<uint16_t&>(value));} ///< Signed conversion.
+	virtual void Read(int32_t& value) {Read(reinterpret_cast<uint32_t&>(value));} ///< Signed conversion.
+	virtual void Read(int64_t& value) {Read(reinterpret_cast<uint64_t&>(value));} ///< Signed conversion.
+	
+	virtual void Read(std::string& value);
 };
-
-/*****************************************************************************/
-
-template<class T>
-void ReadStream::ReadStructVector(std::vector<T>& elements)
-{
-	uint16_t numItems;
-	ReadListBegin(numItems);
-	elements.resize(numItems);
-	for(size_t i = 0; i < elements.size(); ++i)
-	{
-		ReadItemBegin();
-		elements[i].Read(*this);
-		ReadItemEnd();
-	}
-	ReadListEnd();
-}
 
 }
 
