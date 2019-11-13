@@ -178,7 +178,10 @@ void DrawMeshData::Draw(Mesh& mesh)
 	}
 
 	PrepareProgram();
-	mRenderer.Draw(mIndexBuffers.at(mesh.info.buffer), mesh.info);
+	if(mIndexBuffers.size() < (mesh.info.buffer + 1))
+		mRenderer.Draw(mesh.info.mode, mesh.info.count);
+	else
+		mRenderer.Draw(mIndexBuffers.at(mesh.info.buffer), mesh.info);
 
 	if(add || mix)
 	{
