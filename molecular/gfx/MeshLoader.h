@@ -122,6 +122,8 @@ void MeshLoader<TRenderManager>::StoreMesh(MeshManager::Asset& destination, Blob
 		StoreCompiledMesh(destination, blob);
 	else if(FileTypeIdentification::IsNmb(blob.GetData(), blob.GetSize()))
 		StoreNmb(destination, blob);
+	else
+		LOG(WARNING) << "MeshLoader: Unknown mesh file type";
 }
 
 template<class TRenderManager>

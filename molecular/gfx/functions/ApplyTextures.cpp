@@ -53,7 +53,10 @@ void ApplyTextures::SetParameter(Hash variable, RenderCmdSink::Texture::Paramete
 void ApplyTextures::SetTextureUniforms(TextureMap::const_iterator it)
 {
 	if(it == mTextures.end())
-		mCallee->Execute();
+	{
+		if(mCallee)
+			mCallee->Execute();
+	}
 	else
 	{
 		Binding<Uniform<RenderCmdSink::Texture*> > texture(it->first, this);
