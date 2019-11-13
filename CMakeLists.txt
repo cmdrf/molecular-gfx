@@ -211,9 +211,9 @@ target_link_libraries(molecular-gfx PUBLIC
 
 if(GLFW_FOUND)
 	target_link_libraries(molecular-gfx PUBLIC glfw)
+	add_subdirectory(examples)
 endif(GLFW_FOUND)
 
-add_subdirectory(examples)
 if(BUILD_TESTING)
 	add_subdirectory(tests)
 endif()
