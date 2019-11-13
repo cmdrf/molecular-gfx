@@ -26,7 +26,6 @@ SOFTWARE.
 #ifndef MOLECULAR_MATERIALMANAGER_H
 #define MOLECULAR_MATERIALMANAGER_H
 
-#include <molecular/util/PointerContainer.h>
 #include <molecular/util/IniFile.h>
 #include <molecular/util/MtlFile.h>
 #include <molecular/util/Hash.h>

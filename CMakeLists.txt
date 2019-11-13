@@ -149,7 +149,6 @@ add_library(molecular-gfx
 	molecular/util/PixelFormat.cpp
 	molecular/util/PixelFormat.h
 	molecular/util/Plane.h
-	molecular/util/PointerContainer.h
 	molecular/util/StdTaskQueue.cpp
 	molecular/util/StdTaskQueue.h
 	molecular/util/StdThread.h
