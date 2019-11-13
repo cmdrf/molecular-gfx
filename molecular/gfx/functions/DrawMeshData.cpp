@@ -139,15 +139,15 @@ void DrawMeshData::Load(const MeshFile& file)
 	{
 		/* TODO: mVertexBuffers and mIndexBuffers combined contain twice as
 			many buffers as necessary, but they are referenced correctly. */
-		if(file.buffers[i].type == MeshFile::Buffer::Type::kVertex)
+		if(file.GetBuffer(i).type == MeshFile::Buffer::Type::kVertex)
 		{
 			mVertexBuffers[i] = mRenderer.CreateVertexBuffer();
-			mVertexBuffers[i]->Store(file.GetBufferData(i), file.buffers[i].size);
+			mVertexBuffers[i]->Store(file.GetBufferData(i), file.GetBuffer(i).size);
 		}
-		else if(file.buffers[i].type == MeshFile::Buffer::Type::kIndex)
+		else if(file.GetBuffer(i).type == MeshFile::Buffer::Type::kIndex)
 		{
 			mIndexBuffers[i] = mRenderer.CreateIndexBuffer();
-			mIndexBuffers[i]->Store(file.GetBufferData(i), file.buffers[i].size);
+			mIndexBuffers[i]->Store(file.GetBufferData(i), file.GetBuffer(i).size);
 		}
 	}
 	mBounds = util::AxisAlignedBox(file.boundsMin, file.boundsMax);
