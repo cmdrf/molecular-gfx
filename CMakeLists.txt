@@ -44,7 +44,7 @@ add_library(molecular-gfx
 	molecular/gfx/Uniform.cpp
 	molecular/gfx/Uniform.h
 
-    molecular/gfx/functions/ApplyTextures.cpp
+	molecular/gfx/functions/ApplyTextures.cpp
 	molecular/gfx/functions/ApplyTextures.h
 	molecular/gfx/functions/CpuParticleSystemImpl.h
 	molecular/gfx/functions/CpuParticleSystem.h
@@ -175,7 +175,7 @@ add_library(molecular-gfx
 add_library(molecular::gfx ALIAS molecular-gfx)
 
 if(GLFW_FOUND)
-	target_sources(molecular-gfx PUBLIC
+	target_sources(molecular-gfx PRIVATE
 		molecular/gfx/glfw/GlfwContext.cpp
 		molecular/gfx/glfw/GlfwContext.h
 		molecular/gfx/glfw/GlfwFileLoader.h
