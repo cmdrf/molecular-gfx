@@ -34,6 +34,7 @@ SOFTWARE.
 namespace molecular
 {
 
+/// PAK-like file structure
 struct PackageFile
 {
 	struct Entry
@@ -51,6 +52,7 @@ struct PackageFile
 static_assert(sizeof(PackageFile) == 8, "Unexpected size of PackageFile");
 static_assert(sizeof(PackageFile::Entry) == 16, "Unexpected size of PackageFile::Entry");
 
+/// Indexes multiple package files
 class PackageFileDirectory
 {
 public:
@@ -63,6 +65,7 @@ public:
 		size_t size;
 	};
 
+	/// Index contents of package file
 	template<class TStorage>
 	void ReadFromFile(TStorage& storage, const std::string& filename)
 	{
@@ -78,6 +81,7 @@ public:
 		}
 	}
 
+	/// Add index entries
 	/** @param begin Iterator to PackageFile::Entry */
 	template<class TIterator>
 	void Populate(const std::string& filename, TIterator begin, TIterator end)
