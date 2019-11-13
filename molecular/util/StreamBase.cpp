@@ -28,69 +28,6 @@ SOFTWARE.
 namespace molecular
 {
 
-void WriteStreamBase::Write(const int64_t value)
-{
-	Write(*reinterpret_cast<const uint64_t*>(&value));
-}
-
-
-void WriteStreamBase::Write(const int value, const int precision)
-{
-	if(precision > 16)
-		Write((const uint32_t)value);
-	else if(precision > 8)
-		Write((const uint16_t)value);
-	else
-		Write((const uint8_t)value);
-}
-
-void WriteStreamBase::Write(const float value)
-{
-	Write(&value, 4);
-}
-
-void WriteStreamBase::Write(const double value)
-{
-	Write(&value, 8);
-}
-
-void WriteStreamBase::Write(const bool value)
-{
-	if(value)
-		Write(uint8_t(255));
-	else
-		Write(uint8_t(0));
-}
-
-void WriteStreamBase::Write(const std::string& value)
-{
-	Write(value.c_str(), value.size() + 1);
-}
-
-
-void WriteStreamBase::Write(const void* ptr, const size_t size)
-{
-	for(size_t i = 0; i < size; i++)
-		Write((uint8_t*)ptr + i);
-}
-
-
-void WriteStreamBase::Write(const int32_t value)
-{
-	Write(*reinterpret_cast<const uint32_t*>(&value));
-}
-
-void WriteStreamBase::Write(const int16_t value)
-{
-	Write(*reinterpret_cast<const uint16_t*>(&value));
-}
-
-void WriteStreamBase::Write(const int8_t value)
-{
-	Write(*reinterpret_cast<const uint8_t*>(&value));
-}
-
-
 void ReadStreamBase::Read(int& value, const int precision)
 {
 	if(precision > 16)

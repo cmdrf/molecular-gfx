@@ -32,32 +32,7 @@ namespace molecular
 {
 
 /// Abstract base class for data storage streams
-class WriteStreamBase
-{
-public:
-	virtual ~WriteStreamBase(){}
-
-	virtual void Write(const uint8_t  value) = 0;
-	virtual void Write(const uint16_t value) = 0;
-	virtual void Write(const uint32_t value) = 0;
-	virtual void Write(const uint64_t value) = 0;
-
-	virtual void Write(const int    value, const int precision);
-	virtual void Write(const float  value);
-	virtual void Write(const double value);
-	virtual void Write(const bool   value);
-
-	/// Write an array.
-	virtual void Write(const void* ptr, const size_t size);
-
-	virtual	void Write(const int8_t  value); ///< Signed conversion.
-	virtual void Write(const int16_t value); ///< Signed conversion.
-	virtual void Write(const int32_t value); ///< Signed conversion.
-	virtual void Write(const int64_t value); ///< Signed conversion.
-
-	virtual void Write(const std::string&	value);
-};
-
+/** @deprecated Most subsystems around molecular now cast file contents to a struct. */
 class ReadStreamBase
 {
 public:

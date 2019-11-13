@@ -34,11 +34,10 @@ SOFTWARE.
 
 namespace molecular
 {
+
+/** @deprecated Most subsystems around molecular now cast file contents to a struct. */
 template<class Storage>
 using LittleEndianReadStream = HostReadStream<Storage>;
-
-template<class Storage>
-using LittleEndianWriteStream = HostWriteStream<Storage>;
 }
 
 #endif

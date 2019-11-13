@@ -32,26 +32,8 @@ SOFTWARE.
 namespace molecular
 {
 
-/// Stream-interface to a WriteStorage that does no endian conversion.
-template<class Storage>
-class HostWriteStream : public WriteStream
-{
-public:
-	HostWriteStream(Storage& streamStorage);
-	
-	void Write(const uint8_t value) override;
-	void Write(const uint16_t value) override;
-	void Write(const uint32_t value) override;
-	void Write(const uint64_t value) override;
-	void Write(const void* ptr, const size_t size) override;
-
-	using WriteStream::Write;
-
-private:
-	Storage& mStreamStorage;
-};
-
 /// Stream-interface to a ReadStorage that does no endian conversion.
+/** @deprecated Most subsystems around molecular now cast file contents to a struct. */
 template<class Storage>
 class HostReadStream : public ReadStream
 {
@@ -68,45 +50,6 @@ public:
 private:
 	Storage& mStorage;
 };
-
-/*****************************************************************************/
-
-template<class Storage>
-HostWriteStream<Storage>::HostWriteStream(Storage& streamStorage) :
-	mStreamStorage(streamStorage)
-{
-
-}
-
-template<class Storage>
-void HostWriteStream<Storage>::Write(const uint8_t value)
-{
-	mStreamStorage.Write(&value, 1);
-}
-
-template<class Storage>
-void HostWriteStream<Storage>::Write(const uint16_t value)
-{
-	mStreamStorage.Write(&value, 2);
-}
-
-template<class Storage>
-void HostWriteStream<Storage>::Write(const uint32_t value)
-{
-	mStreamStorage.Write(&value, 4);
-}
-
-template<class Storage>
-void HostWriteStream<Storage>::Write(const uint64_t value)
-{
-	mStreamStorage.Write(&value, 8);
-}
-
-template<class Storage>
-void HostWriteStream<Storage>::Write(const void* ptr, const size_t size)
-{
-	mStreamStorage.Write(ptr, size);
-}
 
 /*****************************************************************************/
 

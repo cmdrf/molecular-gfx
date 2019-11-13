@@ -37,31 +37,7 @@ class Quaternion;
 
 /// Abstract base class for data storage streams
 /** This has extensions over StreamBase specific to Molecular Engine.
-	@deprecated Data should be written without endianess conversion etc. */
-class WriteStream : public WriteStreamBase
-{
-public:
-	
-	virtual void Write(const Vector3& value);
-	virtual void Write(const Quaternion& value);
-
-	// Make overloaded inherited functions visible:
-	using WriteStreamBase::Write;
-
-	virtual	void WriteListBegin(const uint16_t numItems);
-	virtual	void WriteItemBegin(){}
-	virtual	void WriteListEnd(){}
-	virtual	void WriteItemEnd(){}
-
-	/// Convenience Write method for vectors of structs
-	/** Calls a Write method in every struct. */
-	template<class T>
-	void WriteStructVector(const typename std::vector<T>& elements);
-
-	/// Write array of float values
-	virtual void Write(const float values[], size_t count);
-};
-
+	@deprecated Data should be read without endianess conversion etc. */
 class ReadStream : public ReadStreamBase
 {
 public:
@@ -85,19 +61,6 @@ public:
 };
 
 /*****************************************************************************/
-
-template<class T>
-void WriteStream::WriteStructVector(const std::vector<T>& elements)
-{
-	WriteListBegin(uint16_t(elements.size()));
-	for(size_t i = 0; i < elements.size(); ++i)
-	{
-		WriteItemBegin();
-		elements[i].Write(*this);
-		WriteItemEnd();
-	}
-	WriteListEnd();
-}
 
 template<class T>
 void ReadStream::ReadStructVector(std::vector<T>& elements)
