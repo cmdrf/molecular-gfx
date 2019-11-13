@@ -66,14 +66,10 @@ add_library(molecular-gfx
 	molecular/gfx/functions/Group.h
 	molecular/gfx/functions/HumanSkin.cpp
 	molecular/gfx/functions/HumanSkin.h
-	molecular/gfx/functions/ParticleSystem.h
-	molecular/gfx/functions/ParticleSystem.cpp
 	molecular/gfx/functions/PortalZoneScene.h
 	molecular/gfx/functions/PortalZoneSceneImpl.h
 	molecular/gfx/functions/RequestOutput.cpp
 	molecular/gfx/functions/RequestOutput.h
-	#molecular/gfx/functions/RTreeScene.cpp
-	#molecular/gfx/functions/RTreeScene.h
 	molecular/gfx/functions/SceneSetup.cpp
 	molecular/gfx/functions/SceneSetup.h
 	molecular/gfx/functions/SetShCoefficients.cpp
@@ -154,8 +150,6 @@ add_library(molecular-gfx
 	molecular/util/PixelFormat.h
 	molecular/util/Plane.h
 	molecular/util/PointerContainer.h
-	molecular/util/RTree.cpp
-	molecular/util/RTree.h
 	molecular/util/StdTaskQueue.cpp
 	molecular/util/StdTaskQueue.h
 	molecular/util/StdThread.h
