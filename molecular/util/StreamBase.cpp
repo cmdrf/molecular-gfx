@@ -46,12 +46,12 @@ void WriteStreamBase::Write(const int value, const int precision)
 
 void WriteStreamBase::Write(const float value)
 {
-	Write(*reinterpret_cast<const uint32_t*>(&value));
+	Write(&value, 4);
 }
 
 void WriteStreamBase::Write(const double value)
 {
-	Write(*reinterpret_cast<const uint64_t*>(&value));
+	Write(&value, 8);
 }
 
 void WriteStreamBase::Write(const bool value)
