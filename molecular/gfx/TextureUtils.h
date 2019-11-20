@@ -72,7 +72,7 @@ RenderCmdSink::Texture* Fbm3DTexture(RenderCmdSink& renderer, TFileServer& fileS
 	quadVertexBuffer->Store(position, sizeof(float) * 8);
 	fbmProgram->SetAttribute("attr_position"_H, quadVertexBuffer, 2, VertexAttributeInfo::kFloat);
 
-	for(int n = 0; n < extent; n++)
+	for(unsigned int n = 0; n < extent; n++)
 	{
 		const float layer = n/(float)extent;
 
