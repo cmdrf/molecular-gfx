@@ -28,6 +28,8 @@ SOFTWARE.*/
 
 namespace molecular
 {
+namespace util
+{
 
 DdsFile::DdsFile(const void *pointer, size_t size) : mOwningBuffers(false)
 {
@@ -169,4 +171,5 @@ size_t DdsFile::SingleImageSize(unsigned int width, unsigned int height)
 	}
 }
 
+}
 }

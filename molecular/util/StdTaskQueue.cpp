@@ -28,6 +28,8 @@ SOFTWARE.*/
 
 namespace molecular
 {
+namespace util
+{
 
 StdTaskQueue::StdTaskQueue() :
 	mStop(false)
@@ -122,4 +124,5 @@ void StdTaskQueue::WorkLoop(TCancelPredicate cancelPredicate)
 	}
 }
 
+}
 }

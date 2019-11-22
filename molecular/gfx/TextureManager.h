@@ -23,14 +23,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_TEXTUREMANAGER_H
-#define MOLECULAR_TEXTUREMANAGER_H
+#ifndef MOLECULAR_GFX_TEXTUREMANAGER_H
+#define MOLECULAR_GFX_TEXTUREMANAGER_H
 
 #include "AssetManager.h"
 #include <molecular/util/TaskDispatcher.h>
 #include <molecular/util/DdsFile.h>
 #include "RenderCmdSink.h"
-#include "TextureManager.h"
 #include <molecular/util/TgaFile.h>
 #include <molecular/util/StringUtils.h>
 #include <molecular/util/KtxFile.h>
@@ -194,7 +193,7 @@ void TextureLoader<TRenderManager>::StoreKtxTexture(TextureManager::Asset& targe
 template<class TRenderManager>
 void TextureLoader<TRenderManager>::StoreDdsTexture(TextureManager::Asset& target, Blob& blob, unsigned int minLevel, unsigned int maxLevel)
 {
-	DdsFile file(blob.GetData(), blob.GetSize());
+	util::DdsFile file(blob.GetData(), blob.GetSize());
 	unsigned int levelsToLoad = std::min(maxLevel + 1, file.GetNumMipmapLevels());
 	for(unsigned int i = minLevel; i < levelsToLoad; ++i)
 	{

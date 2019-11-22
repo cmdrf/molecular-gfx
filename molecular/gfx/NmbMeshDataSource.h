@@ -31,11 +31,13 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 class NmbMeshDataSource : public MeshDataSource
 {
 public:
-	NmbMeshDataSource(NmbFile& file, const std::string &submesh = "");
+	NmbMeshDataSource(util::NmbFile& file, const std::string &submesh = "");
 
 	int PrepareVertexData(LayoutHint layout = kLayoutAny);
 
@@ -48,12 +50,13 @@ public:
 	util::AxisAlignedBox GetBounds() const;
 
 private:
-	NmbFile& mFile;
+	util::NmbFile& mFile;
 	std::string mSubmesh;
-	std::vector<const NmbFile::VertexBuffer*> mVertexBuffers;
-	std::vector<const NmbFile::IndexBuffer*> mIndexBuffers;
+	std::vector<const util::NmbFile::VertexBuffer*> mVertexBuffers;
+	std::vector<const util::NmbFile::IndexBuffer*> mIndexBuffers;
 };
 
+}
 }
 
 #endif // MOLECULAR_NMBMESHDATASOURCE_H

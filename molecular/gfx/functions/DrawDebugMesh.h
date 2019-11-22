@@ -166,8 +166,8 @@ inline void DrawDebugMesh::DrawText(const std::string& text, const Vector3& posi
 {
 	if(mFontDescriptionData.GetSize() > 0)
 	{
-		auto desc = static_cast<const FontAtlasDescriptionFile*>(mFontDescriptionData.GetData());
-		molecular::DrawText(text, position, 0.1f, *desc, mTextVertexData, mTextTexCoordData);
+		auto desc = static_cast<const util::FontAtlasDescriptionFile*>(mFontDescriptionData.GetData());
+		gfx::DrawText(text, position, 0.1f, *desc, mTextVertexData, mTextTexCoordData);
 		mBounds.Stretch(position);
 	}
 }

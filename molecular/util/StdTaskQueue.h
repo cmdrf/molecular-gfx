@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_STDTASKQUEUE_H
-#define MOLECULAR_STDTASKQUEUE_H
+#ifndef MOLECULAR_UTIL_STDTASKQUEUE_H
+#define MOLECULAR_UTIL_STDTASKQUEUE_H
 
 #include "AtomicCounter.h"
 #include "Task.h"
@@ -38,7 +38,10 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
+/// Uses std::thread to process background jobs
 class StdTaskQueue : NonCopyable
 {
 public:
@@ -83,6 +86,7 @@ private:
 	bool mStop;
 };
 
+}
 }
 
 #endif

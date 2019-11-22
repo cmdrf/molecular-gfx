@@ -34,6 +34,8 @@ namespace molecular
 namespace gfx
 {
 
+/// Implementation of subsurface scattering as presented in GPU Gems 3
+/** https://developer.nvidia.com/gpugems/GPUGems3/gpugems3_ch14.html */
 class HumanSkin : public SingleCalleeRenderFunction
 {
 public:

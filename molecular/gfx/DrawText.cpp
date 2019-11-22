@@ -28,6 +28,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 static void DrawRect(
 		float x, float y, float z,
@@ -67,7 +69,7 @@ void DrawText(
 		const TString& text,
 		const Vector3& start,
 		float textHeight,
-		const FontAtlasDescriptionFile& fontDescription,
+		const util::FontAtlasDescriptionFile& fontDescription,
 		std::vector<Vector3>& outVertexPositions,
 		std::vector<Vector2>& outVertexTexCoords
 		)
@@ -111,15 +113,16 @@ template void DrawText(
 		const std::string& text,
 		const Vector3& start,
 		float textHeight,
-		const FontAtlasDescriptionFile& fontDescription,
+		const util::FontAtlasDescriptionFile& fontDescription,
 		std::vector<Vector3>& outVertexPositions,
 		std::vector<Vector2>& outVertexTexCoords);
 template void DrawText(
 		const std::wstring& text,
 		const Vector3& start,
 		float textHeight,
-		const FontAtlasDescriptionFile& fontDescription,
+		const util::FontAtlasDescriptionFile& fontDescription,
 		std::vector<Vector3>& outVertexPositions,
 		std::vector<Vector2>& outVertexTexCoords);
 
+}
 }

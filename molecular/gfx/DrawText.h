@@ -34,35 +34,42 @@ SOFTWARE.
 
 namespace molecular
 {
-
+namespace util
+{
 struct FontAtlasDescriptionFile;
+}
 
+namespace gfx
+{
+
+/// Create vertex positions and texture coordinates for atlassed text
 /** TString can be std::string or std::wstring. */
 template<class TString>
 void DrawText(
         const TString& text,
         const Vector3& start,
         float textHeight,
-        const FontAtlasDescriptionFile& fontDescription,
+		const util::FontAtlasDescriptionFile& fontDescription,
         std::vector<Vector3>& outVertexPositions,
-        std::vector<Vector2>& out
+		std::vector<Vector2>& outVertexTexCoords
         );
 
 extern template void DrawText(
 		const std::string& text,
 		const Vector3& start,
 		float textHeight,
-		const FontAtlasDescriptionFile& fontDescription,
+		const util::FontAtlasDescriptionFile& fontDescription,
 		std::vector<Vector3>& outVertexPositions,
 		std::vector<Vector2>& outVertexTexCoords);
 extern template void DrawText(
 		const std::wstring& text,
 		const Vector3& start,
 		float textHeight,
-		const FontAtlasDescriptionFile& fontDescription,
+		const util::FontAtlasDescriptionFile& fontDescription,
 		std::vector<Vector3>& outVertexPositions,
 		std::vector<Vector2>& outVertexTexCoords);
 
+}
 }
 
 #endif // DRAWTEXT_H

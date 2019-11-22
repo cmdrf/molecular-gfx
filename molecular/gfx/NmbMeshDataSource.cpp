@@ -28,12 +28,14 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
-NmbMeshDataSource::NmbMeshDataSource(NmbFile& file, const std::string& submesh) :
+NmbMeshDataSource::NmbMeshDataSource(util::NmbFile& file, const std::string& submesh) :
 	mFile(file),
 	mSubmesh(submesh)
 {
-	const std::list<NmbFile::Mesh>& meshes = mFile.GetMeshes();
+	const std::list<util::NmbFile::Mesh>& meshes = mFile.GetMeshes();
 
 	if(submesh.empty())
 		SetNumVertexDataSets(meshes.size());
@@ -76,15 +78,15 @@ NmbMeshDataSource::NmbMeshDataSource(NmbFile& file, const std::string& submesh) 
 			info.type = IndexBufferInfo::Type::kUInt16;
 			switch(indexBuffer.operation)
 			{
-			case NmbFile::IndexBuffer::kTriangles:
+			case util::NmbFile::IndexBuffer::kTriangles:
 				info.mode = IndexBufferInfo::Mode::kTriangles;
 				break;
 
-			case NmbFile::IndexBuffer::kTriangleStrip:
+			case util::NmbFile::IndexBuffer::kTriangleStrip:
 				info.mode = IndexBufferInfo::Mode::kTriangleStrip;
 				break;
 
-			case NmbFile::IndexBuffer::kUnknown:
+			case util::NmbFile::IndexBuffer::kUnknown:
 				info.mode = IndexBufferInfo::Mode::kPoints;
 			}
 
@@ -135,4 +137,5 @@ util::AxisAlignedBox NmbMeshDataSource::GetBounds() const
 	return util::AxisAlignedBox(); // TODO
 }
 
+}
 }

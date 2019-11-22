@@ -33,6 +33,11 @@ namespace molecular
 namespace gfx
 {
 
+/// Example shadow mapping function
+/** Calls the callee twice: Once for the shadow pass and once for normal render pass.
+
+	Not view-dependent. Most parameters are currently hard-coded.
+	@todo Only implemented for directional lights, no point or spot lights. */
 class ShadowMapping : public SingleCalleeRenderFunction
 {
 public:

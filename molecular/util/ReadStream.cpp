@@ -27,6 +27,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 void ReadStream::Read(int& value, const int precision)
 {
@@ -86,7 +88,8 @@ void ReadStream::Read(std::string& value)
 void ReadStream::Read(void* ptr, const size_t size)
 {
 	for(size_t i = 0; i < size; i++)
-		Read(((uint8_t*)ptr)[i]);
+		Read((static_cast<uint8_t*>(ptr))[i]);
 }
 
+}
 }

@@ -34,6 +34,11 @@ namespace molecular
 namespace gfx
 {
 
+/// Texture splatting. Mostly useful for terrain.
+/** Blends high-resolution detail textures according to the component values of low-resolution
+	splatting maps. See https://en.wikipedia.org/wiki/Texture_splatting for more information.
+
+	Supports up to kMaxSplattingMaps splatting maps, each with four components. */
 class TextureSplatting : public SingleCalleeRenderFunction
 {
 public:
@@ -76,7 +81,7 @@ private:
 	float mTextureScale;
 };
 
-}
+} // namespace gfx
 }
 
 #endif // MOLECULAR_TEXTURESPLATTING_H

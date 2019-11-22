@@ -35,7 +35,7 @@ struct DdsTest
 	PixelFormat Test(const uint8_t* data, size_t dataSize, size_t expectedImageSize)
 	{
 //		MemoryReadStorage storage(data, dataSize);
-		DdsFile file(static_cast<const void*>(data), dataSize);
+		util::DdsFile file(static_cast<const void*>(data), dataSize);
 		CHECK(1 == file.GetNumFaces());
 		CHECK(1 == file.GetNumMipmapLevels());
 

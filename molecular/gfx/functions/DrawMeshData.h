@@ -41,7 +41,9 @@ namespace gfx
 {
 
 /// RenderFunction that draws a group of meshes
-/** @todo LOD */
+/** @note Do not use this class directly! Use DrawMesh instead, which automatically instantiates
+		DrawMeshData when necessary.
+	@todo LOD */
 class DrawMeshData : public DrawingFunction
 {
 public:

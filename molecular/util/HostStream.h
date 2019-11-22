@@ -31,6 +31,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Stream-interface to a ReadStorage that does no endian conversion.
 /** @deprecated Most subsystems around molecular now cast file contents to a struct. */
@@ -84,4 +86,6 @@ void HostReadStream<Storage>::Read(void* ptr, const size_t size)
 }
 
 }
+}
+
 #endif

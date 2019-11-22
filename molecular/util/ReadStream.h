@@ -23,12 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_STREAMBASE_H
-#define MOLECULAR_STREAMBASE_H
+#ifndef MOLECULAR_UTIL_READSTREAM_H
+#define MOLECULAR_UTIL_READSTREAM_H
 
 #include <string>
 
 namespace molecular
+{
+namespace util
 {
 
 /// Abstract base class for data storage streams
@@ -59,6 +61,7 @@ public:
 	virtual void Read(std::string& value);
 };
 
+}
 }
 
 #endif

@@ -38,6 +38,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Counter with atomic increment/decrement methods
 /** This implementation uses the Windows API. */
@@ -67,9 +69,12 @@ private:
 
 typedef WinAtomicCounter AtomicCounter;
 } // namespace
+}
 #else
 
 namespace molecular
+{
+namespace util
 {
 
 /// Counter with atomic increment/decrement methods
@@ -95,6 +100,7 @@ private:
 
 typedef GccAtomicCounter AtomicCounter;
 
+}
 } // namespace
 
 #endif // _WIN32

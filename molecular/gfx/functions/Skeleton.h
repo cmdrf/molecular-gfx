@@ -34,6 +34,7 @@ namespace molecular
 namespace gfx
 {
 
+/// Set character animation uniforms
 class Skeleton : public SingleCalleeRenderFunction
 {
 public:

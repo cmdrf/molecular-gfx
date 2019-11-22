@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_NMBFILE_H
-#define MOLECULAR_NMBFILE_H
+#ifndef MOLECULAR_UTIL_NMBFILE_H
+#define MOLECULAR_UTIL_NMBFILE_H
 
 #include <molecular/util/LittleEndianStream.h>
 #include <stdexcept>
@@ -33,6 +33,8 @@ SOFTWARE.
 #include <list>
 
 namespace molecular
+{
+namespace util
 {
 
 /// NVidia geometry file
@@ -446,6 +448,7 @@ void NmbFile::ReadMarker(Storage& storage, uint32_t marker)
 		throw std::runtime_error("Marker missed");
 }
 
+}
 }
 
 #endif // NMBFILE_H

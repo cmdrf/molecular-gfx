@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_LITTLEENDIANSTREAM_H
-#define MOLECULAR_LITTLEENDIANSTREAM_H
+#ifndef MOLECULAR_UTIL_LITTLEENDIANSTREAM_H
+#define MOLECULAR_UTIL_LITTLEENDIANSTREAM_H
 
 #if __BYTE_ORDER__ != __ORDER_LITTLE_ENDIAN__
 #error Big Endian systems not supported!
@@ -34,10 +34,14 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /** @deprecated Most subsystems around molecular now cast file contents to a struct. */
 template<class Storage>
 using LittleEndianReadStream = HostReadStream<Storage>;
+
+}
 }
 
 #endif

@@ -150,7 +150,7 @@ void MeshLoader<TRenderManager>::StoreNmb(MeshManager::Asset& destination, Blob&
 	MemoryReadStorage storage(blob.GetData(), blob.GetSize());
 	try
 	{
-		NmbFile nmb(storage);
+		util::NmbFile nmb(storage);
 		NmbMeshDataSource source(nmb);
 		destination.GetAsset()->Load(source);
 		destination.SetState(0, MeshManager::Asset::kLoaded);

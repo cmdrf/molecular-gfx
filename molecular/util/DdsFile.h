@@ -34,6 +34,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Four character code string literal
 /** Little Endian. */
@@ -278,6 +280,7 @@ void DdsFile::ReadHeader(Storage& storage)
 	mFacesMipmapLevels.resize(mNumFaces * mHeader.mipMapCount);
 }
 
+}
 }
 
 #endif // MOLECULAR_DDSFILE_H

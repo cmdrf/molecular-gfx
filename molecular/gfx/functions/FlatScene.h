@@ -33,6 +33,7 @@ namespace molecular
 namespace gfx
 {
 
+/// Uses brute-force frustum culling to call a collection of functions
 class FlatScene : public RenderFunction
 {
 public:

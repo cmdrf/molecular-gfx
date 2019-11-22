@@ -30,6 +30,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 struct FontAtlasDescriptionFile
 {
@@ -108,6 +110,7 @@ struct FontAtlasDescriptionFile
 	}
 };
 
+}
 }
 
 #endif // MOLECULAR_FONTATLASDESCRIPTIONFILE_H

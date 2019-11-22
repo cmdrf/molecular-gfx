@@ -36,6 +36,9 @@ namespace molecular
 namespace gfx
 {
 
+/// Portal-zone visibility determination
+/** Objects are only drawn when they are inside a zone that contain the camera or can be seen
+	through a portal. See https://en.wikipedia.org/wiki/Portal_rendering for more information. */
 template<class TRenderManager, class TZoneKey>
 class PortalZoneScene : public RenderFunction
 {
@@ -95,7 +98,10 @@ private:
 	std::unordered_set<RenderFunction*> mFunctions;
 
 	ZoneMap mZones;
+
+	/// Zone in which the viewer is currently located
 	typename ZoneMap::iterator mCurrentViewZone = mZones.end();
+
 	DrawDebugMesh mDebugMesh;
 };
 
