@@ -27,6 +27,8 @@ SOFTWARE.*/
 
 namespace molecular
 {
+namespace util
+{
 
 IniFile::IniFile(const void* data, size_t size)
 {
@@ -39,4 +41,5 @@ void IniFile::Load(const void* data, size_t size)
 	Load(storage);
 }
 
+}
 }

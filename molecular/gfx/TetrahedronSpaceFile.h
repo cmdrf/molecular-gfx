@@ -44,7 +44,7 @@ struct TetrahedronSpaceFile
 
 	struct Vertex
 	{
-		Vector3 position;
+		util::Vector3 position;
 		util::Matrix<3, 9> coefficients;
 	};
 
@@ -60,7 +60,7 @@ struct TetrahedronSpaceFile
 	Tetrahedron tetrahedra[0];
 
 	const Vertex* GetVertices() const {return reinterpret_cast<const Vertex*>(reinterpret_cast<const uint8_t*>(this) + verticesOffset);}
-	const Vector3* GetNormals() const {return reinterpret_cast<const Vector3*>(reinterpret_cast<const uint8_t*>(this) + normalsOffset);}
+	const util::Vector3* GetNormals() const {return reinterpret_cast<const util::Vector3*>(reinterpret_cast<const uint8_t*>(this) + normalsOffset);}
 };
 
 template<class TetrahedronIterator, class PositionIterator, class CoeffsIterator, class NormalsIterator, class Storage>
@@ -93,7 +93,7 @@ void WriteTetrahedronSpaceFile(
 	}
 
 	for(auto it = normalsBegin; it != normalsEnd; ++it)
-		outStorage.Write(&*it, sizeof(Vector3));
+		outStorage.Write(&*it, sizeof(util::Vector3));
 }
 
 }

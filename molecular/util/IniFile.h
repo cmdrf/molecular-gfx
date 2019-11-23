@@ -32,6 +32,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// ini file parser
 class IniFile
@@ -151,6 +153,8 @@ void IniFile::Load(Storage& storage)
 		}
 	}
 }
-}
+
+} // util
+} // molecular
 
 #endif // MOLECULAR_INIFILE_H

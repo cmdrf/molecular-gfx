@@ -35,7 +35,7 @@ namespace molecular
 namespace gfx
 {
 
-using molecular::Vector4;
+using namespace molecular::util;
 
 class TetrahedronInterpolation
 {

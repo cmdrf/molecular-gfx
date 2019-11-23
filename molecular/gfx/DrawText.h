@@ -41,6 +41,7 @@ struct FontAtlasDescriptionFile;
 
 namespace gfx
 {
+using namespace util;
 
 /// Create vertex positions and texture coordinates for atlassed text
 /** TString can be std::string or std::wstring. */
@@ -49,7 +50,7 @@ void DrawText(
         const TString& text,
         const Vector3& start,
         float textHeight,
-		const util::FontAtlasDescriptionFile& fontDescription,
+		const FontAtlasDescriptionFile& fontDescription,
         std::vector<Vector3>& outVertexPositions,
 		std::vector<Vector2>& outVertexTexCoords
         );
@@ -58,14 +59,14 @@ extern template void DrawText(
 		const std::string& text,
 		const Vector3& start,
 		float textHeight,
-		const util::FontAtlasDescriptionFile& fontDescription,
+		const FontAtlasDescriptionFile& fontDescription,
 		std::vector<Vector3>& outVertexPositions,
 		std::vector<Vector2>& outVertexTexCoords);
 extern template void DrawText(
 		const std::wstring& text,
 		const Vector3& start,
 		float textHeight,
-		const util::FontAtlasDescriptionFile& fontDescription,
+		const FontAtlasDescriptionFile& fontDescription,
 		std::vector<Vector3>& outVertexPositions,
 		std::vector<Vector2>& outVertexTexCoords);
 
