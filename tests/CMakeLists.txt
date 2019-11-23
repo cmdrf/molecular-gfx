@@ -12,7 +12,6 @@ add_executable(molecular-gfx-tests
 	TestKtxFile.cpp
 	TestPlane.cpp
 	TestPlaneSet.cpp
-	TestQuaternion.cpp
 	TestStringStore.cpp
 	TestTgaFile.cpp
 )
