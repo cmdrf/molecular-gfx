@@ -18,9 +18,10 @@ add_library(molecular-gfx
 	molecular/gfx/MaterialManager.cpp
 	molecular/gfx/MaterialManager.h
 	molecular/gfx/MeshDataSource.h
-	molecular/gfx/MeshLoader.cpp
 	molecular/gfx/MeshLoader.h
 	molecular/gfx/MeshLocator.h
+	molecular/gfx/MeshManager.cpp
+	molecular/gfx/MeshManager.h
 	molecular/gfx/NmbMeshDataSource.cpp
 	molecular/gfx/NmbMeshDataSource.h
 	molecular/gfx/Picking.h
