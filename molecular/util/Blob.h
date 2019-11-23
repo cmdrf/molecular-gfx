@@ -31,6 +31,8 @@ SOFTWARE.*/
 
 namespace molecular
 {
+namespace util
+{
 
 /// Holds binary data
 /** Contents are not initialized. Movable, non-copyable. */
@@ -86,6 +88,7 @@ private:
 	size_t mSize;
 };
 
+}
 }
 
 #endif // MOLECULAR_BLOB_H

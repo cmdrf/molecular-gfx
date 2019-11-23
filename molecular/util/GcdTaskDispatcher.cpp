@@ -28,6 +28,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 void GcdTaskDispatcher::DispatchFunction(void* context)
 {
@@ -36,4 +38,5 @@ void GcdTaskDispatcher::DispatchFunction(void* context)
 	delete task;
 }
 
+}
 }

@@ -37,8 +37,11 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 typedef GcdTaskDispatcher TaskDispatcher;
 using FileLoader = GcdAsyncFileLoader;
+}
 }
 #elif !defined(__MINGW32__) // No std::thread implementation on current MinGW
 #include <molecular/util/StdTaskQueue.h>
@@ -46,17 +49,22 @@ using FileLoader = GcdAsyncFileLoader;
 
 namespace molecular
 {
+namespace util
+{
 using TaskDispatcher = StdTaskQueue;
 using FileLoader = DummyFileLoader;
 }
-
+}
 #else
 #include "util/DummyTaskDispatcher.h"
 #include "util/DummyFileLoader.h"
 namespace molecular
 {
+namespace util
+{
 typedef DummyTaskDispatcher TaskDispatcher;
 using FileLoader = DummyFileLoader;
+}
 }
 #endif
 

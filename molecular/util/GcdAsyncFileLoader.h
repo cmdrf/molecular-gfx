@@ -35,6 +35,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Loads files asynchronously using Grand Central Dispatch
 class GcdAsyncFileLoader
@@ -181,6 +183,7 @@ void GcdAsyncFileLoader::ReadEventHandler(void* context)
 		dispatch_source_cancel(readContext->dispatchSource);
 }
 
+}
 }
 
 #endif // MOLECULAR_GCDASYNCFILELOADER_H

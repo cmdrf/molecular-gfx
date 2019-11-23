@@ -40,7 +40,7 @@ using molecular::Vector4;
 class TetrahedronInterpolation
 {
 public:
-	void SetFileData(Blob&& fileData);
+	void SetFileData(util::Blob&& fileData);
 
 	util::Matrix<3, 9> GetShCoefficients(const Vector3& position, int& tetIndex) const;
 
@@ -53,7 +53,7 @@ private:
 	Vector4 GetLightProbeInterpolationWeights(const Vector3& position, int& tetIndex) const;
 	Vector4 GetBarycentricCoordinates(const Vector3& p, const TetrahedronSpaceFile::Tetrahedron& tet) const;
 
-	Blob mFileData;
+	util::Blob mFileData;
 	static const util::Matrix<3, 9> kZeros;
 };
 

@@ -31,6 +31,8 @@ SOFTWARE.*/
 
 namespace molecular
 {
+namespace util
+{
 
 /// Task that calls an std::function with a Blob argument
 /** Blob is movable only, std::function is copyable, so std::bind cannot be
@@ -56,6 +58,7 @@ private:
 	Blob mBlob;
 };
 
+}
 }
 
 #endif // MOLECULAR_BLOBFUNCTIONTASK_H

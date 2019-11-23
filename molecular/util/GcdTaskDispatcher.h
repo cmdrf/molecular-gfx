@@ -31,6 +31,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 class GcdTaskDispatcher
 {
@@ -126,5 +128,6 @@ private:
 	dispatch_queue_t mQueue;
 };
 
+}
 }
 #endif // MOLECULAR_GCDTASKDISPATCHER_H
