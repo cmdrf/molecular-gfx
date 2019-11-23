@@ -42,7 +42,7 @@ class TetrahedronInterpolation
 public:
 	void SetFileData(Blob&& fileData);
 
-	Matrix<3, 9> GetShCoefficients(const Vector3& position, int& tetIndex) const;
+	util::Matrix<3, 9> GetShCoefficients(const Vector3& position, int& tetIndex) const;
 
 	/** For debugging. */
 	void GetTetrahedronCorners(int tetIndex, Vector3 outCorners[4], bool& outIsOuterCell) const;
@@ -54,7 +54,7 @@ private:
 	Vector4 GetBarycentricCoordinates(const Vector3& p, const TetrahedronSpaceFile::Tetrahedron& tet) const;
 
 	Blob mFileData;
-	static const Matrix<3, 9> kZeros;
+	static const util::Matrix<3, 9> kZeros;
 };
 
 }

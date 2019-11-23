@@ -34,8 +34,12 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 namespace CharacterAnimation
 {
+using namespace util;
+
 constexpr int kBoneCount = 80;
 
 /// Parent indices for each bone
@@ -102,7 +106,8 @@ int GetBoneIndex(Hash hash);
 
 void SceneGraphToAbsoluteTransforms(const Matrix4 graph[], const int parents[], Matrix4 output[], int count);
 
-}
-}
+} // CharacterAnimation
+} // gfx
+} // molecular
 
 #endif

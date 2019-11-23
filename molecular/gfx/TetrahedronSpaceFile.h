@@ -31,20 +31,21 @@ SOFTWARE.
 
 namespace molecular
 {
-
+namespace gfx
+{
 struct TetrahedronSpaceFile
 {
 	struct Tetrahedron
 	{
 		int16_t vertices[4];
 		int16_t neighbours[4];
-		Matrix<3, 4> matrix;
+		util::Matrix<3, 4> matrix;
 	};
 
 	struct Vertex
 	{
 		Vector3 position;
-		Matrix<3, 9> coefficients;
+		util::Matrix<3, 9> coefficients;
 	};
 
 	static const uint32_t kMagic = 0x801e14ae;
@@ -95,6 +96,7 @@ void WriteTetrahedronSpaceFile(
 		outStorage.Write(&*it, sizeof(Vector3));
 }
 
+}
 }
 
 #endif // TETRAHEDRONSPACEFILE_H

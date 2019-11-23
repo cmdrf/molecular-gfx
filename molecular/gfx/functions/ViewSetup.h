@@ -32,10 +32,15 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 class Quaternion;
+}
 
 namespace gfx
 {
+using namespace util;
+
 class RenderContext;
 
 class ViewSetup : public SingleCalleeRenderFunction

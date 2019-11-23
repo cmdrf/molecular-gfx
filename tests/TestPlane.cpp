@@ -29,6 +29,7 @@ SOFTWARE.
 #include <array>
 
 using namespace molecular;
+using namespace molecular::testbed;
 using namespace molecular::util;
 
 TEST_CASE("TestPlane")

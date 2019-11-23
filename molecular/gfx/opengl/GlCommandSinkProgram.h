@@ -39,6 +39,7 @@ namespace molecular
 {
 namespace gfx
 {
+using namespace util;
 
 /// Compiled shader program
 /** @see Renderer::CreateProgram

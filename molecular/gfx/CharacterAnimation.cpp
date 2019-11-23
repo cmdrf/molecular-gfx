@@ -27,6 +27,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 namespace CharacterAnimation
 {
 
@@ -239,5 +241,6 @@ void SceneGraphToAbsoluteTransforms(const Matrix4 graph[], const int parents[], 
 	}
 }
 
+}
 }
 }

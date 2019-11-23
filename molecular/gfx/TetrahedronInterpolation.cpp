@@ -32,6 +32,8 @@ SOFTWARE.
 
 namespace molecular
 {
+using namespace util;
+
 namespace gfx
 {
 

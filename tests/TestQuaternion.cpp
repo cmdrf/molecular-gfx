@@ -30,6 +30,8 @@ SOFTWARE.
 #include <molecular/util/Math.h>
 
 using namespace molecular;
+using namespace molecular::testbed;
+using namespace molecular::util;
 using namespace molecular::Math;
 
 TEST_CASE("TestQuaternionRotation")
