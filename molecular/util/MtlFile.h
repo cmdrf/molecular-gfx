@@ -31,6 +31,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Wavefront material file.
 /** @todo Read texture declarations */
@@ -103,6 +105,7 @@ private:
 	std::vector<Material> mMaterials;
 };
 
+}
 }
 
 #endif // MOLECULAR_MTLFILE_H

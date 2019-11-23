@@ -30,15 +30,18 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Shader generator functions for subsurface scattering
 /** @deprecated Contents need to be migrated to text file. */
 class SkinProgramData
 {
 public:
-	static void FeedToGenerator(molecular::ProgramGenerator& generator);
+	static void FeedToGenerator(programgenerator::ProgramGenerator& generator);
 };
 
+}
 }
 
 #endif // SKINPROGRAMDATA_H

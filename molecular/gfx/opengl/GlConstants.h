@@ -30,6 +30,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 struct GlConstants
 {
@@ -443,6 +445,7 @@ struct GlConstants
 	};
 };
 
+}
 }
 
 #endif

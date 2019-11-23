@@ -27,6 +27,8 @@ SOFTWARE.*/
 
 namespace molecular
 {
+namespace gfx
+{
 namespace PixelFormatConversion
 {
 
@@ -208,5 +210,6 @@ PixelFormat ToPixelFormat(uint32_t /*glType*/, uint32_t /*glFormat*/, uint32_t g
 	return PF_NONE;
 }
 
+}
 }
 }

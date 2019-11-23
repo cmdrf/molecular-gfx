@@ -28,6 +28,9 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
+using namespace programgenerator;
 
 void SkinProgramData::FeedToGenerator(ProgramGenerator& generator)
 {
@@ -72,4 +75,5 @@ void SkinProgramData::FeedToGenerator(ProgramGenerator& generator)
 	generator.AddFunction(specular);
 }
 
+}
 }

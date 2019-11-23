@@ -32,6 +32,10 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
+using namespace util;
+
 /// Interface to a source of mesh data
 /** @deprecated Better compile to MeshFile directly. */
 class MeshDataSource
@@ -101,6 +105,7 @@ private:
 	std::vector<IndexBufferInfo> mIndexBufferInfos;
 };
 
+}
 }
 
 #endif // MOLECULAR_MESHDATASOURCE_H

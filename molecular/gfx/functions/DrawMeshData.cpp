@@ -33,6 +33,7 @@ namespace molecular
 {
 namespace gfx
 {
+using namespace meshfile;
 
 DrawMeshData::~DrawMeshData()
 {

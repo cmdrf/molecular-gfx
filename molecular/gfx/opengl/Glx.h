@@ -28,6 +28,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Wrapper around GLX functions
 /** Because #including glx.h #includes X11 headers, and those #define all sorts of shit. */
@@ -37,6 +39,7 @@ namespace Glx
 	ProcAddress GetProcAddress(const char* procname);
 }
 
+}
 }
 
 #endif

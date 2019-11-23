@@ -37,6 +37,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 struct GlFunctionsInitializerWgl
 {
@@ -71,7 +73,7 @@ public:
 };
 
 }
-
+}
 #elif __APPLE__
 
 #include "GlFunctionsGles2Native.h"

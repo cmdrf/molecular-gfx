@@ -28,6 +28,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Wrapper around EGL functions
 /** Because #including egl.h #includes X11 headers, and those #define all sorts of shit. */
@@ -37,6 +39,7 @@ namespace Egl
 	ProcAddress GetProcAddress(const char* procname);
 }
 
+}
 }
 
 #endif

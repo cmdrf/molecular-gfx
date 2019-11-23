@@ -31,7 +31,7 @@ namespace molecular
 namespace gfx
 {
 
-ProgramProvider::ProgramProvider(RenderCmdSink& renderer, ProgramGenerator& generator) :
+ProgramProvider::ProgramProvider(RenderCmdSink& renderer, programgenerator::ProgramGenerator& generator) :
 	mRenderer(renderer),
 	mGenerator(generator)
 {

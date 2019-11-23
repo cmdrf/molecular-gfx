@@ -31,6 +31,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Native OpenGL calls up to OpenGL ES 2.0
 /** Used on Apple. Also works in conjunction with GLEW or GL3W. */
@@ -92,6 +94,7 @@ public:
 	void ValidateProgram(GLuint program) {glValidateProgram(program);}
 };
 
+}
 }
 
 #endif // GLFUNCTIONSGLES2NATIVE_H

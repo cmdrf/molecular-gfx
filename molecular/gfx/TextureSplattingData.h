@@ -30,12 +30,16 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
+
 class TextureSplattingData
 {
 public:
-	static void FeedToGenerator(ProgramGenerator& generator);
+	static void FeedToGenerator(programgenerator::ProgramGenerator& generator);
 };
 
+}
 }
 
 #endif // MOLECULAR_TEXTURESPLATTINGDATA_H

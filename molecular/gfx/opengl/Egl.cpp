@@ -32,12 +32,14 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 namespace Egl
 {
 ProcAddress GetProcAddress(const char* procname) {return eglGetProcAddress(procname);}
 }
 }
-
+}
 #else
-molecular::Egl::ProcAddress molecular::Egl::GetProcAddress(const char*) {assert(false); return nullptr;}
+molecular::gfx::Egl::ProcAddress molecular::gfx::Egl::GetProcAddress(const char*) {assert(false); return nullptr;}
 #endif

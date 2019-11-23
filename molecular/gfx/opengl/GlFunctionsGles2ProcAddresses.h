@@ -31,6 +31,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Procedure Addresses for functions that are in GLES 2.0, but not in OpenGL 1.0
 /** Required on Windows, where everything except OpenGL 1.0 must be acquired as
@@ -316,6 +318,7 @@ void OpenGL10ProcAddresses<TInitializer>::Init()
 	I::Init(mViewport, "glViewport");
 }
 
+}
 }
 
 #endif // GLFUNCTIONSGLES2PROCADDRESSES_H

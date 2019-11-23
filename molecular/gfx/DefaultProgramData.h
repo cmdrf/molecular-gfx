@@ -30,13 +30,16 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Contains default data for ProgramGenerator
 class DefaultProgramData
 {
 public:
-	static void FeedToGenerator(molecular::ProgramGenerator& generator);
+	static void FeedToGenerator(programgenerator::ProgramGenerator& generator);
 };
 
+}
 }
 #endif // MOLECULAR_DEFAULTPROGRAMDATA_H

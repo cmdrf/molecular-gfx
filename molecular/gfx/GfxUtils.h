@@ -33,6 +33,8 @@ namespace molecular
 {
 namespace gfx
 {
+using namespace util;
+
 /// Convert screen coordinates to world coordinates
 /** Similar to gluUnProject().
 	@param proj Projection matrix.

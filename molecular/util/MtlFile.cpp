@@ -31,8 +31,10 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
-using namespace Parser;
+using namespace util::Parser;
 
 template<char a, char b>
 using Keyword2 = Concatenation<Char<a>, Char<b>>;
@@ -174,4 +176,5 @@ void MtlFile::ParserAction(int action, const char* begin, const char* end)
 	}
 }
 
+}
 }

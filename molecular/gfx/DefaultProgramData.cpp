@@ -27,6 +27,9 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
+using namespace programgenerator;
 
 void DefaultProgramData::FeedToGenerator(ProgramGenerator& generator)
 {
@@ -102,4 +105,5 @@ void DefaultProgramData::FeedToGenerator(ProgramGenerator& generator)
 	generator.AddVariable("fragmentColor", "vec4", false, ProgramGenerator::VariableInfo::Usage::kOutput);
 }
 
+}
 }

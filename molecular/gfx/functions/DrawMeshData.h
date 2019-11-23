@@ -31,14 +31,16 @@ SOFTWARE.
 #include <molecular/gfx/Material.h>
 #include <molecular/gfx/MaterialManager.h>
 
-
 namespace molecular
 {
+namespace meshfile
+{
 struct MeshFile;
-class MeshDataSource;
+}
 
 namespace gfx
 {
+class MeshDataSource;
 
 /// RenderFunction that draws a group of meshes
 /** @note Do not use this class directly! Use DrawMesh instead, which automatically instantiates
@@ -81,7 +83,7 @@ public:
 
 	/// Store mesh data in Renderer
 	/** Called by MeshLoader::StoreCompiledMesh. */
-	void Load(const MeshFile& file);
+	void Load(const meshfile::MeshFile& file);
 
 	void Unload();
 

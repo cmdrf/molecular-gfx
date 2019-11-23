@@ -30,6 +30,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Functions that are in both OpenGL 1.0 and OpenGL ES 2.0
 class GlFunctionsGl10NativeNoGles2
@@ -62,6 +64,7 @@ public:
 };
 #endif
 
-} // namespace
+} // namespace gfx
+} // namespace molecular
 
 #endif

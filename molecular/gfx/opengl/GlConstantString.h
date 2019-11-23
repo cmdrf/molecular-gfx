@@ -30,12 +30,15 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Returns string for the given OpenGL constant
 /** If the constant is unknown, it returns the enum value as a string that is
 	only valid until the next call to GlConstantString. */
 const char* GlConstantString(GLenum e);
 
+}
 }
 
 #endif

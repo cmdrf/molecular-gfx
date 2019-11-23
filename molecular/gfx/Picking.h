@@ -32,6 +32,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 namespace Picking
 {
 /// Return value of DoPicking()
@@ -45,7 +47,7 @@ struct Result
 template<class TRenderManager>
 Result DoPicking(TRenderManager& renderManager, RenderFunction& function, int mouseX, int mouseY)
 {
-	Renderer& renderer = renderManager.GetRenderer();
+	typename TRenderManager::RenderCmdSink& renderer = renderManager.GetRenderer();
 	int width = 0;
 	int height = 0;
 	renderer.GetViewport(width, height);
@@ -90,6 +92,7 @@ Result DoPicking(TRenderManager& renderManager, RenderFunction& function, int mo
 	return result;
 }
 
+}
 }
 }
 

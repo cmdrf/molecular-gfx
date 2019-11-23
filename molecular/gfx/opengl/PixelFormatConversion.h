@@ -29,6 +29,8 @@ SOFTWARE.*/
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Conversion between PixelFormat and OpenGL type, format and internalFormat
 /** Also used outside of the OpenGL module, so this must not depend on OpenGL
@@ -43,6 +45,7 @@ uint32_t ToGlInternalFormat(PixelFormat format);
 PixelFormat ToPixelFormat(uint32_t glType, uint32_t glFormat, uint32_t glInternalFormat);
 }
 
+}
 }
 
 #endif // MOLECULAR_PIXELFORMATCONVERSION_H

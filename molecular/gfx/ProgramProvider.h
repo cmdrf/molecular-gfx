@@ -43,7 +43,7 @@ namespace gfx
 class ProgramProvider : NonCopyable
 {
 public:
-	ProgramProvider(RenderCmdSink& renderer, molecular::ProgramGenerator& generator);
+	ProgramProvider(RenderCmdSink& renderer, programgenerator::ProgramGenerator& generator);
 	~ProgramProvider();
 
 	/// Get program with the given inputs and outputs
@@ -58,10 +58,10 @@ private:
 	static Hash CalculateHash(Iterator begin, Iterator end);
 
 	RenderCmdSink& mRenderer;
-	molecular::ProgramGenerator& mGenerator;
+	programgenerator::ProgramGenerator& mGenerator;
 
 	std::unordered_map<Hash, RenderCmdSink::Program*> mGeneratedPrograms;
-	std::unordered_map<molecular::ProgramGenerator::Variable,int> mArraySizes;
+	std::unordered_map<programgenerator::ProgramGenerator::Variable,int> mArraySizes;
 };
 
 template<class Iterator, typename ArraySizeFunc>
@@ -82,7 +82,7 @@ RenderCmdSink::Program* ProgramProvider::GetProgram(Iterator varsBegin, Iterator
 			if(mArraySizes.count(*it) == 0)
 				mArraySizes[*it] = arraySizeFunc(*it);
 		}
-		molecular::ProgramGenerator::ProgramText text = mGenerator.GenerateProgram(varsBegin, varsEnd, mArraySizes);
+		programgenerator::ProgramGenerator::ProgramText text = mGenerator.GenerateProgram(varsBegin, varsEnd, mArraySizes);
 		RenderCmdSink::Program* program = mRenderer.CreateProgram();
 		program->Store(text.vertexShader, text.fragmentShader);
 		mGeneratedPrograms[hash] = program;

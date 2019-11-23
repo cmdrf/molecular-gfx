@@ -29,6 +29,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 const char* GlConstantString(GLenum e)
 {
@@ -133,4 +135,5 @@ const char* GlConstantString(GLenum e)
 	return numString;
 }
 
+}
 }

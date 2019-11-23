@@ -42,6 +42,7 @@ namespace molecular
 {
 namespace gfx
 {
+using namespace util;
 
 /// Interface to OpenGL
 /** The constructor can be called outside the renderer thread. After construction, Init() must be
