@@ -29,6 +29,8 @@ SOFTWARE.*/
 
 namespace molecular
 {
+namespace util
+{
 
 /// Pixel formats for textures etc.
 enum PixelFormat
@@ -95,7 +97,8 @@ namespace Pf
 }
 
 }
+}
 
-std::ostream& operator<<(std::ostream& o, molecular::PixelFormat format);
+std::ostream& operator<<(std::ostream& o, molecular::util::PixelFormat format);
 
 #endif // MOLECULAR_PIXELFORMAT_H

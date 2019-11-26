@@ -30,6 +30,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Iterator adapter that dereferences to the first value of a pair iterator
 template<class PairIterator>
@@ -115,6 +117,7 @@ SkippingIterator<Iterator, Predicate> MakeSkippingIterator(Iterator it, Iterator
 	return SkippingIterator<Iterator, Predicate>(it, end, pred);
 }
 
+}
 }
 
 #endif // MOLECULAR_ITERATORADAPTERS_H

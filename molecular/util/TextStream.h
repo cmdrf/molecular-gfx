@@ -31,6 +31,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 class TextReadStreamBase
 {
@@ -78,6 +80,7 @@ private:
 	Storage& mStorage;
 };
 
+}
 }
 
 #endif

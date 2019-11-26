@@ -31,6 +31,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Pre-C++11 interface to TaskDispatcher
 template<class TFinishFlag>
@@ -72,6 +74,7 @@ TaskT<TFinishFlag>::~TaskT()
 		mFinishFlag->Decrement();
 }
 
+}
 }
 
 #endif // MOLECULAR_TASK_H

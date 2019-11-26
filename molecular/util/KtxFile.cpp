@@ -29,6 +29,8 @@ SOFTWARE.*/
 
 namespace molecular
 {
+namespace util
+{
 
 const uint8_t KtxFile::Header::kKtxIdentifier[12] = {0xAB, 0x4B, 0x54, 0x58, 0x20, 0x31, 0x31, 0xBB, 0x0D, 0x0A, 0x1A, 0x0A};
 
@@ -86,4 +88,5 @@ std::pair<const void*, std::size_t> KtxFile::GetImageData(int mipmapLevel, int f
 	return std::pair<const void*, std::size_t>(imageData, singleImageSize);
 }
 
+}
 }

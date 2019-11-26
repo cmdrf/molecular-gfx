@@ -32,6 +32,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Interface to TGA files
 /** Indexed and/or RLE images not supported. Does not copy any data. */
@@ -150,6 +152,7 @@ private:
 	const void* mData;
 };
 
+}
 }
 
 #endif // MOLECULAR_TGAFILE_H

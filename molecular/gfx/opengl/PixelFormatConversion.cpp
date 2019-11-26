@@ -31,7 +31,7 @@ namespace gfx
 {
 namespace PixelFormatConversion
 {
-
+using namespace util;
 using Gl = GlConstants;
 
 uint32_t ToGlType(PixelFormat format)

@@ -31,6 +31,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Interface to Khronos KTX texture files.
 /** @todo Test cube map and array textures. */
@@ -87,6 +89,7 @@ private:
 	std::vector<MipLevel> mMipLevels;
 };
 
+}
 }
 
 #endif // MOLECULAR_KTXFILE_H

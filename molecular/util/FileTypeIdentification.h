@@ -30,6 +30,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Functions for identifying file types from files contents
 namespace FileTypeIdentification
@@ -63,6 +65,7 @@ FileType Identify(const void* data, std::size_t size);
 
 }
 
+}
 }
 
 #endif // MOLECULAR_FILETYPEIDENTIFICATION_H

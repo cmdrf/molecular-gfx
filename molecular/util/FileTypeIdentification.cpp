@@ -29,6 +29,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 namespace FileTypeIdentification
 {
 
@@ -127,5 +129,6 @@ FileType Identify(const void* data, size_t size)
 	return kUnknown;
 }
 
+}
 }
 }

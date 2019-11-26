@@ -30,6 +30,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Thread-safe FIFO queue
 template<class T, class TMutex>
@@ -64,6 +66,7 @@ private:
 	TMutex mMutex;
 };
 
+}
 }
 
 #endif // MOLECULAR_THREADSAFEQUEUE_H

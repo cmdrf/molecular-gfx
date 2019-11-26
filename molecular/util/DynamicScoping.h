@@ -32,6 +32,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Implementation of dynamic scoping
 /** As opposed to static (lexical) scoping used in C/C++. Shallow binding. */
@@ -173,6 +175,7 @@ private:
 	Map mMap;
 };
 
+}
 }
 
 #endif // MOLECULAR_DYNAMICSCOPING_H

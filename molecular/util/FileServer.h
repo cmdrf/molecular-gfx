@@ -43,6 +43,9 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
+
 /** Supports PAK-like archive files and plain files. */
 template<class TFileLoader>
 class FileServer
@@ -181,6 +184,8 @@ private:
 	StringStore mDirectoryContents;
 	PackageFileDirectory mPackageFileDirectory;
 };
+
+}
 }
 
 #endif // MOLECULAR_FILESERVER_H
