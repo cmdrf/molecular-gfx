@@ -70,9 +70,10 @@ public:
 				auto fileContents = StringUtils::FromStorage(storage);
 				mDirectoryContents.LoadFromText(fileContents.data(), fileContents.size());
 			}
-			catch (std::exception& e)
+			catch (std::exception& /*e*/)
 			{
-				LOG(WARNING) << "Loading directory contents file failed: " << e.what();
+				// Because files can be manually added it is not an error to have neither
+				// of these files.
 			}
 		}
 	}
@@ -97,6 +98,17 @@ public:
 		{
 			throw std::runtime_error("Loading of package file " + path + " failed: " + e.what());
 		}
+	}
+
+	/**
+	 * @brief SetFileList is used as an alternative to contents.txt file.
+	 * @param files is a string containing all available files separated
+	 *        either by ; or a newline (\n) */
+	void SetFileList(const std::string& files)
+	{
+		// This class needs to be recreated in order to clear existing offsets.
+		mDirectoryContents = StringStore();
+		mDirectoryContents.LoadFromText(files.data(), files.size());
 	}
 
 	/// Read entire file and pass contents to handler
