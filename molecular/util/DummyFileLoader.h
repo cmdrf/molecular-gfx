@@ -31,6 +31,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// FileLoader that loads a file synchronously
 class DummyFileLoader
@@ -83,6 +85,7 @@ inline Blob DummyFileLoader::ReadFile(const char* path, size_t offset, size_t le
 	return blob;
 }
 
+}
 }
 
 #endif // MOLECULAR_DUMMYFILELOADER_H
