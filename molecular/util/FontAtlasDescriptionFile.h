@@ -67,7 +67,7 @@ struct FontAtlasDescriptionFile
 		{
 			for(unsigned int i = 0; i < kerningCount; ++i)
 			{
-				if(kerningInfos[i].charcode == charcode)
+				if(kerningInfos[i].charcode == static_cast<int32_t>(charcode))
 					return kerningInfos[i].kerning;
 			}
 			return 0;
@@ -94,7 +94,7 @@ struct FontAtlasDescriptionFile
 		{
 			for(unsigned int i = 0; i < glyphCount; ++i)
 			{
-				if(utfOffsets[i].charcode == charcode)
+				if(utfOffsets[i].charcode == static_cast<int32_t>(charcode))
 					return reinterpret_cast<const GlyphInfo*>(reinterpret_cast<const uint8_t*>(this) + utfOffsets[i].offset);
 			}
 		}
