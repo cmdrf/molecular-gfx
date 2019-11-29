@@ -29,6 +29,7 @@ SOFTWARE.
 #include "TgaTestData.h"
 
 using namespace molecular;
+using namespace molecular::util;
 
 TEST_CASE("TestTgaFile")
 {

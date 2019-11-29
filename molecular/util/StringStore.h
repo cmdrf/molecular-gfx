@@ -33,6 +33,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Structure for files mapping hashes to strings
 struct StringStoreFile
@@ -94,6 +96,7 @@ private:
 	std::string mStringList;
 };
 
+}
 }
 
 #endif

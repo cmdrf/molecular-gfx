@@ -30,6 +30,7 @@ SOFTWARE.
 
 using Catch::Matchers::Equals;
 using namespace molecular;
+using namespace molecular::util;
 
 TEST_CASE("TestStringStore")
 {

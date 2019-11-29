@@ -50,7 +50,7 @@ constexpr Hash MakeHash(Hash hash)
 
 /// Loads assets when they are needed, and unloads them when they are not needed anymore
 template<class T, int lodLevels, bool mipmapStyle, class Location = std::string>
-class AssetManager : NonCopyable
+class AssetManager : util::NonCopyable
 {
 public:
 	class Asset;

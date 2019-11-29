@@ -27,6 +27,8 @@ SOFTWARE.*/
 
 namespace molecular
 {
+namespace util
+{
 
 /// Base class that prevents copying any object of a derived class
 class NonCopyable
@@ -50,6 +52,7 @@ public:
 
 };
 
+}
 }
 
 #endif

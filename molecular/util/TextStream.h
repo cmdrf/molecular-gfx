@@ -37,7 +37,7 @@ namespace util
 class TextReadStreamBase
 {
 public:
-	virtual ~TextReadStreamBase() {}
+	virtual ~TextReadStreamBase() = default;
 	virtual char* GetNextLine() = 0;
 };
 

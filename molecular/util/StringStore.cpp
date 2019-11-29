@@ -31,6 +31,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 StringStore::StringStore(const void* fileData, size_t fileSize)
 {
@@ -98,4 +100,5 @@ const char* StringStore::FindString(uint32_t hash) const noexcept
 	return &mStringList.at(it->second);
 }
 
+}
 }
