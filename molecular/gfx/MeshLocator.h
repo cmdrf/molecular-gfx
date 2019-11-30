@@ -39,7 +39,7 @@ namespace gfx
 struct MeshLocator
 {
 	/// Mesh file path
-	Hash meshFile;
+	util::Hash meshFile;
 
 	/// Specifies a morph target file path and its weight
 	struct MorphTarget

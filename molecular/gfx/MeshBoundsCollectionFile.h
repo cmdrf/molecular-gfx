@@ -33,6 +33,7 @@ namespace molecular
 {
 namespace gfx
 {
+using util::Hash;
 
 static_assert(sizeof(util::AxisAlignedBox) == 6 * sizeof(float), "AxisAlignedBox does not only contain 6 floats");
 

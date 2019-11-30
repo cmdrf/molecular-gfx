@@ -34,7 +34,10 @@ namespace molecular
 {
 namespace gfx
 {
+
+/// Dynamic scoping to associate hashes to Variable
 typedef DynamicScoping<Hash, Variable> Scoping;
+
 }
 }
 #endif // MOLECULAR_GFX_SCOPING_H

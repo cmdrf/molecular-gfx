@@ -22,18 +22,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 */
 
-#ifndef MOLECULAR_DRAWSKYDOME_H
-#define MOLECULAR_DRAWSKYDOME_H
+#ifndef MOLECULAR_GFX_DRAWSKYDOME_H
+#define MOLECULAR_GFX_DRAWSKYDOME_H
 
 #include "DrawingFunction.h"
 #include <molecular/util/Matrix4.h>
+#include <molecular/util/Math.h>
 #include <cstdint>
 
 namespace molecular
 {
 namespace gfx
 {
+using namespace util;
 
+/// Draw textures sky dome
+/** Always writes 1.0 to Z so that it is drawn behind everything else. Use with 360deg by 90deg
+	panoramic textures. */
 template<class TRenderManager>
 class DrawSkyDome : public DrawingFunction
 {
@@ -44,6 +49,8 @@ public:
 	~DrawSkyDome();
 
 	void Execute() override;
+
+	/// Returns infinite bounds, so the sky dome is always rendered
 	util::AxisAlignedBox GetBounds() const override;
 
 	void SetTexture(Hash texture);
@@ -81,8 +88,8 @@ void DrawSkyDome<TRenderManager>::Execute()
 		const unsigned int azimuthSteps = 24;
 		std::vector<float> vertexData;
 		vertexData.reserve(polarSteps * azimuthSteps * 5);
-		const float polarStep = 0.5f * kPi_f / (polarSteps - 1);
-		const float azimuthStep = 2.0f * kPi_f / (azimuthSteps - 1);
+		const float polarStep = 0.5f * Math::kPi_f / (polarSteps - 1);
+		const float azimuthStep = 2.0f * Math::kPi_f / (azimuthSteps - 1);
 		const float radius = 100;
 		const float uStep = 1.0f / (azimuthSteps - 1);
 		const float vStep = 1.0f / (polarSteps - 1);
@@ -156,6 +163,7 @@ void DrawSkyDome<TRenderManager>::Execute()
 template<class TRenderManager>
 util::AxisAlignedBox DrawSkyDome<TRenderManager>::GetBounds() const
 {
+	// Return infinite box
 	return util::AxisAlignedBox();
 }
 
@@ -167,4 +175,4 @@ void DrawSkyDome<TRenderManager>::SetTexture(Hash texture)
 
 }
 }
-#endif // MOLECULAR_DRAWSKYDOME_H
+#endif // MOLECULAR_GFX_DRAWSKYDOME_H

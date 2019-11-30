@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_DRAWTERRAIN_H
-#define MOLECULAR_DRAWTERRAIN_H
+#ifndef MOLECULAR_GFX_DRAWTERRAIN_H
+#define MOLECULAR_GFX_DRAWTERRAIN_H
 
 #include "DrawingFunction.h"
 
@@ -33,9 +33,14 @@ namespace molecular
 namespace gfx
 {
 
-/** @todo Frustum culling
-	@todo Skirting
-	@todo Mipmapping */
+/// Draw heightmap terrain
+/** Divides the terrain into patches of size kPatchSize. Stores heightmap data in a texture that
+	is evaluated in the vertex shader. Does level of detail calculations. Origin of the terrain
+	mesh is the corner with heightmap index 0,0.
+
+	@todo Frustum culling for individual patches.
+	@todo Skirting to hide seams between patches with different LOD.
+	@todo Mipmapping. Right now, simple subsampling is used for lower LOD. */
 class DrawTerrain : public DrawingFunction
 {
 public:
@@ -46,11 +51,22 @@ public:
 	void Execute() override;
 	util::AxisAlignedBox GetBounds() const override;
 
-	/** @todo Pass as parameter to SetHeightmapData(). */
+	/// Set scaling factor for heightmap values
+	/** Defaults to 1.
+		@todo Pass as parameter to SetHeightmapData(). */
 	void SetHeightScale(float scale) {mHeightScale = scale;}
+
+	/// Set drawing size of terrain
+	/** Terrain is always drawn with these dimensions, regardless of heightmap sample count. */
 	void SetSize(float xSize, float ySize);
+
+	/// Set heightmap data from array of floats
 	void SetHeightmapData(unsigned int width, unsigned int height, const float* data);
+
+	/// Set heightmap to a 2D sine pattern for testing purposes
 	void SetTestData(unsigned int width, unsigned int height);
+
+	/// Set factor which decides on the LOD level from distance to viewer
 	void SetLodFactor(float factor) {mLodFactor = factor;}
 	void SetPickingId(unsigned int id) {mPickingId = id;}
 
@@ -119,4 +135,4 @@ DrawTerrain::DrawTerrain(TRenderManager& manager) :
 }
 }
 
-#endif // DRAWTERRAIN_H
+#endif // MOLECULAR_GFX_DRAWTERRAIN_H

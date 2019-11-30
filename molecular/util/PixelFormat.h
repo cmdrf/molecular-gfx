@@ -46,8 +46,8 @@ enum PixelFormat
 	PF_R8G8B8A8, ///< 32 bit RGBA
 	PF_B8G8R8, ///< 24 bit BGR
 	PF_B8G8R8A8, ///< 24 bit BGRA
-	PF_R4G4B4A4,
-	PF_R5G5B5A1,
+	PF_R4G4B4A4, ///< 16 bit RGBA, 4 bit per component
+	PF_R5G5B5A1, ///< 15 bit RGB and 1 bit alpha
 	PF_L8, ///< 8 bits luminance
 	PF_L32_UNSIGNED, ///< 32 bit unsigned integer luminance
 	PF_L8A8, ///< 8 bits luminance, 8 bits alpha
@@ -59,16 +59,16 @@ enum PixelFormat
 
 	PF_L_FLOAT32, ///< 32 bit float luminance
 	PF_RGB_FLOAT16, ///< 16 bit float RGB
-	PF_RGB_FLOAT32,
-	PF_RGBA_FLOAT16,
-	PF_RGBA_FLOAT32,
+	PF_RGB_FLOAT32, ///< 32 bit float RGB
+	PF_RGBA_FLOAT16, ///< 16 bit float RGBA
+	PF_RGBA_FLOAT32, ///< 32 bit float RGBA
 
-	PF_DEPTH_16,
-	PF_DEPTH_24,
-	PF_DEPTH_32,
-	PF_DEPTH_FLOAT32,
+	PF_DEPTH_16, ///< 16 bit integer depth buffer
+	PF_DEPTH_24, ///< 24 bit integer depth buffer
+	PF_DEPTH_32, ///< 32 bit integer depth buffer
+	PF_DEPTH_FLOAT32, ///< 32 bit float depth buffer
 
-	PF_STENCIL_8,
+	PF_STENCIL_8, ///< 8 bit stencil buffer
 
 	PF_RGB_DXT1, ///< S3 Texture Compression DXT1, SRGB
 	PF_RGBA_DXT1, ///< S3TC DXT1 with alpha, SRGB
@@ -89,10 +89,12 @@ enum PixelFormat
 	PF_RGBA_ETC2_LINEAR ///< Ericsson Texture Compression v2 with Alpha, linear color space
 };
 
+/// Functions handling PixelFormat values
 namespace Pf
 {
 
-	bool IsCompressed(PixelFormat format);
+/// Determine if the given pixel format is a compressed format
+bool IsCompressed(PixelFormat format);
 
 }
 

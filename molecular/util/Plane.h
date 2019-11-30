@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_PLANE_H
-#define MOLECULAR_PLANE_H
+#ifndef MOLECULAR_UTIL_PLANE_H
+#define MOLECULAR_UTIL_PLANE_H
 
 #include <molecular/util/Vector3.h>
 #include <molecular/util/AxisAlignedBox.h>
@@ -40,16 +40,19 @@ namespace util
 class Plane
 {
 public:
+	/// Default plane. Spans XY plane, points towards +Z
 	Plane() :
 		mNormal(0, 0, 1),
 		mDistance(0)
 	{}
 
+	/// Construct from normal and distance, normal as Vector3
 	Plane(const Vector3& normal, float distance) :
 		mNormal(normal),
 		mDistance(distance)
 	{}
 
+	/// Construct from normal and distance, normal as individual components
 	Plane(float n0, float n1, float n2, float d) :
 		mNormal(n0, n1, n2),
 		mDistance(d)
@@ -59,6 +62,7 @@ public:
 	/** Normal is positive for the side on which the points are defined CCW. */
 	inline Plane(const Vector3& p0, const Vector3& p1, const Vector3& p2);
 
+	/// Return type of Check()
 	enum IntersectStatus
 	{
 		kOutside,
@@ -66,12 +70,14 @@ public:
 		kIntersect
 	};
 
+	/// Get distance of point to plane
 	float GetDistance(const Vector3& point) const
 	{
 		return mNormal.DotProduct(point) - mDistance;
 	}
 
 	/// Check point
+	/** Never returns kIntersect, obviously. */
 	IntersectStatus Check(const Vector3& point) const
 	{
 		float distance = GetDistance(point);
@@ -93,6 +99,7 @@ public:
 		return kInside;
 	}
 
+	/// Check AABB
 	IntersectStatus Check(const AxisAlignedBox& box) const
 	{
 		Vector3 center = box.GetCenter();
@@ -109,6 +116,8 @@ public:
 		return kIntersect;
 	}
 
+	/// Scale normal and vector so that normal has unit length
+	/** Values describes the same plane before and after normalization. */
 	void Normalize()
 	{
 		float invLength = 1.0f / mNormal.Length();
@@ -127,6 +136,10 @@ public:
 	template<class InputIterator, class OutputIterator>
 	OutputIterator ClipPolygon(InputIterator inputBegin, InputIterator inputEnd, OutputIterator destBegin);
 
+	/// Get point where line intersects with plane
+	/** Line is given by two endpoints.
+		@param p0 One endpoint of the line.
+		@param p1 The other endpoint of the line. */
 	inline Vector3 IntersectionPoint(const Vector3& p0, const Vector3& p1);
 
 private:
