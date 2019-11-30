@@ -30,6 +30,7 @@ namespace molecular
 {
 namespace gfx
 {
+using namespace util;
 using namespace programgenerator;
 
 void SkinProgramData::FeedToGenerator(ProgramGenerator& generator)

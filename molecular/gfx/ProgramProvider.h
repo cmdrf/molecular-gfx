@@ -100,7 +100,7 @@ Hash ProgramProvider::CalculateHash(Iterator begin, Iterator end)
 		if(it == begin)
 			hash = *it;
 		else
-			hash = molecular::HashUtils::Combine(hash, *it);
+			hash = util::HashUtils::Combine(hash, *it);
 	}
 
 	return hash;

@@ -37,6 +37,7 @@ namespace molecular
 {
 namespace gfx
 {
+using namespace util;
 
 inline Hash MakeHash(const std::string& string)
 {

@@ -27,12 +27,13 @@ SOFTWARE.
 #define MOLECULAR_SKELETON_H
 
 #include <molecular/gfx/RenderFunction.h>
-#include <molecular/gfx/CharacterAnimation.h>
+#include <molecular/util/CharacterAnimation.h>
 
 namespace molecular
 {
 namespace gfx
 {
+using namespace util;
 
 /// Set character animation uniforms
 class Skeleton : public SingleCalleeRenderFunction

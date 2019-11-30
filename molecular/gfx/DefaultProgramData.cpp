@@ -30,6 +30,7 @@ namespace molecular
 namespace gfx
 {
 using namespace programgenerator;
+using namespace util;
 
 void DefaultProgramData::FeedToGenerator(ProgramGenerator& generator)
 {

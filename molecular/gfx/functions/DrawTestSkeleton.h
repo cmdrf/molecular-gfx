@@ -27,7 +27,7 @@ SOFTWARE.
 #define MOLECULAR_DRAWTESTSKELETON_H
 
 #include "DrawingFunction.h"
-#include <molecular/gfx/CharacterAnimation.h>
+#include <molecular/util/CharacterAnimation.h>
 
 namespace molecular
 {
