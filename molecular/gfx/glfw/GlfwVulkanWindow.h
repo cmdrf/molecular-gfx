@@ -31,7 +31,8 @@ SOFTWARE.
 
 namespace molecular
 {
-
+namespace gfx
+{
 struct demo;
 
 class GlfwVulkanWindow
@@ -56,6 +57,7 @@ private:
 	uint32_t mHeight = 0;
 };
 
+}
 }
 
 #endif // MOLECULAR_GLFWVULKANWINDOW_H

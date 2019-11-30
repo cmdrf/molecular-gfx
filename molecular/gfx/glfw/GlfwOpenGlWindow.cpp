@@ -29,6 +29,9 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
+
 GlfwOpenGlWindow::GlfwOpenGlWindow(const char* title)
 {
 	if(glfwInit() == GLFW_FALSE)
@@ -74,5 +77,7 @@ GlfwOpenGlWindow::~GlfwOpenGlWindow()
 {
 	glfwDestroyWindow(mWindow);
 	glfwTerminate();
+}
+
 }
 }

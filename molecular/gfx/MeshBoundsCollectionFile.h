@@ -31,9 +31,14 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 static_assert(sizeof(util::AxisAlignedBox) == 6 * sizeof(float), "AxisAlignedBox does not only contain 6 floats");
 
+/// File format for collection of bounding boxes
+/** Associates hash values to bounding boxes. Used to determine if meshes are in view and have to be
+	loaded. */
 struct MeshBoundsCollectionFile
 {
 	static const uint32_t kMagic = 0x505eb0f1;
@@ -59,6 +64,7 @@ struct MeshBoundsCollectionFile
 	}
 };
 
+}
 }
 
 #endif // MESHBOUNDSCOLLECTIONFILE_H

@@ -30,6 +30,9 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
+
 /// Initializes a GLFWwindow with OpenGL capabilities
 class GlfwOpenGlWindow
 {
@@ -46,5 +49,7 @@ public:
 private:
 	GLFWwindow* mWindow = nullptr;
 };
+
+}
 }
 #endif

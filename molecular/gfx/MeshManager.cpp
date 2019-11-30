@@ -27,6 +27,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 Hash MakeHash(const MeshLocator& locator)
 {
@@ -39,4 +41,5 @@ Hash MakeHash(const MeshLocator& locator)
 	return hash;
 }
 
+}
 }

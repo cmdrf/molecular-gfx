@@ -32,8 +32,12 @@ SOFTWARE.
 
 namespace molecular
 {
-typedef gfx::RenderManagerT<FileServer<GlfwFileLoader>, TaskDispatcher> GlfwRenderManager;
-extern template class gfx::RenderManagerT<FileServer<GlfwFileLoader>, TaskDispatcher>;
-}
+namespace gfx
+{
 
+typedef RenderManagerT<FileServer<GlfwFileLoader>, TaskDispatcher> GlfwRenderManager;
+extern template class RenderManagerT<FileServer<GlfwFileLoader>, TaskDispatcher>;
+
+}
+}
 #endif

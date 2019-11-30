@@ -29,6 +29,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 #define DEMO_TEXTURE_COUNT 1
 #define APP_SHORT_NAME "mol"
@@ -1036,4 +1038,5 @@ GlfwVulkanWindow::~GlfwVulkanWindow()
 	glfwTerminate();
 }
 
+}
 }

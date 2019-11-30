@@ -32,6 +32,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Specifies a mesh file and optional morph targets
 struct MeshLocator
@@ -52,6 +54,7 @@ struct MeshLocator
 	std::vector<MorphTarget> morphTargets;
 };
 
+}
 }
 
 #endif // MOLECULAR_MESHLOCATOR_H

@@ -32,12 +32,12 @@ SOFTWARE.
 namespace molecular
 {
 
+namespace gfx
+{
+
 /// Modified hashing function that hashes MeshLocator
 /** Includes the file name and morph targets with their respective weights. */
 Hash MakeHash(const MeshLocator& locator);
-
-namespace gfx
-{
 
 class DrawMeshData;
 
