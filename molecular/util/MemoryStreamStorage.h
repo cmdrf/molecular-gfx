@@ -32,6 +32,8 @@ SOFTWARE.*/
 
 namespace molecular
 {
+namespace util
+{
 
 /// ReadStorage interface to an existing block of memory
 class MemoryReadStorage : public ReadStorage
@@ -106,6 +108,7 @@ inline void MemoryWriteStorage::Write(const void *ptr, const size_t size)
 	mCursor += size;
 }
 
+}
 }
 
 #endif

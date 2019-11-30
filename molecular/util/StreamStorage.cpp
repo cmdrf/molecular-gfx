@@ -27,10 +27,13 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 ReadStorage::~ReadStorage()
 {
 
 }
 
+}
 }

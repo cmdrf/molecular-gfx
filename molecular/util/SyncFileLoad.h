@@ -31,6 +31,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 template<class TFileLoader, class TTaskQueue>
 Blob SyncFileLoad(const char* filename, TFileLoader& fileLoader, TTaskQueue& queue, size_t offset = 0, size_t length = 0)
@@ -43,5 +45,6 @@ Blob SyncFileLoad(const char* filename, TFileLoader& fileLoader, TTaskQueue& que
 	return fileContents;
 }
 
+}
 }
 #endif // SYNCFILELOAD_H

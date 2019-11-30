@@ -1,4 +1,4 @@
-/*	DynamicScoping.h
+/*	Scoping.h
 
 MIT License
 
@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef VARIABLESCOPING_H
-#define VARIABLESCOPING_H
+#ifndef MOLECULAR_GFX_SCOPING_H
+#define MOLECULAR_GFX_SCOPING_H
 
 #include <molecular/util/Hash.h>
 #include "Uniform.h"
@@ -37,5 +37,5 @@ namespace gfx
 typedef DynamicScoping<Hash, Variable> Scoping;
 }
 }
-#endif // VARIABLESCOPING_H
+#endif // MOLECULAR_GFX_SCOPING_H
 

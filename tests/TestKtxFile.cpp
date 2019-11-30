@@ -28,6 +28,7 @@ SOFTWARE.
 #include "KtxTestData.h"
 
 using namespace molecular;
+using namespace molecular::util;
 
 TEST_CASE("TestKtxFile")
 {

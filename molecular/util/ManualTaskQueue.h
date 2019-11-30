@@ -33,6 +33,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Task queue that runs tasks on calls to RunOneTask
 /** @see DummyTaskDispatcher */
@@ -109,6 +111,7 @@ bool ManualTaskQueue<TMutex>::IsFinished(FinishFlag& flag)
 	return flag.CheckZero();
 }
 
+}
 }
 
 #endif // MOLECULAR_MANUALTASKQUEUE_H

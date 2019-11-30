@@ -28,6 +28,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 VulkanInfrastructure::VulkanInfrastructure()
 {
@@ -94,4 +96,5 @@ void VulkanInfrastructure::Exit()
 	mInstance.destroy();
 }
 
+}
 }

@@ -34,7 +34,7 @@ SOFTWARE.
 
 namespace molecular
 {
-namespace Gfx
+namespace gfx
 {
 
 using RenderCmdSink = VulkanRenderCmdSink;

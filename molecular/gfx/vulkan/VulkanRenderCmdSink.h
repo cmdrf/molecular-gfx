@@ -37,6 +37,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Interface to Vulkan
 class VulkanRenderCmdSink : NonCopyable
@@ -272,6 +274,7 @@ public:
 	unsigned int GetHeight() const {}
 };
 
+}
 }
 
 #endif // MOLECULAR_VULKANRENDERCMDSINK_H

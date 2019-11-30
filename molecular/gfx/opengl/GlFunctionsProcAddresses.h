@@ -32,6 +32,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Procedure addresses for functions above GLES 2.0
 template<class TInitializer>
@@ -254,6 +256,7 @@ void GlFunctionsProcAddresses<TInitializer>::Init()
 	I::Init(mPrimitiveRestartIndex, "glPrimitiveRestartIndex", true);
 }
 
+}
 }
 
 #endif // GLFUNCTIONSGLES3_H

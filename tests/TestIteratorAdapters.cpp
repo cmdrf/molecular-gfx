@@ -28,7 +28,7 @@ SOFTWARE.
 #include <molecular/util/IteratorAdapters.h>
 #include <iostream>
 
-using namespace molecular;
+using namespace molecular::util;
 
 TEST_CASE("TestSkippingIterator")
 {

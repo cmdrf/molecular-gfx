@@ -32,6 +32,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// Locking mechanism for resources accessed by multiple threads
 class StdMutex
@@ -89,6 +91,7 @@ private:
 	std::thread mThread;
 };
 
+}
 }
 
 #endif // MOLECULAR_STDTHREAD_H

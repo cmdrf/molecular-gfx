@@ -27,6 +27,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 VulkanRenderCmdSink::~VulkanRenderCmdSink()
 {
@@ -210,4 +212,5 @@ void VulkanRenderCmdSink::RenderTarget::AttachStencilBuffer(unsigned int width, 
 
 }
 
+}
 }

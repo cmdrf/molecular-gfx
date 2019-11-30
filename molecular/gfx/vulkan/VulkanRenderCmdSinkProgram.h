@@ -31,6 +31,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 /// Compiled shader program
 /** @see Renderer::CreateProgram
@@ -121,6 +123,7 @@ private:
 	std::unordered_set<Hash> mInputs;
 };
 
+}
 }
 
 #endif

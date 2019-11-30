@@ -30,6 +30,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 class VulkanInfrastructure
 {
@@ -43,6 +45,7 @@ private:
 	vk::Instance mInstance;
 };
 
+}
 }
 
 #endif // VULKANINFRASTRUCTURE_H

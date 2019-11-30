@@ -27,6 +27,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 MemoryReadStorage::MemoryReadStorage(const void* pointer, size_t length) :
 	mData(static_cast<const uint8_t*>(pointer)),
@@ -45,4 +47,5 @@ void MemoryWriteStorage::SetCursor(size_t cursor)
 	mCursor = cursor;
 }
 
+}
 }

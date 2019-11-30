@@ -33,6 +33,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace util
+{
 
 /// PAK-like file structure
 struct PackageFile
@@ -105,6 +107,7 @@ private:
 	std::unordered_map<Hash, Entry> mEntries;
 };
 
+}
 }
 
 #endif // PACKAGEFILE_H

@@ -223,7 +223,7 @@ private:
 
 	RenderTarget* mCurrentTarget = nullptr;
 	GLuint mBaseTargetFramebuffer = 0;
-	molecular::IntVector4 mBaseTargetViewport = {0, 0, 640, 480};
+	IntVector4 mBaseTargetViewport = {0, 0, 640, 480};
 };
 
 /******************************* Nested classes ******************************/

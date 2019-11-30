@@ -27,6 +27,8 @@ SOFTWARE.
 
 namespace molecular
 {
+namespace gfx
+{
 
 void VulkanRenderCmdSink::Program::Store(const std::string& vertexShaderSource, const std::string& pixelShaderSource)
 {
@@ -48,4 +50,5 @@ void VulkanRenderCmdSink::Program::SetAttribute(Hash key, VertexBuffer* buffer, 
 
 }
 
+}
 }
