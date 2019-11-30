@@ -151,8 +151,6 @@ add_library(molecular-gfx
 	molecular/util/StdTaskQueue.cpp
 	molecular/util/StdTaskQueue.h
 	molecular/util/StdThread.h
-	molecular/util/StreamStorage.cpp
-	molecular/util/StreamStorage.h
 	molecular/util/StringStore.cpp
 	molecular/util/StringStore.h
 	molecular/util/Task.h

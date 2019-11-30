@@ -25,7 +25,7 @@ SOFTWARE.*/
 #ifndef MOLECULAR_MEMORYSTREAMSTORAGE_H
 #define MOLECULAR_MEMORYSTREAMSTORAGE_H
 
-#include "StreamStorage.h"
+#include <molecular/util/StreamStorage.h>
 #include <stdexcept>
 #include <cstring> // memcpy
 #include <algorithm>
