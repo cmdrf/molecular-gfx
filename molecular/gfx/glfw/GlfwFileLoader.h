@@ -33,7 +33,7 @@ namespace molecular
 namespace gfx
 {
 /// Selects file loader, depending on OS
-using GlfwFileLoader = GcdAsyncFileLoader;
+using GlfwFileLoader = util::GcdAsyncFileLoader;
 }
 }
 #else
@@ -43,7 +43,7 @@ namespace molecular
 namespace gfx
 {
 /// Selects file loader, depending on OS
-using GlfwFileLoader = DummyFileLoader;
+using GlfwFileLoader = util::DummyFileLoader;
 }
 }
 #endif
