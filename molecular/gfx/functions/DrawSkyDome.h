@@ -28,6 +28,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #include "DrawingFunction.h"
 #include <molecular/util/Matrix4.h>
 #include <molecular/util/Math.h>
+#include <molecular/gfx/TextureManager.h>
 #include <cstdint>
 
 namespace molecular
@@ -57,7 +58,7 @@ public:
 
 private:
 	RenderManager& mRenderManager;
-	typename RenderManager::TextureManager::Asset* mTexture = nullptr;
+	TextureManager::Asset* mTexture = nullptr;
 	typename RenderManager::RenderCmdSink::VertexBuffer* mVertexBuffer = nullptr;
 	typename RenderManager::RenderCmdSink::IndexBuffer* mIndexBuffer = nullptr;
 	VertexAttributeInfo mPositionInfo;
