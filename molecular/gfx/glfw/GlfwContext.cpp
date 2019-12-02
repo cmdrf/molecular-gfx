@@ -38,7 +38,7 @@ GlfwContext::GlfwContext(GLFWwindow* window) :
 
 }
 
-IntVector4 GlfwContext::GetViewport(int eye)
+util::IntVector4 GlfwContext::GetViewport(int eye)
 {
 	assert(eye == 0);
 	int x = 0;

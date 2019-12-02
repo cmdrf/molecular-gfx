@@ -86,7 +86,7 @@ public:
 	FileServer& GetFileServer() {return mFileServer;}
 	TextureManager& GetTextureManager() {return mTextureManager;}
 	MeshManager& GetMeshManager() {return mMeshManager;}
-	ProgramGenerator& GetProgramGenerator() {return mProgramGenerator;}
+	programgenerator::ProgramGenerator& GetProgramGenerator() {return mProgramGenerator;}
 	ProgramProvider& GetProgramProvider() {return mProgramProvider;}
 	MaterialManager& GetMaterialManager() {return mMaterialManager;}
 
@@ -111,7 +111,7 @@ private:
 	MeshManager mMeshManager;
 	MaterialManager mMaterialManager;
 
-	ProgramGenerator mProgramGenerator;
+	programgenerator::ProgramGenerator mProgramGenerator;
 	ProgramProvider mProgramProvider;
 
 	Blob mMeshBoundsCollectionFileData;
@@ -151,7 +151,7 @@ bool RenderManagerT<TFileServer, TTaskQueue>::LoadProgramFile(const Blob& fileCo
 	try
 	{
 		char* fileBegin =  const_cast<char*>(static_cast<const char*>(fileContents.GetData()));
-		ProgramFile progFile(fileBegin, fileBegin + fileContents.GetSize());
+		programgenerator::ProgramFile progFile(fileBegin, fileBegin + fileContents.GetSize());
 
 		for(auto& it: progFile.GetVariables())
 		{

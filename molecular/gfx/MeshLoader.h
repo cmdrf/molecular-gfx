@@ -129,7 +129,7 @@ void MeshLoader<TRenderManager>::StoreMesh(MeshManager::Asset& destination, Blob
 template<class TRenderManager>
 void MeshLoader<TRenderManager>::StoreCompiledMesh(MeshManager::Asset& destination, Blob& blob)
 {
-	const MeshFile& file = *static_cast<const MeshFile*>(blob.GetData());
+	const meshfile::MeshFile& file = *static_cast<const meshfile::MeshFile*>(blob.GetData());
 	try
 	{
 		destination.GetAsset()->Load(file);

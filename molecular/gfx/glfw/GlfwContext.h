@@ -43,7 +43,7 @@ public:
 	/** Throws exceptions on failure. */
 	GlfwContext(GLFWwindow* window);
 
-	IntVector4 GetViewport(int eye) override;
+	util::IntVector4 GetViewport(int eye) override;
 
 private:
 	GLFWwindow* mWindow = nullptr;
