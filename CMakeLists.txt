@@ -1,5 +1,3 @@
-find_package(GLFW QUIET)
-
 configure_file(molecular/Config.h.in molecular/Config.h)
 
 add_library(molecular-gfx
@@ -160,7 +158,7 @@ add_library(molecular-gfx
 )
 add_library(molecular::gfx ALIAS molecular-gfx)
 
-if(GLFW_FOUND)
+if(TARGET glfw)
 	target_sources(molecular-gfx PRIVATE
 		molecular/gfx/glfw/GlfwContext.cpp
 		molecular/gfx/glfw/GlfwContext.h
@@ -174,7 +172,7 @@ if(GLFW_FOUND)
 		#	molecular/gfx/glfw/GlfwVulkanWindow.h
 		molecular/gfx/glfw/GlfwWindow.h
 	)
-endif(GLFW_FOUND)
+endif(TARGET glfw)
 
 if(APPLE)
 	target_compile_definitions(molecular-gfx PUBLIC GL_SILENCE_DEPRECATION)
@@ -199,10 +197,10 @@ target_link_libraries(molecular-gfx PUBLIC
 	Threads::Threads
 )
 
-if(GLFW_FOUND)
+if(TARGET glfw)
 	target_link_libraries(molecular-gfx PUBLIC glfw)
 	add_subdirectory(examples)
-endif(GLFW_FOUND)
+endif(TARGET glfw)
 
 if(BUILD_TESTING)
 	add_subdirectory(tests)
