@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -43,9 +43,9 @@ public:
 
 	virtual int GetNumEyes() {return 1;}
 	virtual util::IntVector4 GetViewport(int eye) = 0;
-	virtual intptr_t GetRenderTarget(int eye) {assert(eye == 0); return 0;}
-	virtual util::Matrix4 GetHeadToEyeTransform(int eye) {assert(eye == 0); return util::Matrix4::Identity();}
-	virtual bool HasProjectionMatrix(int eye) {assert(eye == 0); return false;}
+	virtual intptr_t GetRenderTarget(int eye) {assert(eye == 0); static_cast<void>(eye); return 0;}
+	virtual util::Matrix4 GetHeadToEyeTransform(int eye) {assert(eye == 0); static_cast<void>(eye); return util::Matrix4::Identity();}
+	virtual bool HasProjectionMatrix(int eye) {assert(eye == 0); static_cast<void>(eye); return false;}
 	virtual util::Matrix4 GetProjectionMatrix(int /*eye*/) {assert(false); return util::Matrix4::Identity();}
 };
 

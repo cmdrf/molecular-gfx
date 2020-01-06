@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -56,7 +56,7 @@ public:
 	void EnqueueTask(Task* task) {mQueue.Push(task);}
 
 	/** @deprecated Use std::function interface instead. */
-	void EnqueueTask(Task* task, FinishFlag& flag)
+	void EnqueueTask(Task* /*task*/, FinishFlag& /*flag*/)
 	{
 		assert(false);
 		//flag.Increment();
