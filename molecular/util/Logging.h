@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_LOGGING_H
-#define MOLECULAR_LOGGING_H
+#ifndef MOLECULAR_UTIL_LOGGING_H
+#define MOLECULAR_UTIL_LOGGING_H
 
-#define LOG(x) std::cerr << #x << ": "
+#include <iostream>
 
-#endif // MOLECULAR_LOGGING_H
+namespace molecular
+{
+namespace util
+{
+
+/// Automatic newlines for log messages
+/** Based on an answer by user7860670 to https://stackoverflow.com/questions/51802549 */
+struct Log
+{
+	Log(const char* severity)
+	{
+		std::cerr << severity << ": ";
+	}
+
+    ~Log() { std::cerr << std::endl; }
+};
+
+
+
+template<typename T> Log &&
+operator <<(Log && wrap, T const & whatever)
+{
+    std::cerr << whatever;
+    return std::move(wrap);
+}
+
+}
+}
+
+#define LOG(x) molecular::util::Log(#x)
+
+#endif // MOLECULAR_UTIL_LOGGING_H
