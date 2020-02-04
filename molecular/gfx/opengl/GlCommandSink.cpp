@@ -89,22 +89,22 @@ void GlCommandSink::Init()
 void GlCommandSink::VertexBuffer::Store(const void* data, size_t size, bool stream)
 {
 	gl.BindBuffer(gl.ARRAY_BUFFER, mBuffer);
-	CheckError("glBindBuffer", __LINE__);
+	CheckError("glBindBuffer", __LINE__, __FILE__);
 	if(stream)
 	{
 		// https://www.opengl.org/wiki/Buffer_Object_Streaming#Buffer_re-specification
 		gl.BufferData(gl.ARRAY_BUFFER, size, nullptr, gl.STREAM_DRAW);
 	}
 	gl.BufferData(gl.ARRAY_BUFFER, size, data, stream ? gl.STREAM_DRAW : gl.STATIC_DRAW);
-	CheckError("glBufferData", __LINE__);
+	CheckError("glBufferData", __LINE__, __FILE__);
 }
 
 void GlCommandSink::IndexBuffer::Store(const void* data, size_t size)
 {
 	gl.BindBuffer(gl.ELEMENT_ARRAY_BUFFER, mBuffer);
-	CheckError("glBindBuffer", __LINE__);
+	CheckError("glBindBuffer", __LINE__, __FILE__);
 	gl.BufferData(gl.ELEMENT_ARRAY_BUFFER, size, data, gl.STATIC_DRAW);
-	CheckError("glBufferData", __LINE__);
+	CheckError("glBufferData", __LINE__, __FILE__);
 }
 
 GlCommandSink::Texture* GlCommandSink::CreateTexture() {return new Texture;}
@@ -127,25 +127,25 @@ void GlCommandSink::UseProgram(Program* program)
 	{
 #ifndef NDEBUG
 		gl.ValidateProgram(program->mProgram);
-		CheckError("glValidateProgram", __LINE__);
+		CheckError("glValidateProgram", __LINE__, __FILE__);
 		GLint status;
 		gl.GetProgramiv(program->mProgram, gl.VALIDATE_STATUS, &status);
-		CheckError("glGetProgramiv", __LINE__);
+		CheckError("glGetProgramiv", __LINE__, __FILE__);
 		if(status != GL_TRUE)
 			LOG(ERROR) << "GL_VALIDATE_STATUS == GL_FALSE";
 #endif
 
 		gl.UseProgram(program->mProgram);
-		CheckError("glUseProgram", __LINE__);
+		CheckError("glUseProgram", __LINE__, __FILE__);
 		gl.BindVertexArray(program->mVertexArrayObject);
-		CheckError("glBindVertexArray", __LINE__);
+		CheckError("glBindVertexArray", __LINE__, __FILE__);
 	}
 	else
 	{
 		gl.UseProgram(0);
-		CheckError("glUseProgram", __LINE__);
+		CheckError("glUseProgram", __LINE__, __FILE__);
 		gl.BindVertexArray(0);
-		CheckError("glBindVertexArray", __LINE__);
+		CheckError("glBindVertexArray", __LINE__, __FILE__);
 	}
 }
 
@@ -166,26 +166,26 @@ void GlCommandSink::SetTarget(RenderTarget* target)
 	if(target)
 	{
 		gl.BindFramebuffer(gl.FRAMEBUFFER, target->mFramebuffer);
-		CheckError("glBindFramebuffer", __LINE__);
+		CheckError("glBindFramebuffer", __LINE__, __FILE__);
 		if(target->ColorBufferAttached())
 		{
 			GLenum drawBuffer = gl.COLOR_ATTACHMENT0;
 			gl.DrawBuffers(1, &drawBuffer);
-			CheckError("glDrawBuffers", __LINE__);
+			CheckError("glDrawBuffers", __LINE__, __FILE__);
 			gl.ReadBuffer(gl.COLOR_ATTACHMENT0);
-			CheckError("glReadBuffer", __LINE__);
+			CheckError("glReadBuffer", __LINE__, __FILE__);
 		}
 		else
 		{
 			GLenum drawBuffer = GL_NONE;
 			gl.DrawBuffers(1, &drawBuffer);
-			CheckError("glDrawBuffers", __LINE__);
+			CheckError("glDrawBuffers", __LINE__, __FILE__);
 			gl.ReadBuffer(GL_NONE);
-			CheckError("glReadBuffer", __LINE__);
+			CheckError("glReadBuffer", __LINE__, __FILE__);
 		}
 #ifndef NDEBUG
 		GLenum status = gl.CheckFramebufferStatus(gl.FRAMEBUFFER);
-		CheckError("glCheckFramebufferStatus", __LINE__);
+		CheckError("glCheckFramebufferStatus", __LINE__, __FILE__);
 		if(status != gl.FRAMEBUFFER_COMPLETE)
 		{
 			LOG(ERROR) << std::hex << "glCheckFramebufferStatus Return: " << status;
@@ -193,23 +193,23 @@ void GlCommandSink::SetTarget(RenderTarget* target)
 		}
 #endif
 		gl.Viewport(0, 0, target->GetWidth(), target->GetHeight());
-		CheckError("glViewport", __LINE__);
+		CheckError("glViewport", __LINE__, __FILE__);
 	}
 	else
 	{
 		gl.BindFramebuffer(gl.FRAMEBUFFER, mBaseTargetFramebuffer);
-		CheckError("glBindFramebuffer", __LINE__);
+		CheckError("glBindFramebuffer", __LINE__, __FILE__);
 #ifdef OPENGL_ES3
 //		GLenum drawBuffer = GL_BACK;
 #else
 //		GLenum drawBuffer = GL_BACK_LEFT;
 #endif
 //		gl.DrawBuffers(1, &drawBuffer);
-//		CheckError("glDrawBuffers", __LINE__);
+//		CheckError("glDrawBuffers", __LINE__, __FILE__);
 //		gl.ReadBuffer(drawBuffer);
-//		CheckError("glReadBuffer", __LINE__);
+//		CheckError("glReadBuffer", __LINE__, __FILE__);
 		gl.Viewport(mBaseTargetViewport[0], mBaseTargetViewport[1], mBaseTargetViewport[2], mBaseTargetViewport[3]);
-		CheckError("glViewport", __LINE__);
+		CheckError("glViewport", __LINE__, __FILE__);
 	}
 	mCurrentTarget = target;
 }
@@ -245,7 +245,7 @@ void GlCommandSink::Clear(bool color, bool depth)
 void GlCommandSink::ReadPixels(int x, int y, int width, int height, PixelFormat format, void* data)
 {
 	gl.ReadPixels(x, y, width, height, PixelFormatConversion::ToGlFormat(format), PixelFormatConversion::ToGlType(format), data);
-	CheckError("glReadPixels", __LINE__);
+	CheckError("glReadPixels", __LINE__, __FILE__);
 }
 
 void GlCommandSink::SetBlending(bool enable, BlendFactor sourceFactor, BlendFactor destFactor)
@@ -294,9 +294,9 @@ void GlCommandSink::Draw(IndexBuffer* buffer, const IndexBufferInfo& info)
 {
 	assert(buffer);
 	gl.BindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffer->mBuffer);
-	CheckError("glBindBuffer", __LINE__);
+	CheckError("glBindBuffer", __LINE__, __FILE__);
 	gl.DrawElements(ToGlEnum(info.mode), info.count, ToGlEnum(info.type), reinterpret_cast<const GLvoid*>(info.offset));
-	CheckError("glDrawElements", __LINE__);
+	CheckError("glDrawElements", __LINE__, __FILE__);
 
 /*	Found on the web:
 	GL_INVALID_OPERATION is generated if a non-zero buffer object name is bound
@@ -339,23 +339,23 @@ void GlCommandSink::Draw(TransformFeedback* transformFeedback, IndexBufferInfo::
 	if(gl.HasDrawTransformFeedback())
 	{
 		gl.DrawTransformFeedback(ToGlEnum(mode), transformFeedback->mFeedback);
-		CheckError("glDrawTransformFeedback", __LINE__);
+		CheckError("glDrawTransformFeedback", __LINE__, __FILE__);
 	}
 	else
 	{
 		// Query
 		GLuint primitives = 0;
 		gl.GetQueryObjectuiv(transformFeedback->mQuery, gl.QUERY_RESULT, &primitives);
-		CheckError("glGetQueryObjectiv", __LINE__);
+		CheckError("glGetQueryObjectiv", __LINE__, __FILE__);
 		gl.DrawArrays(ToGlEnum(mode), 0, primitives);
-		CheckError("glDrawArrays", __LINE__);
+		CheckError("glDrawArrays", __LINE__, __FILE__);
 	}
 }
 
 void GlCommandSink::Draw(IndexBufferInfo::Mode mode, unsigned int count)
 {
 	gl.DrawArrays(ToGlEnum(mode), 0, count);
-	CheckError("glDrawArrays", __LINE__);
+	CheckError("glDrawArrays", __LINE__, __FILE__);
 }
 
 GLenum GlCommandSink::ToGlEnum(VertexAttributeInfo::Type type)
@@ -408,12 +408,12 @@ GLenum GlCommandSink::ToGlEnum(IndexBufferInfo::Mode mode)
 void GlCommandSink::Texture::Store(unsigned int width, unsigned int height, const void* data, PixelFormat format, int mipmapLevel, size_t dataSize)
 {
 	gl.BindTexture(GL_TEXTURE_2D, mTexture);
-	CheckError("glBindTexture", __LINE__);
+	CheckError("glBindTexture", __LINE__, __FILE__);
 	GLenum intFormat = PixelFormatConversion::ToGlInternalFormat(format);
 	if(Pf::IsCompressed(format))
 	{
 		gl.CompressedTexImage2D(GL_TEXTURE_2D, mipmapLevel, intFormat, width, height, 0, dataSize, data);
-		CheckError("glCompressedTexImage2D", __LINE__);
+		CheckError("glCompressedTexImage2D", __LINE__, __FILE__);
 	}
 	else
 	{
@@ -424,7 +424,7 @@ void GlCommandSink::Texture::Store(unsigned int width, unsigned int height, cons
 			gl.TexSubImage2D(GL_TEXTURE_2D, mipmapLevel, 0, 0, width, height, glFormat, type, data);
 		else
 			gl.TexImage2D(GL_TEXTURE_2D, mipmapLevel, intFormat, width, height, 0, glFormat, type, data);
-		CheckError("glTexImage2D", __LINE__);
+		CheckError("glTexImage2D", __LINE__, __FILE__);
 	}
 	mWidth = width;
 	mHeight = height;
@@ -434,12 +434,12 @@ void GlCommandSink::Texture::Store(unsigned int width, unsigned int height, cons
 void GlCommandSink::Texture::Store(unsigned int width, unsigned int height, unsigned int depth, const void* data, PixelFormat format)
 {
 	gl.BindTexture(gl.TEXTURE_3D, mTexture);
-	CheckError("glBindTexture", __LINE__);
+	CheckError("glBindTexture", __LINE__, __FILE__);
 	GLenum glFormat = PixelFormatConversion::ToGlFormat(format);
 	GLenum intFormat = PixelFormatConversion::ToGlInternalFormat(format);
 	GLenum type = PixelFormatConversion::ToGlType(format);
 	gl.TexImage3D(gl.TEXTURE_3D, 0, intFormat, width, height, depth, 0, glFormat, type, data);
-	CheckError("glTexImage3D", __LINE__);
+	CheckError("glTexImage3D", __LINE__, __FILE__);
 	mWidth = width;
 	mHeight = height;
 	mDepth = depth;
@@ -448,20 +448,20 @@ void GlCommandSink::Texture::Store(unsigned int width, unsigned int height, unsi
 void GlCommandSink::Texture::Store(unsigned int offsetX, unsigned int offsetY, unsigned int width, unsigned int height, const void* data, PixelFormat format, int mipmapLevel, size_t dataSize)
 {
 	gl.BindTexture(GL_TEXTURE_2D, mTexture);
-	CheckError("glBindTexture", __LINE__);
+	CheckError("glBindTexture", __LINE__, __FILE__);
 
 	if(Pf::IsCompressed(format))
 	{
 		GLenum internalFormat = PixelFormatConversion::ToGlInternalFormat(format);
 		gl.CompressedTexSubImage2D(GL_TEXTURE_2D, mipmapLevel, offsetX, offsetY, width, height, internalFormat, dataSize, data);
-		CheckError("glCompressedTexSubImage2D", __LINE__);
+		CheckError("glCompressedTexSubImage2D", __LINE__, __FILE__);
 	}
 	else
 	{
 		GLenum glFormat = PixelFormatConversion::ToGlFormat(format);
 		GLenum type = PixelFormatConversion::ToGlType(format);
 		gl.TexSubImage2D(GL_TEXTURE_2D, mipmapLevel, offsetX, offsetY, width, height, glFormat, type, data);
-		CheckError("glTexSubImage2D", __LINE__);
+		CheckError("glTexSubImage2D", __LINE__, __FILE__);
 	}
 }
 
@@ -495,12 +495,12 @@ void GlCommandSink::RenderTarget::AttachColorBuffer(Texture* texture, unsigned i
 	if(mColorRenderbuffers.size() > attachment && mColorRenderbuffers[attachment] != 0)
 	{
 		gl.DeleteRenderbuffers(1, &mColorRenderbuffers[attachment]);
-		CheckError("glDeleteRenderbuffers", __LINE__);
+		CheckError("glDeleteRenderbuffers", __LINE__, __FILE__);
 		mColorRenderbuffers[attachment] = 0;
 	}
 
 	gl.BindFramebuffer(gl.FRAMEBUFFER, mFramebuffer);
-	CheckError("glBindFramebuffer", __LINE__);
+	CheckError("glBindFramebuffer", __LINE__, __FILE__);
 	if(texture)
 	{
 		if(texture->GetDepth() > 0)
@@ -511,14 +511,14 @@ void GlCommandSink::RenderTarget::AttachColorBuffer(Texture* texture, unsigned i
 		else
 			gl.FramebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0 + attachment, GL_TEXTURE_2D, texture->mTexture, 0);
 
-		CheckError("glFramebufferTexture2D", __LINE__);
+		CheckError("glFramebufferTexture2D", __LINE__, __FILE__);
 		mWidth = texture->GetWidth();
 		mHeight = texture->GetHeight();
 	}
 	else // Detach texture
 	{
 		gl.FramebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0 + attachment, GL_TEXTURE_2D, 0, 0);
-		CheckError("glFramebufferTexture2D", __LINE__);
+		CheckError("glFramebufferTexture2D", __LINE__, __FILE__);
 	}
 
 	if(attachment == 0)
@@ -532,16 +532,16 @@ void GlCommandSink::RenderTarget::AttachColorBuffer(unsigned int width, unsigned
 	if(mColorRenderbuffers[attachment] == 0)
 	{
 		gl.GenRenderbuffers(1, &mColorRenderbuffers[attachment]);
-		CheckError("glGenRenderbuffers", __LINE__);
+		CheckError("glGenRenderbuffers", __LINE__, __FILE__);
 	}
 	gl.BindRenderbuffer(gl.RENDERBUFFER, mColorRenderbuffers[attachment]);
-	CheckError("glBindRenderbuffer", __LINE__);
+	CheckError("glBindRenderbuffer", __LINE__, __FILE__);
 	gl.RenderbufferStorage(gl.RENDERBUFFER, PixelFormatConversion::ToGlInternalFormat(format), width, height);
-	CheckError("glRenderbufferStorage", __LINE__);
+	CheckError("glRenderbufferStorage", __LINE__, __FILE__);
 	gl.BindFramebuffer(gl.FRAMEBUFFER, mFramebuffer);
-	CheckError("glBindFramebuffer", __LINE__);
+	CheckError("glBindFramebuffer", __LINE__, __FILE__);
 	gl.FramebufferRenderbuffer(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0 + attachment, gl.RENDERBUFFER, mColorRenderbuffers[attachment]);
-	CheckError("glFramebufferRenderbuffer", __LINE__);
+	CheckError("glFramebufferRenderbuffer", __LINE__, __FILE__);
 	mColorBufferAttached = (attachment == 0);
 	mWidth = width;
 	mHeight = height;
@@ -555,7 +555,7 @@ void GlCommandSink::RenderTarget::AttachDepthBuffer(Texture* texture)
 		mDepthRenderbuffer = 0;
 	}
 	gl.BindFramebuffer(gl.FRAMEBUFFER, mFramebuffer);
-	CheckError("glBindFramebuffer", __LINE__);
+	CheckError("glBindFramebuffer", __LINE__, __FILE__);
 
 	if(texture)
 	{
@@ -565,7 +565,7 @@ void GlCommandSink::RenderTarget::AttachDepthBuffer(Texture* texture)
 	}
 	else
 		gl.FramebufferTexture2D(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, GL_TEXTURE_2D, 0, 0);
-	CheckError("glFramebufferTexture2D", __LINE__);
+	CheckError("glFramebufferTexture2D", __LINE__, __FILE__);
 
 }
 
@@ -621,7 +621,7 @@ GlCommandSink::RenderTarget::RenderTarget() :
 	mHeight(0)
 {
 	gl.GenFramebuffers(1, &mFramebuffer);
-	CheckError("glGenFramebuffers", __LINE__);
+	CheckError("glGenFramebuffers", __LINE__, __FILE__);
 }
 
 

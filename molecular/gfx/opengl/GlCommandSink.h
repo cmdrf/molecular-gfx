@@ -201,7 +201,7 @@ public:
 
 	void SetRasterizationState(bool rasterizerDiscard, CullMode cullMode = kBack);
 
-	static inline void CheckError(const char* function, int line, const char* file = "Renderer.cpp")
+	static inline void CheckError(const char* function, int line, const char* file)
 	{
 #if 1 //ndef NDEBUG
 //		std::cerr << function << "(" << file << ":" << line << ")" << std::endl;
