@@ -42,7 +42,7 @@ struct Log
 		std::cerr << severity << ": ";
 	}
 
-    ~Log() { std::cerr << std::endl; }
+	~Log() { std::cerr << std::endl; }
 };
 
 
@@ -50,8 +50,8 @@ struct Log
 template<typename T> Log &&
 operator <<(Log && wrap, T const & whatever)
 {
-    std::cerr << whatever;
-    return std::move(wrap);
+	std::cerr << whatever;
+	return std::move(wrap);
 }
 
 }
