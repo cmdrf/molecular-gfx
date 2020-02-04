@@ -108,15 +108,15 @@ uint32_t ToGlFormat(PixelFormat format)
 
 	case PF_L_FLOAT32:
 	case PF_L8:
-                return Gl::RED;
+		return Gl::RED;
 
 	case PF_L8A8: return Gl::RG;
-        case PF_A8: return Gl::RED;
+	case PF_A8: return Gl::RED;
 
 	case PF_DEPTH_16:
 	case PF_DEPTH_24:
 	case PF_DEPTH_32:
-                return Gl::DEPTH_COMPONENT;
+		return Gl::DEPTH_COMPONENT;
 
 	case PF_B8G8R8: return Gl::BGR;
 	case PF_B8G8R8A8: return Gl::BGRA;
@@ -130,16 +130,16 @@ uint32_t ToGlInternalFormat(PixelFormat format)
 {
 	switch(format)
 	{
-        case PF_ANY_RGB: return Gl::RGB;
-        case PF_ANY_RGBA: return Gl::RGBA;
+	case PF_ANY_RGB: return Gl::SRGB;
+	case PF_ANY_RGBA: return Gl::SRGB_ALPHA;
 
 	case PF_R8G8B8:
 	case PF_B8G8R8:
-                return Gl::RGB8;
+		return Gl::SRGB8;
 
 	case PF_R8G8B8A8:
 	case PF_B8G8R8A8:
-                return Gl::RGBA8;
+		return Gl::SRGB8_ALPHA8;
 
 	case PF_R8G8B8_SIGNED_NORM: return Gl::RGB8_SNORM;
 	case PF_R8G8B8A8_UNSIGNED: return Gl::RGBA8UI;

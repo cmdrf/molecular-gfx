@@ -39,6 +39,9 @@ namespace PixelFormatConversion
 {
 uint32_t ToGlType(util::PixelFormat format);
 uint32_t ToGlFormat(util::PixelFormat format);
+
+/** Defaults to sRGB formats where applicable and possible, except for pixel formats ending with
+	_LINEAR. */
 uint32_t ToGlInternalFormat(util::PixelFormat format);
 
 /** Only implemented for a few compressed types. */
