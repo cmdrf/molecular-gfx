@@ -60,13 +60,6 @@ void GlCommandSink::Init()
 		for(GLint i = 0; i < numCompressedTextureFormats; ++i)
 			LOG(INFO) << "    " << GlConstantString(compressedTextureFormats[i]);
 	}
-	gl.Enable(gl.FRAMEBUFFER_SRGB);
-	CheckError("glEnable", __LINE__);
-
-	GLint colorEncoding = 0;
-	gl.GetFramebufferAttachmentParameteriv(gl.FRAMEBUFFER, gl.FRONT_LEFT, gl.FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING, &colorEncoding);
-	CheckError("glGetFramebufferAttachmentParameteriv", __LINE__);
-	LOG(INFO) << "GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING: " << GlConstantString(colorEncoding);
 
 	gl.Enable(gl.DEPTH_TEST);
 	gl.Enable(gl.CULL_FACE);
@@ -80,6 +73,16 @@ void GlCommandSink::Init()
 
 #ifndef OPENGL_ES3
 	gl.Enable(gl.PROGRAM_POINT_SIZE); // Always enabled on GLES3
+
+	// OpenGL ES always renders in sRGB when the underlying framebuffer has sRGB color format:
+	gl.Enable(gl.FRAMEBUFFER_SRGB);
+	CheckError("glEnable", __LINE__, __FILE__);
+
+	GLint colorEncoding = 0;
+	gl.GetFramebufferAttachmentParameteriv(gl.FRAMEBUFFER, gl.FRONT_LEFT, gl.FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING, &colorEncoding);
+	CheckError("glGetFramebufferAttachmentParameteriv", __LINE__, __FILE__);
+	LOG(INFO) << "GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING: " << GlConstantString(colorEncoding);
+
 #endif
 }
 
