@@ -165,11 +165,12 @@ GlCommandSink::Program::Shader::Shader(ShaderType type)
 
 bool GlCommandSink::Program::Shader::SourceCompile(const char* text, size_t length)
 {
-#ifdef OPENGL_ES3
+	/* Generated code is compatible with GLSL versions "150" and "300 es". Some desktop OpenGL
+		implementations however support "300 es" but not "150", so we always choose version
+		"300 es". If we encounter implementations that support "150" but not "300 es", we must
+		query the supported versions somehow and act accordingly. */
 	const char versionString[] = "#version 300 es\nprecision highp float;\n"; // TODO: selective precision
-#else
-	const char versionString[] = "#version 150\n";
-#endif
+
 	const char* strings[] = {versionString, text};
 	GLint lengths[] = {sizeof(versionString) - 1, static_cast<GLint>(length)};
 	gl.ShaderSource(mShader, 2, strings, lengths);
