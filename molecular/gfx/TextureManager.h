@@ -183,7 +183,7 @@ void TextureLoader<TRenderManager>::StoreKtxTexture(TextureManager::Asset& targe
 	{
 		auto mipLevel = ktxFile.GetImageData(i);
 		target.GetAsset()->Store(width, height, mipLevel.first, format, i, mipLevel.second);
-		//if(i < +kLodLevels)
+		if(i < +kLodLevels)
 			target.SetState(i, TextureManager::Asset::kLoaded);
 		width /= 2;
 		height /= 2;
