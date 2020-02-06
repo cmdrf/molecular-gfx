@@ -1,8 +1,8 @@
-/*	SceneSetup.cpp
+/*	SetupLight.cpp
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "SceneSetup.h"
+#include "SetupLight.h"
 
 namespace molecular
 {
 namespace gfx
 {
 
-void SceneSetup::Execute()
+void SetupLight::Execute()
 {
 	Binding<Uniform<Hash>> blendMode("blendMode"_H, this);
 	**blendMode = "none"_H;
@@ -49,19 +49,19 @@ void SceneSetup::Execute()
 		mCallee->Execute();
 }
 
-void SceneSetup::SetDirectionalLight(bool enable, const Vector3& direction, const Vector3& color)
+void SetupLight::SetDirectionalLight(bool enable, const Vector3& direction, const Vector3& color)
 {
 	mDirectionalLightEnabled = enable;
 	mLightDirection = direction.Normalized();
 	mLightColor = color;
 }
 
-void SceneSetup::Set(Hash key, bool value)
+void SetupLight::Set(Hash key, bool value)
 {
 	if(key == "directionalLightEnabled"_H)
 		mDirectionalLightEnabled = value;
 	else
-		throw std::runtime_error("Unknown bool variable in SceneSetup");
+		throw std::runtime_error("Unknown bool variable in SetupLight");
 }
 
 }

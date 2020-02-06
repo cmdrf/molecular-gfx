@@ -1,8 +1,8 @@
-/*	SceneSetup.h
+/*	SetupLight.h
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_SCENESETUP_H
-#define MOLECULAR_SCENESETUP_H
+#ifndef MOLECULAR_GFX_SETUPLIGHT_H
+#define MOLECULAR_GFX_SETUPLIGHT_H
 
 #include <molecular/gfx/RenderFunction.h>
 #include <molecular/util/Quaternion.h>
@@ -35,13 +35,13 @@ namespace molecular
 namespace gfx
 {
 
-/// Sets lighting and view and projection matrices
-/** @todo Don't interfere with projection matrix from RenderContext. */
-class SceneSetup : public SingleCalleeRenderFunction
+/// Sets up a single, directional light
+/** Sets uniforms lightDirection0 and lightColor0. */
+class SetupLight : public SingleCalleeRenderFunction
 {
 public:
 	template<class TRenderManager>
-	SceneSetup(TRenderManager& manager) :
+	SetupLight(TRenderManager& manager) :
 		SingleCalleeRenderFunction(manager)
 	{
 	}
@@ -62,4 +62,4 @@ private:
 }
 }
 
-#endif // MOLECULAR_SCENESETUP_H
+#endif // MOLECULAR_GFX_SETUPLIGHT_H

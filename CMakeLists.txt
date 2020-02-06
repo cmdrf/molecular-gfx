@@ -65,12 +65,12 @@ add_library(molecular-gfx
 	molecular/gfx/functions/PortalZoneSceneImpl.h
 	molecular/gfx/functions/RequestOutput.cpp
 	molecular/gfx/functions/RequestOutput.h
-	molecular/gfx/functions/SceneSetup.cpp
-	molecular/gfx/functions/SceneSetup.h
 	molecular/gfx/functions/SetShCoefficients.cpp
 	molecular/gfx/functions/SetShCoefficients.h
 	molecular/gfx/functions/SetUniforms.cpp
 	molecular/gfx/functions/SetUniforms.h
+	molecular/gfx/functions/SetupLight.cpp
+	molecular/gfx/functions/SetupLight.h
 	molecular/gfx/functions/ShadowMapping.cpp
 	molecular/gfx/functions/ShadowMapping.h
 	molecular/gfx/functions/Skeleton.h
