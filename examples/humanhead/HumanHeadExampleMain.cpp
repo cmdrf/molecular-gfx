@@ -31,7 +31,7 @@ SOFTWARE.
 #include <molecular/gfx/functions/DrawMesh.h>
 #include <molecular/gfx/functions/Transform.h>
 #include <molecular/gfx/functions/ShadowMapping.h>
-#include <molecular/gfx/functions/SceneSetup.h>
+#include <molecular/gfx/functions/SetupLight.h>
 #include <molecular/gfx/functions/DrawTerrain.h>
 #include <molecular/gfx/functions/ApplyTextures.h>
 #include <molecular/gfx/functions/HumanSkin.h>
@@ -76,15 +76,15 @@ void Run(int argc, char** argv)
 
 	// Render graph construction:
 	ViewSetup viewSetup(renderManager);
-	SceneSetup sceneSetup(renderManager);
+	SetupLight setupLight(renderManager);
 	ShadowMapping shadowMapping(renderManager);
 	Transform transform(renderManager);
 	ApplyTextures applyTextures(renderManager);
 	HumanSkin humanSkin(renderManager);
 	DrawMesh<RenderManager> drawMesh(renderManager);
 
-	viewSetup.SetCallee(&sceneSetup);
-	sceneSetup.SetCallee(&shadowMapping);
+	viewSetup.SetCallee(&setupLight);
+	setupLight.SetCallee(&shadowMapping);
 	shadowMapping.SetCallee(&transform);
 	transform.SetCallee(&applyTextures);
 	applyTextures.SetCallee(&humanSkin);
@@ -92,7 +92,7 @@ void Run(int argc, char** argv)
 
 	// Parameters:
 	viewSetup.SetCamera(Vector3(-1.f, 0, 0.f), Quaternion::kIdentity);
-	sceneSetup.SetDirectionalLight(true, Vector3(1,-1,-1));
+	setupLight.SetDirectionalLight(true, Vector3(1,-1,-1));
 	viewSetup.SetProjectionPerspective(0.3f * Math::kPi_f, 0.1, 10.f);
 
 	drawMesh.SetMeshFile("nv/geo_Skin1.nmb"_H);
