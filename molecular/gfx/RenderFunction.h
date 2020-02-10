@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_RENDERFUNCTION_H
-#define MOLECULAR_RENDERFUNCTION_H
+#ifndef MOLECULAR_GFX_RENDERFUNCTION_H
+#define MOLECULAR_GFX_RENDERFUNCTION_H
 
 #include "ProgramProvider.h"
 #include "Uniform.h"
@@ -74,6 +74,8 @@ public:
 	virtual molecular::util::AxisAlignedBox GetBounds() const = 0;
 	virtual bool BoundsChangedSince(int /*framecounter*/) const {return false;}
 
+	/// Set bool property with given name
+	/** This system is not finished. */
 	virtual void Set(Hash /*variable*/, bool /*value*/) {throw std::runtime_error("This RenderFunction does not have bool parameters");}
 
 protected:
@@ -98,7 +100,7 @@ class SingleCalleeRenderFunction : public RenderFunction
 {
 public:
 	template<class TRenderManager>
-	SingleCalleeRenderFunction(TRenderManager& manager) : RenderFunction(manager), mCallee(nullptr) {}
+	SingleCalleeRenderFunction(TRenderManager& manager) : RenderFunction(manager) {}
 
 	SingleCalleeRenderFunction(gfx::Scoping& scoping, RenderCmdSink& renderer) : RenderFunction(scoping, renderer), mCallee(nullptr) {}
 
@@ -108,22 +110,25 @@ public:
 	void SetCallee(RenderFunction* callee) {mCallee = callee;}
 
 protected:
-	RenderFunction* mCallee;
+	RenderFunction* mCallee = nullptr;
 
 };
 
 /// RenderFunction that calls multiple other RenderFunctions
+/** Why not make all RenderFunctions MultipleCalleeRenderFunctions? Because only those doing
+	visibility determination should be used to contain multiple callees, like FlatScene. Why
+	not do visibility determination everywhere? Because some functions don't even get a frustum,
+	like full-screen effects. */
 class MultipleCalleeRenderFunction : public RenderFunction
 {
-public:
 public:
 	template<class TRenderManager>
 	MultipleCalleeRenderFunction (TRenderManager& manager) : RenderFunction(manager) {}
 
 	MultipleCalleeRenderFunction (gfx::Scoping& scoping, RenderCmdSink& renderer) : RenderFunction(scoping, renderer){}
 
-	/// @todo implement
-	molecular::util::AxisAlignedBox GetBounds() const override {return molecular::util::AxisAlignedBox(0, 0, 0, 0, 0, 0);}
+	molecular::util::AxisAlignedBox GetBounds() const override;
+
 	/// @todo implement
 	bool BoundsChangedSince(int /*framecounter*/) const override {return true;}
 

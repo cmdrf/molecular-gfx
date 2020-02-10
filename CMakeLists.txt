@@ -25,6 +25,7 @@ add_library(molecular-gfx
 	molecular/gfx/ProgramProvider.h
 	molecular/gfx/RenderCmdSink.h
 	molecular/gfx/RenderContext.h
+	molecular/gfx/RenderFunction.cpp
 	molecular/gfx/RenderFunction.h
 	molecular/gfx/RenderManager.h
 	molecular/gfx/Scoping.h
