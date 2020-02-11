@@ -132,8 +132,8 @@ public:
 	/// @todo implement
 	bool BoundsChangedSince(int /*framecounter*/) const override {return true;}
 
-	void AppendCallee(RenderFunction* callee) {mCallees.insert(callee);}
-	void RemoveCallee(RenderFunction* callee) {mCallees.erase(callee);}
+	void AppendCallee(RenderFunction* callee) {assert(callee); mCallees.insert(callee);}
+	void RemoveCallee(RenderFunction* callee) {assert(callee); mCallees.erase(callee);}
 	void ClearCallees() {mCallees.clear();}
 
 protected:
