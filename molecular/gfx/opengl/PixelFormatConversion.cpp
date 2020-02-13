@@ -203,8 +203,8 @@ PixelFormat ToPixelFormat(uint32_t /*glType*/, uint32_t /*glFormat*/, uint32_t g
 		// ETC2
 	case Gl::COMPRESSED_RGB8_ETC2: return PF_RGB_ETC2_LINEAR;
 	case Gl::COMPRESSED_SRGB8_ETC2: return PF_RGB_ETC2;
-	case Gl::COMPRESSED_RGBA8_ETC2_EAC: return PF_RGBA_ETC2;
-	case Gl::COMPRESSED_SRGB8_ALPHA8_ETC2_EAC: return PF_RGBA_ETC2_LINEAR;
+	case Gl::COMPRESSED_RGBA8_ETC2_EAC: return PF_RGBA_ETC2_LINEAR;
+	case Gl::COMPRESSED_SRGB8_ALPHA8_ETC2_EAC: return PF_RGBA_ETC2;
 
 	}
 
