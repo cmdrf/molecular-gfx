@@ -39,11 +39,14 @@ namespace gfx
 {
 using namespace util;
 
+/// Make hash out of std::string
 inline Hash MakeHash(const std::string& string)
 {
 	return HashUtils::MakeHash(string);
 }
 
+/// Make hash out of hash
+/** Just returns the hash itself. */
 constexpr Hash MakeHash(Hash hash)
 {
 	return hash;
@@ -83,6 +86,7 @@ public:
 		/** Using specific texture LOD levels is not supported on GLES. */
 		T Use(unsigned int lodLevel = 0);
 
+		/// Current loading state
 		enum State
 		{
 			kLoading,

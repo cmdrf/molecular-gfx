@@ -43,35 +43,35 @@ class RenderFunction
 public:
 	/// Convenience shortcut to RenderManager::Scoping::Binding
 	template<class T>
-	class Binding : public gfx::Scoping::Binding<T>
+	class Binding : public Scoping::Binding<T>
 	{
 	public:
 		Binding(Hash key, RenderFunction* self) :
-			gfx::Scoping::Binding<T>(key, self->mScoping)
+			Scoping::Binding<T>(key, self->mScoping)
 		{}
 
 		Binding(const char* key, RenderFunction* self) :
-			gfx::Scoping::Binding<T>(HashUtils::MakeHash(key), self->mScoping)
+			Scoping::Binding<T>(HashUtils::MakeHash(key), self->mScoping)
 		{}
 	};
 
 	/// Convenience shortcut to RenderManager::Scoping::SkeletalManualBinding
-	class SkeletalManualBinding : public gfx::Scoping::SkeletalManualBinding
+	class SkeletalManualBinding : public Scoping::SkeletalManualBinding
 	{
 	public:
-		SkeletalManualBinding(Hash key, RenderFunction* self, gfx::Scoping::ValueSuperType* value) :
-			gfx::Scoping::SkeletalManualBinding(key, self->mScoping, value)
+		SkeletalManualBinding(Hash key, RenderFunction* self, Scoping::ValueSuperType* value) :
+			Scoping::SkeletalManualBinding(key, self->mScoping, value)
 		{}
 	};
 
 	template<class TRenderManager>
 	explicit RenderFunction(TRenderManager& manager) : mScoping(manager.GetScoping()), mRenderer(manager.GetRenderCmdSink()) {}
 
-	RenderFunction(gfx::Scoping& scoping, RenderCmdSink& renderer) : mScoping(scoping), mRenderer(renderer) {}
+	RenderFunction(Scoping& scoping, RenderCmdSink& renderer) : mScoping(scoping), mRenderer(renderer) {}
 
 	virtual ~RenderFunction() {}
 	virtual void Execute() = 0;
-	virtual molecular::util::AxisAlignedBox GetBounds() const = 0;
+	virtual util::AxisAlignedBox GetBounds() const = 0;
 	virtual bool BoundsChangedSince(int /*framecounter*/) const {return false;}
 
 	/// Set bool property with given name
@@ -90,7 +90,7 @@ protected:
 //	/// Call from subclasses when bounds or transforms changed
 //	void BoundsChanged() {mBoundsChangedCounter = mRenderManager.GetFramecounter();}
 
-	gfx::Scoping& mScoping;
+	Scoping& mScoping;
 	RenderCmdSink& mRenderer;
 //	int mBoundsChangedCounter;
 };
@@ -102,9 +102,9 @@ public:
 	template<class TRenderManager>
 	SingleCalleeRenderFunction(TRenderManager& manager) : RenderFunction(manager) {}
 
-	SingleCalleeRenderFunction(gfx::Scoping& scoping, RenderCmdSink& renderer) : RenderFunction(scoping, renderer), mCallee(nullptr) {}
+	SingleCalleeRenderFunction(Scoping& scoping, RenderCmdSink& renderer) : RenderFunction(scoping, renderer), mCallee(nullptr) {}
 
-	molecular::util::AxisAlignedBox GetBounds() const override {return mCallee->GetBounds();}
+	util::AxisAlignedBox GetBounds() const override {return mCallee->GetBounds();}
 	bool BoundsChangedSince(int framecounter) const override {return mCallee->BoundsChangedSince(framecounter);}
 
 	void SetCallee(RenderFunction* callee) {mCallee = callee;}
@@ -125,9 +125,9 @@ public:
 	template<class TRenderManager>
 	MultipleCalleeRenderFunction (TRenderManager& manager) : RenderFunction(manager) {}
 
-	MultipleCalleeRenderFunction (gfx::Scoping& scoping, RenderCmdSink& renderer) : RenderFunction(scoping, renderer){}
+	MultipleCalleeRenderFunction (Scoping& scoping, RenderCmdSink& renderer) : RenderFunction(scoping, renderer){}
 
-	molecular::util::AxisAlignedBox GetBounds() const override;
+	util::AxisAlignedBox GetBounds() const override;
 
 	/// @todo implement
 	bool BoundsChangedSince(int /*framecounter*/) const override {return true;}
