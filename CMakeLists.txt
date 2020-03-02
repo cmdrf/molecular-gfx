@@ -118,8 +118,6 @@ add_library(molecular-gfx
 	molecular/util/BlobFunctionTask.h
 	molecular/util/Box.cpp
 	molecular/util/Box.h
-	molecular/util/DdsFile.cpp
-	molecular/util/DdsFile.h
 	molecular/util/DummyFileLoader.h
 	molecular/util/DynamicScoping.h
 	molecular/util/FileServer.h
@@ -128,25 +126,16 @@ add_library(molecular-gfx
 	molecular/util/FontAtlasDescriptionFile.h
 	molecular/util/Frustum.cpp
 	molecular/util/Frustum.h
-	molecular/util/HostStream.h
 	molecular/util/IniFile.cpp
 	molecular/util/IniFile.h
 	molecular/util/IteratorAdapters.h
 	molecular/util/KtxFile.cpp
 	molecular/util/KtxFile.h
-	molecular/util/LittleEndianStream.h
 	molecular/util/Logging.h
-	molecular/util/MemoryStreamStorage.cpp
-	molecular/util/MemoryStreamStorage.h
 	molecular/util/MtlFile.cpp
 	molecular/util/MtlFile.h
 	molecular/util/NmbFile.h
-	molecular/util/NonCopyable.h
-	molecular/util/PixelFormat.cpp
-	molecular/util/PixelFormat.h
 	molecular/util/Plane.h
-	molecular/util/ReadStream.cpp
-	molecular/util/ReadStream.h
 	molecular/util/StdTaskQueue.cpp
 	molecular/util/StdTaskQueue.h
 	molecular/util/StdThread.h
