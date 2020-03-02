@@ -128,8 +128,6 @@ add_library(molecular-gfx
 	molecular/util/IniFile.cpp
 	molecular/util/IniFile.h
 	molecular/util/IteratorAdapters.h
-	molecular/util/KtxFile.cpp
-	molecular/util/KtxFile.h
 	molecular/util/Logging.h
 	molecular/util/MtlFile.cpp
 	molecular/util/MtlFile.h
