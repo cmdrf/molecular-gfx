@@ -113,7 +113,6 @@ add_library(molecular-gfx
 #	molecular/gfx/vulkan/VulkanRenderCmdSinkProgram.cpp
 #	molecular/gfx/vulkan/VulkanRenderCmdSinkProgram.h
 
-	molecular/util/AtomicCounter.h
 	molecular/util/Blob.h
 	molecular/util/BlobFunctionTask.h
 	molecular/util/Box.cpp
@@ -136,13 +135,8 @@ add_library(molecular-gfx
 	molecular/util/MtlFile.h
 	molecular/util/NmbFile.h
 	molecular/util/Plane.h
-	molecular/util/StdTaskQueue.cpp
-	molecular/util/StdTaskQueue.h
-	molecular/util/StdThread.h
 	molecular/util/StringStore.cpp
 	molecular/util/StringStore.h
-	molecular/util/Task.h
-	molecular/util/TaskDispatcher.h
 	molecular/util/TextStream.h
 	molecular/util/TgaFile.h
 )

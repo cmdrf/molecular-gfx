@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,8 @@ SOFTWARE.*/
 #ifndef MOLECULAR_BLOBFUNCTIONTASK_H
 #define MOLECULAR_BLOBFUNCTIONTASK_H
 
-#include "Task.h"
 #include "Blob.h"
+#include <molecular/util/Task.h>
 #include <functional>
 
 namespace molecular

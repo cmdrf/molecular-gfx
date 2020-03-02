@@ -27,9 +27,10 @@ SOFTWARE.
 #define MOLECULAR_MANUALTASKQUEUE_H
 
 #include "ThreadSafeQueue.h"
-#include "Task.h"
-#include "AtomicCounter.h"
-#include "NonCopyable.h"
+
+#include <molecular/util/AtomicCounter.h>
+#include <molecular/util/NonCopyable.h>
+#include <molecular/util/Task.h>
 
 namespace molecular
 {

@@ -27,13 +27,15 @@ SOFTWARE.
 #define MOLECULAR_GFX_TEXTUREMANAGER_H
 
 #include "AssetManager.h"
+#include "opengl/PixelFormatConversion.h"
+#include "RenderCmdSink.h"
+
+#include <molecular/util/Blob.h>
 #include <molecular/util/TaskDispatcher.h>
 #include <molecular/util/DdsFile.h>
-#include "RenderCmdSink.h"
 #include <molecular/util/TgaFile.h>
 #include <molecular/util/StringUtils.h>
 #include <molecular/util/KtxFile.h>
-#include "opengl/PixelFormatConversion.h"
 #include <molecular/util/FileTypeIdentification.h>
 
 #ifdef min
