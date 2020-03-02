@@ -25,7 +25,7 @@ SOFTWARE.*/
 #ifndef MOLECULAR_BLOBFUNCTIONTASK_H
 #define MOLECULAR_BLOBFUNCTIONTASK_H
 
-#include "Blob.h"
+#include <molecular/util/Blob.h>
 #include <molecular/util/Task.h>
 #include <functional>
 

@@ -112,7 +112,6 @@ add_library(molecular-gfx
 #	molecular/gfx/vulkan/VulkanRenderCmdSinkProgram.cpp
 #	molecular/gfx/vulkan/VulkanRenderCmdSinkProgram.h
 
-	molecular/util/Blob.h
 	molecular/util/BlobFunctionTask.h
 	molecular/util/Box.cpp
 	molecular/util/Box.h
