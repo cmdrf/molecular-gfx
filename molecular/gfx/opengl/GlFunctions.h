@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ SOFTWARE.
 #define MOLECULAR_GLFUNCTIONS_H
 
 #include "GlFunctionsProcAddresses.h"
-#include "GlConstants.h"
+#include <molecular/util/GlConstants.h>
 #include <stdexcept>
 
 #ifdef _WIN32
@@ -60,7 +60,7 @@ class GlFunctions :
 	public GlFunctionsGl10Native,
 	public GlFunctionsGles2ProcAddresses<GlFunctionsInitializerWgl>,
 	public GlFunctionsProcAddresses<GlFunctionsInitializerWgl>,
-	public GlConstants
+	public util::GlConstants
 {
 public:
 	void Init()
@@ -87,7 +87,7 @@ namespace gfx
 class GlFunctions :
 	public GlFunctionsNative,
 	public GlFunctionsGles2Native,
-	public GlConstants
+	public util::GlConstants
 {};
 
 }
@@ -123,7 +123,7 @@ struct GlFunctionsInitializerEgl
 class GlFunctions :
 	public GlFunctionsProcAddresses<GlFunctionsInitializerEgl>,
 	public GlFunctionsGles2Native,
-	public GlConstants
+	public util::GlConstants
 {};
 
 }
@@ -158,7 +158,7 @@ struct GlFunctionsInitializerGlx
 class GlFunctions :
 	public GlFunctionsProcAddresses<GlFunctionsInitializerGlx>,
 	public GlFunctionsGles2Native,
-	public GlConstants
+	public util::GlConstants
 {};
 
 }

@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@ SOFTWARE.
 */
 
 #include "GlConstantString.h"
-#include "GlConstants.h"
+#include <molecular/util/GlConstants.h>
 #include <cstdio>
 
 namespace molecular
@@ -34,7 +34,7 @@ namespace gfx
 
 const char* GlConstantString(GLenum e)
 {
-	using Gl = GlConstants;
+	using Gl = util::GlConstants;
 	switch(e)
 	{
 	case Gl::_3DC_X_AMD: return "GL_3DC_X_AMD";

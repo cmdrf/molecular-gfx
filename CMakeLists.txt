@@ -98,7 +98,6 @@ add_library(molecular-gfx
 	molecular/gfx/opengl/GlFunctionsProcAddresses.h
 	molecular/gfx/opengl/OpenGlPrerequisites.h
 	molecular/gfx/opengl/GlFunctions.h
-	molecular/gfx/opengl/GlConstants.h
 	molecular/gfx/opengl/GlConstantString.cpp
 	molecular/gfx/opengl/GlConstantString.h
 	molecular/gfx/opengl/PixelFormatConversion.cpp
