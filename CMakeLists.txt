@@ -158,8 +158,6 @@ if(APPLE)
 	target_compile_definitions(molecular-gfx PUBLIC GL_SILENCE_DEPRECATION)
 	target_sources(molecular-gfx PRIVATE
 		molecular/util/GcdAsyncFileLoader.h
-		molecular/util/GcdTaskDispatcher.cpp
-		molecular/util/GcdTaskDispatcher.h
 	)
 endif()
 
