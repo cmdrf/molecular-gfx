@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_APPLYTEXTURES_H
-#define MOLECULAR_APPLYTEXTURES_H
+#ifndef MOLECULAR_GFX_APPLYTEXTURES_H
+#define MOLECULAR_GFX_APPLYTEXTURES_H
 
 #include <molecular/gfx/RenderFunction.h>
 #include <molecular/gfx/TextureManager.h>
@@ -46,7 +46,13 @@ public:
 
 	void Execute() override;
 
+	/// Add new texture or replace existing texture
+	/** @param variable Hashed uniform name to be used in the shader program
+		@param file Hashed file path that is passed to FileLoader */
 	void SetTexture(Hash variable, Hash file);
+
+	/// Remove all textures
+	void ClearTextures() {mTextures.clear();}
 
 	void SetParameter(Hash variable, RenderCmdSink::Texture::Parameter param, RenderCmdSink::Texture::ParamValue value);
 
@@ -62,4 +68,4 @@ private:
 }
 }
 
-#endif // MOLECULAR_APPLYTEXTURES_H
+#endif
