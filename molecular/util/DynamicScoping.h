@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -49,6 +49,8 @@ private:
 	typedef typename std::map<Key, ValueSuperType*> Map;
 
 	/// Functor for use with the SkippingIterator
+	/** Checks if the second value of a std::pair is nullptr. Obviously works only for
+		pointer types. */
 	class IsSecondNull // : public std::unary_function<bool, ?>
 	{
 	public:
@@ -144,6 +146,7 @@ public:
 	};
 
 	/// Binding without its own copy of the data
+	/** Pointer to the data is passed into the constructor. */
 	class SkeletalBinding : protected SkeletalManualBinding
 	{
 	public:
@@ -157,18 +160,32 @@ public:
 		{
 			this->Unbind();
 		}
-
 	};
 
-	/// Skips entries that are not set
-	typedef SkippingIterator<typename Map::const_iterator, IsSecondNull> Iterator;
+	/// Unbind variable in the current scope
+	/** When iterating over all variables in this scope or below, unbound variables won't be
+		included. Useful to exclude shader variables from generated shader programs. */
+	class Unbinding : protected SkeletalBinding
+	{
+	public:
+		Unbinding(Key key, DynamicScoping& scoping) : SkeletalBinding(key, scoping, nullptr)
+		{}
+	};
 
-	typedef PairFirstIterator<Iterator> KeyIterator;
+	/// Iterator over all variables currently set
+	/** Used to provide the shader generator with all variables currently set. */
+	using Iterator = SkippingIterator<typename Map::const_iterator, IsSecondNull>;
+
+	/// Iterator over keys
+	using KeyIterator = PairFirstIterator<Iterator>;
 
 	Iterator Begin() const {return Iterator(mMap.begin(), mMap.end(), IsSecondNull());}
 	Iterator End() const {return Iterator(mMap.end(), mMap.end(), IsSecondNull());}
 
+	/// Get "begin" iterator over keys
 	KeyIterator KeyBegin() {return KeyIterator(Begin());}
+
+	/// Get "end" iterator over keys
 	KeyIterator KeyEnd() {return KeyIterator(End());}
 
 private:
