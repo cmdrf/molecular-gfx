@@ -82,7 +82,6 @@ void GlCommandSink::Init()
 	gl.GetFramebufferAttachmentParameteriv(gl.FRAMEBUFFER, gl.FRONT_LEFT, gl.FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING, &colorEncoding);
 	CheckError("glGetFramebufferAttachmentParameteriv", __LINE__, __FILE__);
 	LOG(INFO) << "GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING: " << GlConstantString(colorEncoding);
-
 #endif
 }
 
@@ -125,6 +124,8 @@ void GlCommandSink::UseProgram(Program* program)
 {
 	if(program)
 	{
+		gl.BindVertexArray(program->mVertexArrayObject);
+		CheckError("glBindVertexArray", __LINE__, __FILE__);
 #ifndef NDEBUG
 		gl.ValidateProgram(program->mProgram);
 		CheckError("glValidateProgram", __LINE__, __FILE__);
@@ -144,8 +145,6 @@ void GlCommandSink::UseProgram(Program* program)
 
 		gl.UseProgram(program->mProgram);
 		CheckError("glUseProgram", __LINE__, __FILE__);
-		gl.BindVertexArray(program->mVertexArrayObject);
-		CheckError("glBindVertexArray", __LINE__, __FILE__);
 	}
 	else
 	{
