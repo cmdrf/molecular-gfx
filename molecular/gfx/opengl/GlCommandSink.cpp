@@ -65,12 +65,6 @@ void GlCommandSink::Init()
 	gl.Enable(gl.CULL_FACE);
 	SetTarget(nullptr);
 
-	if(gl.HasPrimitiveRestartIndex())
-	{
-		gl.PrimitiveRestartIndex(0xffff);
-		gl.Enable(gl.PRIMITIVE_RESTART);
-	}
-
 #ifndef OPENGL_ES3
 	gl.Enable(gl.PROGRAM_POINT_SIZE); // Always enabled on GLES3
 
