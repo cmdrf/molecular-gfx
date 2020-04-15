@@ -132,7 +132,14 @@ void GlCommandSink::UseProgram(Program* program)
 		gl.GetProgramiv(program->mProgram, gl.VALIDATE_STATUS, &status);
 		CheckError("glGetProgramiv", __LINE__, __FILE__);
 		if(status != GL_TRUE)
-			LOG(ERROR) << "GL_VALIDATE_STATUS == GL_FALSE";
+		{
+			GLint length = 0;
+			gl.GetProgramiv(program->mProgram, gl.INFO_LOG_LENGTH, &length);
+			std::vector<char> infoLog;
+			infoLog.resize(length);
+			gl.GetProgramInfoLog(program->mProgram, length, nullptr, infoLog.data());
+			LOG(ERROR) << infoLog.data();
+		}
 #endif
 
 		gl.UseProgram(program->mProgram);
