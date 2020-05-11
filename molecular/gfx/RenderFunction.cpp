@@ -32,8 +32,11 @@ namespace gfx
 
 void RenderFunction::Execute(const Scope* parentScope)
 {
-	Scope scope(parentScope);
-	HandleExecute(scope);
+	if(mVisible)
+	{
+		Scope scope(parentScope);
+		HandleExecute(scope);
+	}
 }
 
 AxisAlignedBox MultipleCalleeRenderFunction::GetBounds() const

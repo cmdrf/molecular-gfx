@@ -51,6 +51,8 @@ public:
 	virtual util::AxisAlignedBox GetBounds() const = 0;
 	virtual bool BoundsChangedSince(int /*framecounter*/) const {return false;}
 
+	void SetVisible(bool visible) {mVisible = visible;}
+
 	/// Set bool property with given name
 	/** This system is not finished. */
 	virtual void Set(Hash /*variable*/, bool /*value*/) {throw std::runtime_error("This RenderFunction does not have bool parameters");}
@@ -63,6 +65,7 @@ protected:
 
 	RenderCmdSink& mRenderer;
 //	int mBoundsChangedCounter;
+	bool mVisible = true;
 };
 
 /// RenderFunction that calls a single other RenderFunction only
