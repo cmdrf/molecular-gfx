@@ -44,8 +44,6 @@ public:
 		mTextureManager(manager.GetTextureManager())
 	{}
 
-	void Execute() override;
-
 	/// Add new texture or replace existing texture
 	/** @param variable Hashed uniform name to be used in the shader program
 		@param file Hashed file path that is passed to FileLoader */
@@ -56,10 +54,11 @@ public:
 
 	void SetParameter(Hash variable, RenderCmdSink::Texture::Parameter param, RenderCmdSink::Texture::ParamValue value);
 
+protected:
+	void HandleExecute(Scope& scope) override;
+
 private:
 	typedef std::map<Hash, TextureManager::Asset*> TextureMap;
-
-	void SetTextureUniforms(TextureMap::const_iterator it);
 
 	TextureManager& mTextureManager;
 	TextureMap mTextures;

@@ -16,8 +16,10 @@ public:
 	Visibility(TRenderManager& manager):
 		SingleCalleeRenderFunction(manager) {}
 
-	void Execute() override;
 	void SetVisibility(bool visible);
+
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	bool mVisible = true;

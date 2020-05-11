@@ -34,39 +34,39 @@ namespace molecular
 namespace gfx
 {
 
-void ViewSetup::Execute()
+void ViewSetup::HandleExecute(Scope& scope)
 {
 	if(!mCallee)
 		return;
 
-	Binding<Output> glPosition("gl_Position"_H, this);
-	Binding<Output> fragmentColor("fragmentColor"_H, this);
-	Binding<Uniform<Vector2>> viewportSize("viewportSize"_H, this);
-	Binding<Uniform<Matrix4>> projectionMatrix("projectionMatrix"_H, this);
-	Binding<Uniform<Matrix4>> viewMatrix("viewMatrix"_H, this);
+	scope.Set("gl_Position"_H, Output());
+	scope.Set("fragmentColor"_H, Output());
 
 	for(int eye = 0; eye < mRenderContext.GetNumEyes(); ++eye)
 	{
 		auto viewport = mRenderContext.GetViewport(eye);
 		auto renderTarget = mRenderContext.GetRenderTarget(eye);
-		**viewportSize = Vector2(viewport[2], viewport[3]);
+		scope.Set("viewportSite"_H, Uniform<Vector2>(Vector2(viewport[2], viewport[3])));
 
-		**viewMatrix = (mCamera * mRenderContext.GetHeadToEyeTransform(eye)).Inverse();
+		const Matrix4 viewMatrix = (mCamera * mRenderContext.GetHeadToEyeTransform(eye)).Inverse();
+		scope.Set("viewMatrix"_H, Uniform<Matrix4>(viewMatrix));
 
 		mRenderer.SetBaseTarget(viewport, renderTarget);
 		mRenderer.Clear(true, true);
 
+		Matrix4 projectionMatrix;
 		if(mRenderContext.HasProjectionMatrix(eye))
 		{
 			// Set projection matrix from RenderContext
-			**projectionMatrix = mRenderContext.GetProjectionMatrix(eye);
+			projectionMatrix = mRenderContext.GetProjectionMatrix(eye);
 		}
 		else
 		{
 			float viewportAspectRatio = float(viewport[2]) / viewport[3];
-			**projectionMatrix = CalculateProjectionMatrix(viewportAspectRatio);
+			projectionMatrix = CalculateProjectionMatrix(viewportAspectRatio);
 		}
-		mCallee->Execute();
+		scope.Set("projectionMatrix"_H, Uniform<Matrix4>(projectionMatrix));
+		mCallee->Execute(&scope);
 	}
 
 }

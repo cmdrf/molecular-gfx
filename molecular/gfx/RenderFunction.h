@@ -28,7 +28,7 @@ SOFTWARE.
 
 #include "ProgramProvider.h"
 #include "Uniform.h"
-#include "Scoping.h"
+#include "Scope.h"
 
 #include <molecular/util/AxisAlignedBox.h>
 
@@ -41,43 +41,13 @@ namespace gfx
 class RenderFunction
 {
 public:
-	/// Convenience shortcut to molecular::gfx::Scoping::Binding
-	template<class T>
-	class Binding : public Scoping::Binding<T>
-	{
-	public:
-		Binding(Hash key, RenderFunction* self) :
-			Scoping::Binding<T>(key, self->mScoping)
-		{}
-
-		Binding(const char* key, RenderFunction* self) :
-			Scoping::Binding<T>(HashUtils::MakeHash(key), self->mScoping)
-		{}
-	};
-
-	/// Convenience shortcut to molecular::gfx::Scoping::SkeletalManualBinding
-	class SkeletalManualBinding : public Scoping::SkeletalManualBinding
-	{
-	public:
-		SkeletalManualBinding(Hash key, RenderFunction* self, Scoping::ValueSuperType* value) :
-			Scoping::SkeletalManualBinding(key, self->mScoping, value)
-		{}
-	};
-
-	/// Convenience shortcut to molecular::gfx::Scoping::Unbinding
-	class Unbinding : public Scoping::Unbinding
-	{
-	public:
-		Unbinding(Hash key, RenderFunction* self) : Scoping::Unbinding(key, self->mScoping) {}
-	};
-
 	template<class TRenderManager>
-	explicit RenderFunction(TRenderManager& manager) : mScoping(manager.GetScoping()), mRenderer(manager.GetRenderCmdSink()) {}
+	explicit RenderFunction(TRenderManager& manager) : mRenderer(manager.GetRenderCmdSink()) {}
 
-	RenderFunction(gfx::Scoping& scoping, RenderCmdSink& renderer) : mScoping(scoping), mRenderer(renderer) {}
+	RenderFunction(RenderCmdSink& renderer) : mRenderer(renderer) {}
 
 	virtual ~RenderFunction() {}
-	virtual void Execute() = 0;
+	void Execute(const Scope* parentScope);
 	virtual util::AxisAlignedBox GetBounds() const = 0;
 	virtual bool BoundsChangedSince(int /*framecounter*/) const {return false;}
 
@@ -86,18 +56,11 @@ public:
 	virtual void Set(Hash /*variable*/, bool /*value*/) {throw std::runtime_error("This RenderFunction does not have bool parameters");}
 
 protected:
-	/// Convenience shortcut to a variable pointer from the dynamic scope
-	/** @returns nullptr if variable does not exist. */
-	template<class T>
-	const T* GetVariable(Hash key)
-	{
-		return static_cast<const T*>(mScoping[key]);
-	}
+	virtual void HandleExecute(Scope& scope) = 0;
 
 //	/// Call from subclasses when bounds or transforms changed
 //	void BoundsChanged() {mBoundsChangedCounter = mRenderManager.GetFramecounter();}
 
-	gfx::Scoping& mScoping;
 	RenderCmdSink& mRenderer;
 //	int mBoundsChangedCounter;
 };
@@ -109,7 +72,7 @@ public:
 	template<class TRenderManager>
 	SingleCalleeRenderFunction(TRenderManager& manager) : RenderFunction(manager) {}
 
-	SingleCalleeRenderFunction(gfx::Scoping& scoping, RenderCmdSink& renderer) : RenderFunction(scoping, renderer), mCallee(nullptr) {}
+	SingleCalleeRenderFunction(RenderCmdSink& renderer) : RenderFunction(renderer), mCallee(nullptr) {}
 
 	molecular::util::AxisAlignedBox GetBounds() const override {return mCallee->GetBounds();}
 	bool BoundsChangedSince(int framecounter) const override {return mCallee->BoundsChangedSince(framecounter);}
@@ -132,7 +95,7 @@ public:
 	template<class TRenderManager>
 	MultipleCalleeRenderFunction (TRenderManager& manager) : RenderFunction(manager) {}
 
-	MultipleCalleeRenderFunction (gfx::Scoping& scoping, RenderCmdSink& renderer) : RenderFunction(scoping, renderer){}
+	MultipleCalleeRenderFunction (RenderCmdSink& renderer) : RenderFunction(renderer){}
 
 	molecular::util::AxisAlignedBox GetBounds() const override;
 

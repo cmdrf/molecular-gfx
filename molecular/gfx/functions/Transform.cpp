@@ -32,14 +32,14 @@ namespace molecular
 namespace gfx
 {
 
-void Transform::Execute()
+void Transform::HandleExecute(Scope& scope)
 {
 	if(mCallee)
 	{
-		Binding<Uniform<Matrix4> > modelMatrix("modelMatrix"_H, this);
+		Uniform<Matrix4>& modelMatrix = scope.Bind<Uniform<Matrix4>>("modelMatrix"_H);
 
-		**modelMatrix *= mTransform;
-		mCallee->Execute();
+		*modelMatrix *= mTransform;
+		mCallee->Execute(&scope);
 	}
 }
 

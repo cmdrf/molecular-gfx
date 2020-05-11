@@ -19,7 +19,8 @@ public:
 		MultipleCalleeRenderFunction (manager)
 	{}
 
-	void Execute();
+protected:
+	void HandleExecute(Scope& scope) override;
 };
 
 

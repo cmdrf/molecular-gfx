@@ -5,10 +5,10 @@ namespace molecular
 namespace gfx
 {
 
-void Group::Execute()
+void Group::HandleExecute(Scope& scope)
 {
 	for(auto& func: mCallees)
-		func->Execute();
+		func->Execute(&scope);
 }
 
 

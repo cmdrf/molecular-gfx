@@ -50,7 +50,6 @@ public:
 
 	}
 
-	void Execute() override;
 	util::AxisAlignedBox GetBounds() const override {return mBounds;}
 	bool BoundsChangedSince(int framecounter) const override {return mLastBoundsChange > framecounter;}
 
@@ -58,6 +57,9 @@ public:
 	void AddMorphTarget(const std::string& targetFile, float weight = 1.0);
 	void ClearMorphTargets();
 	void SetPickingId(unsigned int id) {mPickingId = id;}
+
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	void DataChanged();
@@ -73,7 +75,7 @@ private:
 /******************************************************************************/
 
 template<class TRenderManager>
-void DrawMesh<TRenderManager>::Execute()
+void DrawMesh<TRenderManager>::HandleExecute(Scope& scope)
 {
 	if(!mAsset && mLocator.meshFile != ""_H)
 	{
@@ -88,9 +90,8 @@ void DrawMesh<TRenderManager>::Execute()
 			mBounds = data->GetBounds();
 //			mLastBoundsChange = mRenderManager.GetFramecounter();
 		}
-		Binding<Uniform<unsigned int> > pickingColor("pickingColor"_H, this);
-		**pickingColor = mPickingId;
-		data->Execute();
+		scope.Set("pickingColor"_H, Uniform<unsigned int>(mPickingId));
+		data->Execute(&scope);
 	}
 }
 

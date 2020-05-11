@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -40,10 +40,12 @@ public:
 	template<class TRenderManager>
 	DrawTestSkeleton(TRenderManager& manager);
 
-	void Execute() override;
 	util::AxisAlignedBox GetBounds() const override {return util::AxisAlignedBox();}
 
 	void SetJoints(const Matrix4 joints[CharacterAnimation::kBoneCount]);
+
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	RenderCmdSink::VertexBuffer* mVertexBuffer;

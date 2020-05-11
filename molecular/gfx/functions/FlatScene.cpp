@@ -33,22 +33,19 @@ namespace molecular
 namespace gfx
 {
 
-void FlatScene::Execute()
+void FlatScene::HandleExecute(Scope& scope)
 {
-	const Uniform<Matrix4>* projMatrix = GetVariable<Uniform<Matrix4> >("projectionMatrix"_H);
-	const Uniform<Matrix4>* viewMatrix = GetVariable<Uniform<Matrix4> >("viewMatrix"_H);
+	const Matrix4 projMatrix = *scope.Get<Uniform<Matrix4>>("projectionMatrix"_H);
+	const Matrix4 viewMatrix = *scope.Get<Uniform<Matrix4>>("viewMatrix"_H);
 
-	if(!projMatrix || !viewMatrix)
-		return;
-
-	Matrix4 viewProjectionMatrix = **projMatrix * **viewMatrix;
+	Matrix4 viewProjectionMatrix = projMatrix * viewMatrix;
 	util::Frustum frustum(viewProjectionMatrix);
 
 	for(auto func: mFunctions)
 	{
 		auto bounds = func->GetBounds(); // TODO: Cache
 		if(frustum.Check(bounds) != util::Plane::kOutside)
-			func->Execute();
+			func->Execute(&scope);
 	}
 }
 

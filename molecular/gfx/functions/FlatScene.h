@@ -42,12 +42,14 @@ public:
 	template<class TRenderManager>
 	explicit FlatScene(TRenderManager& manager) : RenderFunction(manager) {}
 
-	void Execute() override;
 	util::AxisAlignedBox GetBounds() const override;
 	bool BoundsChangedSince(int framecounter) const override;
 
 	Leaf* Insert(RenderFunction* function) {mFunctions.insert(function); return function;}
 	void Remove(Leaf* leaf) {mFunctions.erase(leaf);}
+
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	std::unordered_set<Leaf*> mFunctions;

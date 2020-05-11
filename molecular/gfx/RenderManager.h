@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,11 +27,9 @@ SOFTWARE.
 #define MOLECULAR_RENDERMANAGER_H
 
 #include "RenderCmdSink.h"
-#include "Scoping.h"
 #include "RenderFunction.h"
 #include "MeshBoundsCollectionFile.h"
 
-#include <molecular/util/DynamicScoping.h>
 #include <molecular/gfx/Uniform.h>
 #include <molecular/gfx/TextureManager.h>
 #include <molecular/programgenerator/ProgramGenerator.h>
@@ -79,7 +77,6 @@ public:
 	GlTaskQueue& GetGlTaskQueue() {return mGlTaskQueue;}
 
 	inline int GetFramecounter() const {return mFramecounter;}
-	Scoping& GetScoping() {return mScoping;}
 	RenderContext& GetRenderContext() {return mRenderContext;}
 	RenderCmdSink& GetRenderCmdSink() {return mRenderer;}
 
@@ -97,7 +94,6 @@ private:
 	RenderContext& mRenderContext;
 	RenderCmdSink& mRenderer;
 	int mFramecounter;
-	Scoping mScoping;
 
 	FileServer& mFileServer;
 
@@ -142,7 +138,7 @@ void RenderManagerT<TFileServer, TTaskQueue>::DrawOneFrame(RenderFunction& funct
 	// Execute one task from the render thread queue
 	mGlTaskQueue.RunOneTask();
 	mFramecounter++;
-	function.Execute();
+	function.Execute(nullptr);
 }
 
 template<class TFileServer, class TTaskQueue>

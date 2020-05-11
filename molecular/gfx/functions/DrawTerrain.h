@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,6 @@ public:
 	DrawTerrain(TRenderManager& manager);
 	~DrawTerrain();
 
-	void Execute() override;
 	util::AxisAlignedBox GetBounds() const override;
 
 	/// Set scaling factor for heightmap values
@@ -69,6 +68,9 @@ public:
 	/// Set factor which decides on the LOD level from distance to viewer
 	void SetLodFactor(float factor) {mLodFactor = factor;}
 	void SetPickingId(unsigned int id) {mPickingId = id;}
+
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	static void BuildIndices(int lodLevel, std::vector<uint16_t>& indices, IndexBufferInfo& info);

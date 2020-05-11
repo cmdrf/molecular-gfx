@@ -68,9 +68,9 @@ CpuParticleSystem<TRenderManager>::~CpuParticleSystem()
 }
 
 template<class TRenderManager>
-void CpuParticleSystem<TRenderManager>::Execute()
+void CpuParticleSystem<TRenderManager>::HandleExecute(Scope& scope)
 {
-	bool shadowPass = !mScoping["fragmentColor"_H];
+	bool shadowPass = !scope.Has("fragmentColor"_H);
 
 	if((shadowPass && mCastShadows) || (!shadowPass && !mCastShadows))
 	{
@@ -94,22 +94,15 @@ void CpuParticleSystem<TRenderManager>::Execute()
 
 	if(!shadowPass || mCastShadows)
 	{
-		Binding<Attribute> position("vertexPositionAttr"_H, this);
-		Binding<Attribute> particleAge("particleAge"_H, this);
-		Binding<Uniform<float>> particleMaxAge("particleMaxAge"_H, this);
-		Binding<Uniform<Vector3>> color("diffuseColor"_H, this);
-		Binding<Uniform<Matrix4>> modelMatrix("modelMatrix"_H, this);
-		Binding<Uniform<float>> pointWorldSize("pointWorldSize"_H, this);
-		Binding<Output> glPointSizeOutput("gl_PointSize"_H, this);
+		scope.Set("vertexPositionAttr"_H, Attribute(mVertexBuffer, mPositionInfo));
+		scope.Set("particleAge"_H, Attribute(mVertexBuffer, mAgeInfo));
+		scope.Set("particleMaxAge"_H, Uniform<float>(mMaxParticleAge));
+		scope.Set("diffuseColor"_H, Uniform<Vector3>(mColor));
+		scope.Set("modelMatrix"_H, Uniform<Matrix4>(Matrix4::Identity()));
+		scope.Set("pointWorldSize"_H, Uniform<float>(0.5));
+		scope.Set("gl_PointSize"_H, Output());
 
-		*position = Attribute(mVertexBuffer, mPositionInfo);
-		*particleAge = Attribute(mVertexBuffer, mAgeInfo);
-		**particleMaxAge = mMaxParticleAge;
-		**color = mColor;
-		**modelMatrix = Matrix4::Identity();
-		**pointWorldSize = 0.5;
-
-		PrepareProgram();
+		PrepareProgram(scope);
 		mRenderer.SetBlending(true, RenderCmdSink::kOne, RenderCmdSink::kOne);
 		mRenderer.SetDepthState(true, false);
 		mRenderer.Draw(IndexBufferInfo::Mode::kPoints, mNumParticles);

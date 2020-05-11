@@ -46,13 +46,14 @@ public:
 	{
 	}
 
-	void Execute() override;
-
 	template<class T>
 	void SetUniform(Hash hash, const T& variable)
 	{
 		mUniforms.SetUniform(hash, variable);
 	}
+
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	Material mUniforms;

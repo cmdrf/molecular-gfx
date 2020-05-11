@@ -65,6 +65,12 @@ void GlCommandSink::Init()
 	gl.Enable(gl.CULL_FACE);
 	SetTarget(nullptr);
 
+/*	if(gl.HasPrimitiveRestartIndex())
+	{
+		gl.PrimitiveRestartIndex(0xffff);
+		gl.Enable(gl.PRIMITIVE_RESTART);
+	}
+*/
 #ifndef OPENGL_ES3
 	gl.Enable(gl.PROGRAM_POINT_SIZE); // Always enabled on GLES3
 
@@ -76,6 +82,7 @@ void GlCommandSink::Init()
 	gl.GetFramebufferAttachmentParameteriv(gl.FRAMEBUFFER, gl.FRONT_LEFT, gl.FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING, &colorEncoding);
 	CheckError("glGetFramebufferAttachmentParameteriv", __LINE__, __FILE__);
 	LOG(INFO) << "GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING: " << GlConstantString(colorEncoding);
+
 #endif
 }
 
@@ -118,8 +125,6 @@ void GlCommandSink::UseProgram(Program* program)
 {
 	if(program)
 	{
-		gl.BindVertexArray(program->mVertexArrayObject);
-		CheckError("glBindVertexArray", __LINE__, __FILE__);
 #ifndef NDEBUG
 		gl.ValidateProgram(program->mProgram);
 		CheckError("glValidateProgram", __LINE__, __FILE__);
@@ -127,18 +132,13 @@ void GlCommandSink::UseProgram(Program* program)
 		gl.GetProgramiv(program->mProgram, gl.VALIDATE_STATUS, &status);
 		CheckError("glGetProgramiv", __LINE__, __FILE__);
 		if(status != GL_TRUE)
-		{
-			GLint length = 0;
-			gl.GetProgramiv(program->mProgram, gl.INFO_LOG_LENGTH, &length);
-			std::vector<char> infoLog;
-			infoLog.resize(length);
-			gl.GetProgramInfoLog(program->mProgram, length, nullptr, infoLog.data());
-			LOG(ERROR) << infoLog.data();
-		}
+			LOG(ERROR) << "GL_VALIDATE_STATUS == GL_FALSE";
 #endif
 
 		gl.UseProgram(program->mProgram);
 		CheckError("glUseProgram", __LINE__, __FILE__);
+		gl.BindVertexArray(program->mVertexArrayObject);
+		CheckError("glBindVertexArray", __LINE__, __FILE__);
 	}
 	else
 	{

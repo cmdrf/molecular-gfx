@@ -52,13 +52,15 @@ public:
 
 	~DrawDebugMesh() override;
 
-	void Execute() override;
 	util::AxisAlignedBox GetBounds() const override {return mBounds;}
 
 	void DrawLine(const Vector3& from, const Vector3& to, const Vector3& color);
 	void DrawText(const std::string& text, const Vector3& position);
 	void DrawAxisAlignedBox(const Vector3& min, const Vector3& max, const Vector3& color);
 	void DrawCoordSystem(const Matrix4& coordSystem);
+
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	std::vector<Vector3> mLineVertexData;
@@ -109,36 +111,29 @@ inline DrawDebugMesh::~DrawDebugMesh()
 }
 
 //template<class TRenderManager>
-inline void DrawDebugMesh::Execute()
+inline void DrawDebugMesh::HandleExecute(Scope& scope)
 {
 	mLinePositionBuffer->Store(mLineVertexData.data(), mLineVertexData.size() * sizeof(Vector3));
 	mLineColorBuffer->Store(mLineColorData.data(), mLineColorData.size() * sizeof(Vector3));
 	mTextVertexBuffer->Store(mTextVertexData.data(), mTextVertexData.size() * sizeof(Vector3));
 	mTextTexCoordBuffer->Store(mTextTexCoordData.data(), mTextTexCoordData.size() * sizeof(Vector2));
 
-	Binding<Attribute> position("vertexPositionAttr"_H, this);
-
 	{
-		Binding<Attribute> color("vertexColorAttr"_H, this);
-		*position = Attribute(mLinePositionBuffer, mVector3Info);
-		*color = Attribute(mLineColorBuffer, mVector3Info);
+		Scope linesScope(&scope);
+		linesScope.Set("vertexPositionAttr"_H, Attribute(mLinePositionBuffer, mVector3Info));
+		linesScope.Set("vertexColorAttr"_H, Attribute(mLineColorBuffer, mVector3Info));
 
-		PrepareProgram();
+		PrepareProgram(linesScope);
 		mRenderer.Draw(IndexBufferInfo::Mode::kLines, mLineVertexData.size());
 	}
 	{
-		Binding<Attribute> vertexUv0("vertexUv0Attr"_H, this);
-#if 1
-		Binding<Uniform<RenderCmdSink::Texture*>> texture("signedDistanceFieldTexture"_H, this);
-		Binding<Uniform<Vector3>> diffuseColor("diffuseColor"_H, this);
-		**diffuseColor = Vector3(1, 1, 1);
-#else
-		Binding<Uniform<RenderCmdSink::Texture*>> texture("diffuseTexture"_H, this);
-#endif
-		**texture = mTextTextureHandle->Use();
-		*position = Attribute(mTextVertexBuffer, mVector3Info);
-		*vertexUv0 = Attribute(mTextTexCoordBuffer, mVector2Info);
-		PrepareProgram();
+		Scope textScope(&scope);
+		textScope.Set("vertexPositionAttr"_H, Attribute(mTextVertexBuffer, mVector3Info));
+		textScope.Set("vertexUv0Attr"_H, Attribute(mTextTexCoordBuffer, mVector2Info));
+		textScope.Set("diffuseColor"_H, Uniform<Vector3>(Vector3(1, 1, 1)));
+		textScope.Set("signedDistanceFieldTexture"_H, Uniform<RenderCmdSink::Texture*>(mTextTextureHandle->Use()));
+
+		PrepareProgram(textScope);
 		mRenderer.SetBlending(true, RenderCmdSink::kSrcAlpha, RenderCmdSink::kOneMinusSrcAlpha);
 		mRenderer.Draw(IndexBufferInfo::Mode::kTriangles, mTextVertexData.size());
 		mRenderer.SetBlending(false);

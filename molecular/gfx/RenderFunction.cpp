@@ -30,6 +30,12 @@ namespace molecular
 namespace gfx
 {
 
+void RenderFunction::Execute(const Scope* parentScope)
+{
+	Scope scope(parentScope);
+	HandleExecute(scope);
+}
+
 AxisAlignedBox MultipleCalleeRenderFunction::GetBounds() const
 {
 	// Create bounding box that encloses all boxes of the callees:

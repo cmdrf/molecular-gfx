@@ -27,6 +27,7 @@ SOFTWARE.
 #define MOLECULAR_UNIFORM_H
 
 #include "RenderCmdSink.h"
+#include <molecular/util/Scope.h>
 #include <assert.h>
 
 namespace molecular
@@ -43,6 +44,9 @@ public:
 	/// Feed to program
 	virtual void Apply(RenderCmdSink::Program* program, Hash name) const = 0;
 
+	// Transitional
+	virtual void Apply(util::Scope<Variable>& scope, Hash name) const = 0;
+
 	virtual unsigned int GetArraySize() const {return 0;}
 };
 
@@ -51,12 +55,23 @@ template<class T, int arraySize = 1>
 class Uniform : public Variable
 {
 public:
+	Uniform() = default;
+	Uniform(const T& value)
+	{
+		static_assert (arraySize == 1, "This constructor can only be used for non-array uniforms");
+		mValues[0] = value;
+	}
+
 	void Apply(RenderCmdSink::Program* program, Hash name) const override
 	{
 		assert(program);
 		program->SetUniform(name, mValues, arraySize);
 	}
-//	using Variable::Apply;
+
+	void Apply(util::Scope<Variable>& scope, Hash name) const override
+	{
+		scope.Set(name, *this);
+	}
 
 	unsigned int GetArraySize() const override {return arraySize == 1 ? 0 : arraySize;}
 
@@ -85,6 +100,11 @@ public:
 
 	void Apply(RenderCmdSink::Program* program, Hash name) const override;
 
+	void Apply(util::Scope<Variable>& scope, Hash name) const override
+	{
+		scope.Set<Attribute>(name, *this);
+	}
+
 private:
 	RenderCmdSink::VertexBuffer* mBuffer;
 	VertexAttributeInfo::Type mType;
@@ -107,6 +127,11 @@ class Output : public Variable
 public:
 	/** This is never called. */
 	void Apply(RenderCmdSink::Program* /*program*/, Hash /*name*/) const override {}
+
+	void Apply(util::Scope<Variable>& scope, Hash name) const override
+	{
+		scope.Set(name, *this);
+	}
 };
 
 }

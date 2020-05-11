@@ -58,9 +58,6 @@ public:
 		mRenderContext(manager.GetRenderContext())
 	{}
 
-
-	void Execute() override;
-
 	/// Set projection matrix to a perspective projection
 	/** @todo Don't pass aspect ratio here. Recalculate on viewport change. */
 	void SetProjectionPerspective(float fieldOfView, float nearPlane, float farPlane);
@@ -74,6 +71,9 @@ public:
 
 	/// Set view matrix
 	void SetCamera(const Matrix4& cameraMatrix) {mCamera = cameraMatrix;}
+
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	Matrix4 CalculateProjectionMatrix(float viewportAspectRatio);

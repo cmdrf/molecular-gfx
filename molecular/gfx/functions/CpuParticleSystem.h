@@ -59,7 +59,6 @@ public:
 	CpuParticleSystem(TRenderManager& manager);
 	~CpuParticleSystem();
 
-	void Execute() override;
 	util::AxisAlignedBox GetBounds() const override {return util::AxisAlignedBox();}
 
 	/// Set emitters
@@ -81,6 +80,9 @@ public:
 
 //	void SetEmissionRandomness(Vector3 positionRandomness, Vector3 velocityRandomness);
 //	void SetTransitionRandomness(Vector3 positionRandomness, Vector3 velocityRandomness);
+
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	enum

@@ -48,10 +48,12 @@ public:
 
 	~CascadedShadowMapping() override;
 
-	void Execute() override;
 
 	void SetCascadeSplitLambda(float cascadeSplitLambda) {mCascadeSplitLambda = cascadeSplitLambda;}
 	void SetShadowDrawingDistance(float shadowDrawingDistance) {mShadowDrawingDistance = shadowDrawingDistance;}
+
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	/// Matrices for each cascade calculated by CalculateCascades()

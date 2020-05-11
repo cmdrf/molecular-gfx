@@ -1,8 +1,8 @@
-/*	DrawTestSkeleton.cpp
+/*	Scope.h
 
 MIT License
 
-Copyright (c) 2019-2020 Fabian Herb
+Copyright (c) 2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,32 +23,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "DrawTestSkeleton.h"
-#include <array>
+#ifndef MOLECULAR_GFX_SCOPE_H
+#define MOLECULAR_GFX_SCOPE_H
+
+#include "Uniform.h"
+
+#include <molecular/util/Scope.h>
 
 namespace molecular
 {
 namespace gfx
 {
-
-void DrawTestSkeleton::HandleExecute(Scope& scope)
-{
-	scope.Set("vertexPositionAttr"_H, Attribute(mVertexBuffer, mPositionInfo));
-	scope.Set("diffuseColor"_H, Uniform<Vector3>(Vector3(1, 0, 0)));
-
-	PrepareProgram(scope);
-	mRenderer.Draw(mIndexBuffer, mIndicesInfo);
-}
-
-void DrawTestSkeleton::SetJoints(const Matrix4 joints[CharacterAnimation::kBoneCount])
-{
-	std::array<Matrix4, CharacterAnimation::kBoneCount> absoluteTransforms;
-	CharacterAnimation::SceneGraphToAbsoluteTransforms(joints, CharacterAnimation::kBoneParents, absoluteTransforms.data(), CharacterAnimation::kBoneCount);
-	Vector3 positions[CharacterAnimation::kBoneCount];
-	for(int i = 0; i < CharacterAnimation::kBoneCount; i++)
-		positions[i] = absoluteTransforms[i].GetTranslation() * 0.01f; // TODO scaling
-	mVertexBuffer->Store(positions, CharacterAnimation::kBoneCount * sizeof(Vector3), true);
-}
-
+using Scope = util::Scope<Variable>;
 }
 }
+
+#endif // MOLECULAR_GFX_SCOPE_H

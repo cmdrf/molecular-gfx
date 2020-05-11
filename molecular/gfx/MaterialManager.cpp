@@ -58,7 +58,7 @@ void MaterialManager::ReadFile(IniFile& file)
 	IniFile::SectionMap::const_iterator section = sections.begin();
 	while(section != sections.end())
 	{
-		Material* material = new Material(mTextureManager, mScoping);
+		Material* material = new Material(mTextureManager);
 		mMaterials[HashUtils::MakeHash(section->first)].reset(material);
 		IniFile::ValueMap::const_iterator it = section->second.begin();
 		while(it != section->second.end())
@@ -74,7 +74,7 @@ void MaterialManager::ReadFile(MtlFile& file)
 {
 	for(const MtlFile::Material& mat: file)
 	{
-		Material* material = new Material(mTextureManager, mScoping);
+		Material* material = new Material(mTextureManager);
 		if(mat.hasDiffuse)
 			material->SetUniform("diffuseColor"_H, Vector4(Vector3(mat.diffuse)));
 		if(mat.hasAmbient)

@@ -44,7 +44,6 @@ public:
 	{
 	}
 
-	void Execute() override;
 	molecular::util::AxisAlignedBox GetBounds() const override;
 	bool BoundsChangedSince(int framecounter) const override;
 
@@ -54,6 +53,8 @@ public:
 //		mBoundsChangedFramecounter = mRenderManager.GetFramecounter();
 	}
 
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	Matrix4 mTransform;

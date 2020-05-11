@@ -42,9 +42,10 @@ public:
 	template<class TRenderManager>
 	HumanSkin(TRenderManager& manager, unsigned int dimensions = 1024);
 
-	void Execute();
-
 	void SetStretchTexture(const Hash file){mStretchTexture = mTextureManager.GetAsset(file);}
+
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	class BlurStage : NonCopyable
@@ -63,7 +64,7 @@ private:
 		HumanSkin& mParent;
 	};
 
-	void Blur(BlurStage& from, BlurStage& to, bool y, float width, bool noBind = false);
+	void Blur(BlurStage& from, BlurStage& to, bool y, float width, Scope& scope);
 
 	BlurStage mStageTmp, mStage0, mStage1, mStage2, mStage3, mStage4;
 

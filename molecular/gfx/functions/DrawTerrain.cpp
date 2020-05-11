@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -41,36 +41,33 @@ DrawTerrain::~DrawTerrain()
 	mRenderer.DestroyTexture(mHeightmap);
 }
 
-void DrawTerrain::Execute()
+void DrawTerrain::HandleExecute(Scope& scope)
 {
 	if(mHeightmapWidth == 0 || mHeightmapHeight == 0)
 		return;
 
-	Binding<Uniform<Matrix4> > viewMatrix("viewMatrix"_H, this);
-	Binding<Uniform<Matrix4> > modelMatrix("modelMatrix"_H, this);
+	const Matrix4 viewMatrix = *scope.Get<Uniform<Matrix4>>("viewMatrix"_H);
+	const Matrix4 modelMatrix = *scope.Get<Uniform<Matrix4>>("modelMatrix"_H);
 
-	Binding<Attribute> patchVertex("terrainVertex"_H, this);
-	Binding<Uniform<IntVector2> > start("terrainStart"_H, this);
-	Binding<Uniform<Vector3> > scale("terrainScale"_H, this);
-	Binding<Uniform<RenderCmdSink::Texture*> > heightmap("heightmapTexture"_H, this);
-	Binding<Uniform<RenderCmdSink::Texture*> > normalMap("terrainNormalMap"_H, this);
-	Binding<Uniform<unsigned int> > pickingColor("pickingColor"_H, this);
+	scope.Set("terrainVertex"_H, Attribute(mPatchVertices, 2, VertexAttributeInfo::kUInt16));
+	scope.Set("heightmapTexture"_H, Uniform<RenderCmdSink::Texture*>(mHeightmap));
+	scope.Set("terrainNormalMap"_H, Uniform<RenderCmdSink::Texture*>(mNormalMap));
+	scope.Set("pickingColor"_H, Uniform<unsigned int>(mPickingId));
 
-	*patchVertex = Attribute(mPatchVertices, 2, VertexAttributeInfo::kUInt16);
-	**scale = Vector3(mXSize / mHeightmapWidth, mHeightScale, mYSize / mHeightmapHeight);
-	**heightmap = mHeightmap;
-	**normalMap = mNormalMap;
-	**pickingColor = mPickingId;
+	Uniform<IntVector2>& start = scope.Bind<Uniform<IntVector2>>("terrainStart"_H);
+	Uniform<Vector3>& scale = scope.Bind<Uniform<Vector3>>("terrainScale"_H);
 
-	RenderCmdSink::Program* program = PrepareProgram();
+	*scale = Vector3(mXSize / mHeightmapWidth, mHeightScale, mYSize / mHeightmapHeight);
+
+	RenderCmdSink::Program* program = PrepareProgram(scope);
 
 	for(unsigned int y = 0; y <= mHeightmapHeight - kPatchSize; y += kPatchSize - 1)
 	{
 		for(unsigned int x = 0; x <= mHeightmapWidth - kPatchSize; x += kPatchSize - 1)
 		{
-			float xCenter = (x + kPatchSize/2) * (**scale)[0];
-			float zCenter = (y + kPatchSize/2) * (**scale)[2];
-			Vector3 patchCenter = (**viewMatrix * (**modelMatrix * Vector4(xCenter, 0, zCenter, 1))).Xyz();
+			float xCenter = (x + kPatchSize/2) * (*scale)[0];
+			float zCenter = (y + kPatchSize/2) * (*scale)[2];
+			Vector3 patchCenter = (viewMatrix * (modelMatrix * Vector4(xCenter, 0, zCenter, 1))).Xyz();
 			float patchViewerDistance = patchCenter.Length();
 			int lodLevel = int(sqrt(patchViewerDistance * mLodFactor));
 			if(lodLevel >= kLodLevels)
@@ -78,8 +75,8 @@ void DrawTerrain::Execute()
 			else if(lodLevel < 0)
 				lodLevel = 0;
 
-			**start = IntVector2(x, y);
-			start->Apply(program, "terrainStart"_H);
+			*start = IntVector2(x, y);
+			start.Apply(program, "terrainStart"_H);
 			mRenderer.Draw(mPatchIndices[lodLevel], mPatchInfos[lodLevel]);
 		}
 	}

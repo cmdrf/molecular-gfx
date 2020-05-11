@@ -27,6 +27,7 @@ SOFTWARE.
 #define MOLECLUAR_DRAWINGFUNCTION_H
 
 #include <molecular/gfx/RenderFunction.h>
+#include <molecular/util/IteratorAdapters.h>
 
 namespace molecular
 {
@@ -49,24 +50,23 @@ public:
 
 protected:
 	/** The return value is usually ignored. */
-	RenderCmdSink::Program* PrepareProgram()
+	RenderCmdSink::Program* PrepareProgram(const Scope& scope)
 	{
 		auto getArraySize = [&](Hash hash)
 		{
-			const Variable* var = mScoping[hash];
-			assert(var);
-			return var->GetArraySize();
+			assert(scope.Has(hash));
+			return scope.Get<Variable>(hash).GetArraySize();
 		};
 
-		auto program = mProgramProvider.GetProgram(mScoping.KeyBegin(), mScoping.KeyEnd(), getArraySize);
+		auto scopeMap = scope.ToMap();
+		auto program = mProgramProvider.GetProgram(util::MakePairFirstIterator(scopeMap.begin()), util::MakePairFirstIterator(scopeMap.end()), getArraySize);
 		assert(program);
 		mRenderer.UseProgram(program);
 
 		for(auto input: program->GetInputs())
 		{
-			const Variable* var = mScoping[input];
-			if(var)
-				var->Apply(program, input);
+			assert(scope.Has(input));
+			scope.Get<Variable>(input).Apply(program, input);
 		}
 		return program;
 	}

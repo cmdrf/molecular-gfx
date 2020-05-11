@@ -117,6 +117,12 @@ SkippingIterator<Iterator, Predicate> MakeSkippingIterator(Iterator it, Iterator
 	return SkippingIterator<Iterator, Predicate>(it, end, pred);
 }
 
+template<class Iterator>
+PairFirstIterator<Iterator> MakePairFirstIterator(Iterator it)
+{
+	return PairFirstIterator<Iterator>(it);
+}
+
 }
 }
 

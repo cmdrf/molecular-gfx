@@ -25,8 +25,6 @@ SOFTWARE.
 
 #include "CascadedShadowMapping.h"
 
-#include <array>
-
 namespace molecular
 {
 namespace gfx
@@ -95,57 +93,58 @@ CascadedShadowMapping::~CascadedShadowMapping()
 	TeardownShadowResources();
 }
 
-void CascadedShadowMapping::Execute()
+void CascadedShadowMapping::HandleExecute(Scope& scope)
 {
 	if(!mCallee)
 		return;
 
-	Binding<Output> glPosition("gl_Position"_H, this);
+	scope.Set("gl_Position"_H, Output());
 
 	CascadesInfo cascades;
 	{
-		Binding<Uniform<Matrix4>> viewMatrix("viewMatrix"_H, this);
-		Binding<Uniform<Matrix4>> projMatrix("projectionMatrix"_H, this);
-		Binding<Uniform<Vector3>> lightDirection0("lightDirection0"_H, this);
+		Scope shadowMappingScope(&scope);
+		Uniform<Matrix4>& viewMatrix = shadowMappingScope.Bind<Uniform<Matrix4>>("viewMatrix"_H);
+		Uniform<Matrix4>& projMatrix = shadowMappingScope.Bind<Uniform<Matrix4>>("projectionMatrix"_H);
+		const Vector3 lightDirection0 = *shadowMappingScope.Get<Uniform<Vector3>>("lightDirection0"_H);
 
 		/* Unbind fragmentColor if previously bound by ViewSetup, since we don't need to generate
 			color information: */
-		Unbinding fragmentColor("fragmentColor"_H, this);
+		shadowMappingScope.Unset("fragmentColor"_H);
 
-		cascades = CalculateCascades(**projMatrix, **viewMatrix, **lightDirection0);
+		cascades = CalculateCascades(*projMatrix, *viewMatrix, lightDirection0);
 
 		RenderCmdSink::RenderTarget* oldTarget = mRenderer.GetTarget();
 		mRenderer.SetRasterizationState(false, RenderCmdSink::kFront);
 
 		for(unsigned i = 0; i < NUM_SHADOW_MAPS; i++)
 		{
-			**projMatrix = cascades.globalShadowProj[i];
-			**viewMatrix = cascades.globalShadowViews[i];
+			*projMatrix = cascades.globalShadowProj[i];
+			*viewMatrix = cascades.globalShadowViews[i];
 
 		   mRenderer.SetTarget(mRenderTargets[i]);
 		   mRenderer.Clear(false, true);
 
-		   mCallee->Execute();
+		   mCallee->Execute(&shadowMappingScope);
 		}
 
 		mRenderer.SetTarget(oldTarget);
 	}
 
 	// Render scene normally
-	Binding<Uniform<RenderCmdSink::Texture*, 3> > shadowTextures("shadowTextures"_H, this);
-	Binding<Uniform<Matrix4, 3> > shadowViewProjMatrices("shadowViewProjMatrices"_H, this);
-	Binding<Uniform<float, 3>> shadowCascadeSplits("shadowCascadeSplits"_H, this);
-	Binding<Output> fragmentColor("fragmentColor"_H, this);
+	Uniform<RenderCmdSink::Texture*, 3>& shadowTextures = scope.Bind<Uniform<RenderCmdSink::Texture*, 3>>("shadowTextures"_H);
+	Uniform<Matrix4, 3>& shadowViewProjMatrices = scope.Bind<Uniform<Matrix4, 3>>("shadowViewProjMatrices"_H);
+	Uniform<float, 3>& shadowCascadeSplits = scope.Bind<Uniform<float, 3>>("shadowCascadeSplits"_H);
+	scope.Set("fragmentColor"_H, Output());
 
 	for(int i = 0; i < 3; ++i)
 	{
-		(*shadowTextures)[i] = mShadowMaps[i];
-		(*shadowViewProjMatrices)[i] =  kBiasMatrix * cascades.globalShadowProj[i] * cascades.globalShadowViews[i];
-		(*shadowCascadeSplits)[i] = cascades.cascadeSplit[i];
+		shadowTextures[i] = mShadowMaps[i];
+		shadowViewProjMatrices[i] =  kBiasMatrix * cascades.globalShadowProj[i] * cascades.globalShadowViews[i];
+		shadowCascadeSplits[i] = cascades.cascadeSplit[i];
 	}
 
 	mRenderer.SetRasterizationState(false, RenderCmdSink::kBack);
-	mCallee->Execute();
+	mCallee->Execute(&scope);
 }
 
 void CascadedShadowMapping::SetupShadowResources()

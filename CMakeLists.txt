@@ -68,18 +68,18 @@ add_library(molecular-gfx
 	molecular/gfx/functions/PortalZoneSceneImpl.h
 	molecular/gfx/functions/RequestOutput.cpp
 	molecular/gfx/functions/RequestOutput.h
-	molecular/gfx/functions/SetShCoefficients.cpp
-	molecular/gfx/functions/SetShCoefficients.h
+#	molecular/gfx/functions/SetShCoefficients.cpp
+#	molecular/gfx/functions/SetShCoefficients.h
 	molecular/gfx/functions/SetUniforms.cpp
 	molecular/gfx/functions/SetUniforms.h
-	molecular/gfx/functions/SetupLight.cpp
-	molecular/gfx/functions/SetupLight.h
-	molecular/gfx/functions/ShadowMapping.cpp
-	molecular/gfx/functions/ShadowMapping.h
-	molecular/gfx/functions/Skeleton.h
-	molecular/gfx/functions/Skeleton.cpp
-	molecular/gfx/functions/TextureSplatting.cpp
-	molecular/gfx/functions/TextureSplatting.h
+#	molecular/gfx/functions/SetupLight.cpp
+#	molecular/gfx/functions/SetupLight.h
+#	molecular/gfx/functions/ShadowMapping.cpp
+#	molecular/gfx/functions/ShadowMapping.h
+#	molecular/gfx/functions/Skeleton.h
+#	molecular/gfx/functions/Skeleton.cpp
+#	molecular/gfx/functions/TextureSplatting.cpp
+#	molecular/gfx/functions/TextureSplatting.h
 	molecular/gfx/functions/Transform.cpp
 	molecular/gfx/functions/Transform.h
 	molecular/gfx/functions/ViewSetup.cpp
@@ -179,7 +179,7 @@ target_link_libraries(molecular-gfx PUBLIC
 
 if(TARGET glfw)
 	target_link_libraries(molecular-gfx PUBLIC glfw)
-	add_subdirectory(examples)
+#	add_subdirectory(examples)
 endif(TARGET glfw)
 
 if(BUILD_TESTING)

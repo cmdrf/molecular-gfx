@@ -30,7 +30,6 @@ SOFTWARE.
 #include <molecular/util/MtlFile.h>
 #include <molecular/util/Hash.h>
 #include "TextureManager.h"
-#include "Scoping.h"
 
 namespace molecular
 {
@@ -45,9 +44,9 @@ class MaterialManager
 {
 public:
 	template<class TRenderManager>
-	MaterialManager(TRenderManager& renderManager)  : mTextureManager(renderManager.GetTextureManager()), mScoping(renderManager.GetScoping()) {}
+	MaterialManager(TRenderManager& renderManager)  : mTextureManager(renderManager.GetTextureManager()) {}
 
-	MaterialManager(TextureManager& textureManager, gfx::Scoping& scoping) : mTextureManager(textureManager), mScoping(scoping) {}
+	MaterialManager(TextureManager& textureManager) : mTextureManager(textureManager) {}
 	~MaterialManager();
 
 	template<class TStorage>
@@ -71,7 +70,6 @@ private:
 	void AddVariable(Material* material, Hash key, const std::string& value);
 
 	TextureManager& mTextureManager;
-	gfx::Scoping& mScoping;
 
 	std::unordered_map<Hash, std::unique_ptr<Material>> mMaterials;
 };

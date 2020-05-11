@@ -31,9 +31,13 @@ namespace molecular
 namespace gfx
 {
 
-void ApplyTextures::Execute()
+void ApplyTextures::HandleExecute(Scope& scope)
 {
-	SetTextureUniforms(mTextures.begin());
+	for(auto& it: mTextures)
+		scope.Set<Uniform<RenderCmdSink::Texture*>>(it.first, it.second->Use());
+
+	if(mCallee)
+		mCallee->Execute(&scope);
 }
 
 void ApplyTextures::SetTexture(Hash variable, Hash file)
@@ -47,22 +51,6 @@ void ApplyTextures::SetParameter(Hash variable, RenderCmdSink::Texture::Paramete
 	if(it != mTextures.end())
 	{
 		it->second->GetAsset()->SetParameter(param, value);
-	}
-}
-
-void ApplyTextures::SetTextureUniforms(TextureMap::const_iterator it)
-{
-	if(it == mTextures.end())
-	{
-		if(mCallee)
-			mCallee->Execute();
-	}
-	else
-	{
-		Binding<Uniform<RenderCmdSink::Texture*> > texture(it->first, this);
-		**texture = it->second->Use();
-		it++;
-		SetTextureUniforms(it);
 	}
 }
 

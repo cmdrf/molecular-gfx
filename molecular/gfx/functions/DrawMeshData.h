@@ -70,9 +70,6 @@ public:
 
 	~DrawMeshData() override;
 
-	/** Draws meshes if they are loaded. Does nothing otherwise. */
-	void Execute() override;
-
 	util::AxisAlignedBox GetBounds() const override {return mBounds;}
 
 	/// Store mesh data in Renderer
@@ -86,6 +83,10 @@ public:
 	void Load(const meshfile::MeshFile& file);
 
 	void Unload();
+
+protected:
+	/** Draws meshes if they are loaded. Does nothing otherwise. */
+	void HandleExecute(Scope& scope) override;
 
 private:
 	struct VertexDataSet
@@ -101,10 +102,10 @@ private:
 		Material* material;
 	};
 
-	void Draw(Mesh& mesh);
+	void Draw(Mesh& mesh, const Scope& scope);
 
 	/// Binds alls attributes and calls Draw
-	void BindAttributesAndDraw(Mesh& mesh, std::vector<VertexAttributeInfo>::iterator begin, std::vector<VertexAttributeInfo>::iterator end);
+	void BindAttributesAndDraw(Mesh& mesh, const std::vector<VertexAttributeInfo>& attributes, const Scope& parentScope);
 
 	MaterialManager& mMaterialManager;
 

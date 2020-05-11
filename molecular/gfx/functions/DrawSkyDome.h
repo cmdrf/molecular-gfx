@@ -49,12 +49,14 @@ public:
 	DrawSkyDome(RenderManager& renderManager);
 	~DrawSkyDome();
 
-	void Execute() override;
 
 	/// Returns infinite bounds, so the sky dome is always rendered
 	util::AxisAlignedBox GetBounds() const override;
 
 	void SetTexture(Hash texture);
+
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	RenderManager& mRenderManager;
@@ -81,7 +83,7 @@ DrawSkyDome<TRenderManager>::~DrawSkyDome()
 }
 
 template<class TRenderManager>
-void DrawSkyDome<TRenderManager>::Execute()
+void DrawSkyDome<TRenderManager>::HandleExecute(Scope& scope)
 {
 	if(!mVertexBuffer)
 	{
@@ -140,22 +142,19 @@ void DrawSkyDome<TRenderManager>::Execute()
 		mIndexInfo.type = IndexBufferInfo::Type::kUInt16;
 	}
 
-	Binding<Uniform<Matrix4>> viewMatrix("viewMatrix"_H, this);
-	Binding<Uniform<Matrix4>> modelMatrix("modelMatrix"_H, this);
-	**viewMatrix = Matrix4::Translation(-(**viewMatrix).GetTranslation()) * **viewMatrix;
-	**modelMatrix = Matrix4::Identity();
+	Uniform<Matrix4>& viewMatrix = scope.Bind<Uniform<Matrix4>>("viewMatrix"_H);
+	Uniform<Matrix4>& modelMatrix= scope.Bind<Uniform<Matrix4>>("modelMatrix"_H);
+	*viewMatrix = Matrix4::Translation(-(*viewMatrix).GetTranslation()) * *viewMatrix;
+	*modelMatrix = Matrix4::Identity();
 
 	/* Choose different name for attribute to select program snippet writing 1.0 to Z. */
-	Binding<Attribute> vertexPositionAttr("skyVertexPositionAttr"_H, this);
-	Binding<Attribute> vertexUv0Attr("vertexUv0Attr"_H, this);
-	Binding<Uniform<RenderCmdSink::Texture*>> diffuseTexture("diffuseTexture"_H, this);
+	scope.Set("skyVertexPositionAttr"_H, Attribute(mVertexBuffer, mPositionInfo));
+	scope.Set("vertexUv0Attr"_H, Attribute(mVertexBuffer, mUvInfo));
 
-	*vertexPositionAttr = Attribute(mVertexBuffer, mPositionInfo);
-	*vertexUv0Attr = Attribute(mVertexBuffer, mUvInfo);
 	if(mTexture)
-		**diffuseTexture = mTexture->Use();
+		scope.Set("diffuseTexture"_H, Uniform<RenderCmdSink::Texture*>(mTexture->Use()));
 	mRenderer.SetDepthState(true, false, RenderCmdSink::kEqual);
-	PrepareProgram();
+	PrepareProgram(scope);
 	mRenderer.Draw(mIndexBuffer, mIndexInfo);
 	mRenderer.SetDepthState(true, true);
 

@@ -26,9 +26,10 @@ SOFTWARE.
 #ifndef MOLECULAR_MATERIAL_H
 #define MOLECULAR_MATERIAL_H
 
-#include <molecular/util/DynamicScoping.h>
 #include "TextureManager.h"
-#include "Scoping.h"
+#include "Scope.h"
+
+#include <type_traits>
 
 namespace molecular
 {
@@ -40,68 +41,38 @@ class Material
 {
 public:
 	template<class TRenderManager>
-	explicit Material(TRenderManager& renderManager) : mTextureManager(renderManager.GetTextureManager()), mScoping(renderManager.GetScoping()) {}
+	explicit Material(TRenderManager& renderManager) : mTextureManager(renderManager.GetTextureManager()) {}
 
-	Material(TextureManager& textureManager, gfx::Scoping& scoping) : mTextureManager(textureManager), mScoping(scoping) {}
+	Material(TextureManager& textureManager) : mTextureManager(textureManager) {}
 	~Material();
 
 	template<class T>
-	void SetUniform(Hash hash, const T& variable)
+	void SetUniform(Hash hash, T&& variable)
 	{
-		assert(!mBound);
+		using BaseType = typename std::remove_cv<typename std::remove_reference<T>::type>::type;
+
 		int index = FindEntry(hash);
-		using Binding = gfx::Scoping::ManualBinding<Uniform<T>>;
-		if(index == -1)
+		if(index < 0)
 		{
-			Binding* binding = new Binding(hash, mScoping);
-			***binding = variable;
-			mUniforms.emplace_back(hash, binding);
+			mUniforms.emplace_back(new Uniform<BaseType>(variable));
+			mNames.push_back(hash);
 		}
 		else
-		{
-			***static_cast<Binding*>(mUniforms[index].binding.get()) = variable;
-		}
+			static_cast<Uniform<BaseType>&>(*mUniforms[index]) = variable;
 	}
 
 	void SetTexture(Hash hash, Hash textureFileName);
 
-	/// Binds alls material variables to the current DynamicScoping scope
-	/** Use MaterialBinding for automatic binding! */
-	void Bind(int lodLevel = 0);
-
-	/// Unbinds alls material variables from the current DynamicScoping scope
-	/** Use MaterialBinding for automatic binding! */
-	void Unbind();
+	/// Binds alls material variables to the given Scope
+	void Bind(Scope& scope, int lodLevel = 0);
 
 private:
-	struct Entry
-	{
-		Entry(){}
-		Entry(Hash n, gfx::Scoping::SkeletalManualBinding* b, TextureManager::Asset* t = nullptr) :
-			name(n), binding(b), texture(t){}
-
-		Hash name = 0;
-		std::unique_ptr<gfx::Scoping::SkeletalManualBinding> binding;
-		TextureManager::Asset* texture = nullptr;
-	};
-
+	/** @returns Index in nNames and mUniforms if found, -1 otherwise. */
 	int FindEntry(Hash name);
 
-	std::vector<Entry> mUniforms;
+	std::vector<Hash> mNames;
+	std::vector<std::unique_ptr<Variable>> mUniforms;
 	TextureManager& mTextureManager;
-	gfx::Scoping& mScoping;
-	bool mBound = false;
-};
-
-/// Binds alls material variables to the current DynamicScoping scope
-class MaterialBinding
-{
-public:
-	explicit MaterialBinding(Material& material, int lodLevel = 0) : mMaterial(material) {material.Bind(lodLevel);}
-	~MaterialBinding() {mMaterial.Unbind();}
-
-private:
-	Material& mMaterial;
 };
 
 }

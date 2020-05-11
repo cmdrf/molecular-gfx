@@ -5,16 +5,15 @@ namespace molecular
 namespace gfx
 {
 
-
-void molecular::gfx::Visibility::Execute()
-{
-	if(mCallee && mVisible)
-		mCallee->Execute();
-}
-
 void Visibility::SetVisibility(bool visible)
 {
 	mVisible = visible;
+}
+
+void molecular::gfx::Visibility::HandleExecute(Scope& scope)
+{
+	if(mCallee && mVisible)
+		mCallee->Execute(&scope);
 }
 
 }// namespace gfx

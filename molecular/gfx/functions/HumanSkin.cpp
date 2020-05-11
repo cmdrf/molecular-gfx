@@ -31,69 +31,54 @@ namespace molecular
 namespace gfx
 {
 
-void HumanSkin::Execute()
+void HumanSkin::HandleExecute(Scope& scope)
 {
-	SkeletalManualBinding projMatrix("projectionMatrix"_H, this, nullptr);
-	if(mScoping["shadowTexture0"_H])
+	if(scope.Has("shadowTexture0"_H))
 	{
 		mRenderer.SetDepthState(false, false);
 
 		// Texture space render
-		projMatrix.Bind();
+		Scope blurScope(&scope);
+		blurScope.Unset("projectionMatrix"_H);
 		mOldRenderTarget = mRenderer.GetTarget();
 		mStage4.Bind();
-		mCallee->Execute();
+		mCallee->Execute(&blurScope);
 
-		Blur(mStage4, mStageTmp, false, 2.0f);
-		Blur(mStageTmp, mStage0, true, 2.0f);
-		Blur(mStage0, mStageTmp, false, 3.387f);
-		Blur(mStageTmp, mStage1, true, 3.387f);
-		Blur(mStage1, mStageTmp, false, 5.60683f);
-		Blur(mStageTmp, mStage2, true, 5.60683f);
-		Blur(mStage2, mStageTmp, false, 10.8565f);
-		Blur(mStageTmp, mStage3, true, 10.8565f);
-		Blur(mStage3, mStageTmp, false, 21.1558f);
-		Blur(mStageTmp, mStage4, true, 21.1558f);
+		Blur(mStage4, mStageTmp, false, 2.0f, blurScope);
+		Blur(mStageTmp, mStage0, true, 2.0f, blurScope);
+		Blur(mStage0, mStageTmp, false, 3.387f, blurScope);
+		Blur(mStageTmp, mStage1, true, 3.387f, blurScope);
+		Blur(mStage1, mStageTmp, false, 5.60683f, blurScope);
+		Blur(mStageTmp, mStage2, true, 5.60683f, blurScope);
+		Blur(mStage2, mStageTmp, false, 10.8565f, blurScope);
+		Blur(mStageTmp, mStage3, true, 10.8565f, blurScope);
+		Blur(mStage3, mStageTmp, false, 21.1558f, blurScope);
+		Blur(mStageTmp, mStage4, true, 21.1558f, blurScope);
 
 		mRenderer.SetTarget(mOldRenderTarget);
 
 		mRenderer.SetDepthState(true, true);
 
-		projMatrix.Unbind();
-
 		// Final render
-		Binding<Uniform<RenderCmdSink::Texture*> > blur2Texture("blur2Texture", this);
-		Binding<Uniform<RenderCmdSink::Texture*> > blur4Texture("blur4Texture", this);
-		Binding<Uniform<RenderCmdSink::Texture*> > blur8Texture("blur8Texture", this);
-		Binding<Uniform<RenderCmdSink::Texture*> > blur16Texture("blur16Texture", this);
-		Binding<Uniform<RenderCmdSink::Texture*> > blur32Texture("blur32Texture", this);
+		scope.Set<Uniform<RenderCmdSink::Texture*>>("blur2Texture"_H, mStage0.GetTexture());
+		scope.Set<Uniform<RenderCmdSink::Texture*>>("blur4Texture"_H, mStage1.GetTexture());
+		scope.Set<Uniform<RenderCmdSink::Texture*>>("blur8Texture"_H, mStage2.GetTexture());
+		scope.Set<Uniform<RenderCmdSink::Texture*>>("blur16Texture"_H, mStage3.GetTexture());
+		scope.Set<Uniform<RenderCmdSink::Texture*>>("blur32Texture"_H, mStage4.GetTexture());
 
-		**blur2Texture = mStage0.GetTexture();
-		**blur4Texture = mStage1.GetTexture();
-		**blur8Texture = mStage2.GetTexture();
-		**blur16Texture = mStage3.GetTexture();
-		**blur32Texture = mStage4.GetTexture();
+		scope.Set("noBlurWeight"_H, Uniform<Vector3>(Vector3(0.651023f, 0.761059f, 0.661339f)));
+		scope.Set("blur2Weight"_H, Uniform<Vector3>(Vector3(0.278155f, 0.560714f, 0.350606f)));
+		scope.Set("blur4Weight"_H, Uniform<Vector3>(Vector3(0.32887f, 0.32887f, 0.0f)));
+		scope.Set("blur8Weight"_H, Uniform<Vector3>(Vector3(0.31438f, 0.0f, 0.0f)));
+		scope.Set("blur16Weight"_H, Uniform<Vector3>(Vector3(1.0f, 0.00618938f, 0.00618938f)));
+		scope.Set("blur32Weight"_H, Uniform<Vector3>(Vector3(0.220194f, 0.0f, 0.0f)));
 
-		Binding<Uniform<Vector3> > noBlurWeight("noBlurWeight", this);
-		Binding<Uniform<Vector3> > blur2Weight("blur2Weight", this);
-		Binding<Uniform<Vector3> > blur4Weight("blur4Weight", this);
-		Binding<Uniform<Vector3> > blur8Weight("blur8Weight", this);
-		Binding<Uniform<Vector3> > blur16Weight("blur16Weight", this);
-		Binding<Uniform<Vector3> > blur32Weight("blur32Weight", this);
-
-		**noBlurWeight = Vector3(0.651023f, 0.761059f, 0.661339f);
-		**blur2Weight = Vector3(0.278155f, 0.560714f, 0.350606f);
-		**blur4Weight = Vector3(0.32887f, 0.32887f, 0.0f);
-		**blur8Weight = Vector3(0.31438f, 0.0f, 0.0f);
-		**blur16Weight = Vector3(1.0f, 0.00618938f, 0.00618938f);
-		**blur32Weight = Vector3(0.220194f, 0.0f, 0.0f);
-
-		mCallee->Execute();
+		mCallee->Execute(&scope);
 	}
 	else
 	{
 		// Texture map render
-		mCallee->Execute();
+		mCallee->Execute(&scope);
 	}
 }
 
@@ -123,22 +108,17 @@ void HumanSkin::BlurStage::Bind()
 	mParent.mRenderer.SetTarget(mRenderTarget);
 }
 
-void HumanSkin::Blur(BlurStage& from, BlurStage& to, bool y, float width, bool noBind)
+void HumanSkin::Blur(BlurStage& from, BlurStage& to, bool y, float width, Scope& scope)
 {
 	Hash gaussWidthVar = y ? "gaussWidthY"_H : "gaussWidthX"_H;
 
-	Binding<Uniform<RenderCmdSink::Texture*> > sourceTexture("blurSourceTexture"_H, this);
-	Binding<Uniform<RenderCmdSink::Texture*> > stretchTexture("stretchTexture"_H, this);
-	Binding<Uniform<float> > gaussWidth(gaussWidthVar, this);
-
-	**sourceTexture = from.GetTexture();
+	scope.Set<Uniform<RenderCmdSink::Texture*>>("blurSourceTexture"_H, from.GetTexture());
 	if(mStretchTexture)
-		**stretchTexture = mStretchTexture->Use();
-	**gaussWidth = width;
+		scope.Set<Uniform<RenderCmdSink::Texture*>>("stretchTexture"_H, mStretchTexture->Use());
+	scope.Set(gaussWidthVar, Uniform<float>(width));
 
-	if(!noBind)
-		to.Bind();
-	mDrawQuad.Execute();
+	to.Bind();
+	mDrawQuad.Execute(&scope);
 }
 
 }

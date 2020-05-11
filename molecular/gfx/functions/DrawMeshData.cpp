@@ -44,21 +44,19 @@ DrawMeshData::~DrawMeshData()
 		mRenderer.DestroyIndexBuffer(buffer);
 }
 
-void DrawMeshData::Execute()
+void DrawMeshData::HandleExecute(Scope& scope)
 {
 	if(mMeshes.empty())
 		return; // No meshes loaded, do nothing
 
 	for(auto& mesh: mMeshes)
 	{
+		Scope meshScope(&scope);
 		if(mesh.material)
-			mesh.material->Bind();
+			mesh.material->Bind(meshScope);
 
 		auto& attributes = mVertexDataSets.at(mesh.info.vertexDataSet).attributes;
-		BindAttributesAndDraw(mesh, attributes.begin(), attributes.end());
-
-		if(mesh.material)
-			mesh.material->Unbind();
+		BindAttributesAndDraw(mesh, attributes, scope);
 	}
 }
 
@@ -163,11 +161,16 @@ void DrawMeshData::Unload()
 	// Reset bounding box?
 }
 
-void DrawMeshData::Draw(Mesh& mesh)
+void DrawMeshData::Draw(Mesh& mesh, const Scope& scope)
 {
-	Binding<Uniform<Hash>> blendMode("blendMode"_H, this);
-	bool add = (**blendMode == "add"_H);
-	bool mix = (**blendMode == "mix"_H);
+	bool add = false;
+	bool mix = false;
+	if(scope.Has("blendMode"_H))
+	{
+		Hash blendMode = *scope.Get<Uniform<Hash>>("blendMode"_H);
+		add = (blendMode == "add"_H);
+		mix = (blendMode == "mix"_H);
+	}
 
 	if(add || mix)
 	{
@@ -178,7 +181,7 @@ void DrawMeshData::Draw(Mesh& mesh)
 			mRenderer.SetBlending(true, RenderCmdSink::kSrcAlpha, RenderCmdSink::kOneMinusSrcAlpha);
 	}
 
-	PrepareProgram();
+	PrepareProgram(scope);
 	if(mIndexBuffers.empty())
 		mRenderer.Draw(mesh.info.mode, mesh.info.count);
 	else
@@ -191,16 +194,13 @@ void DrawMeshData::Draw(Mesh& mesh)
 	}
 }
 
-void DrawMeshData::BindAttributesAndDraw(Mesh& mesh, std::vector<VertexAttributeInfo>::iterator begin, std::vector<VertexAttributeInfo>::iterator end)
+void DrawMeshData::BindAttributesAndDraw(Mesh& mesh, const std::vector<VertexAttributeInfo>& attributes, const Scope& parentScope)
 {
-	if(begin == end)
-		Draw(mesh);
-	else
-	{
-		Binding<Attribute> attrBinding(begin->semantic, this);
-		*attrBinding = Attribute(mVertexBuffers.at(begin->buffer), *begin);
-		BindAttributesAndDraw(mesh, begin + 1, end);
-	}
+	Scope scope(&parentScope);
+	for(auto& it: attributes)
+		scope.Set(it.semantic, Attribute(mVertexBuffers.at(it.buffer), it));
+
+	Draw(mesh, scope);
 }
 
 }

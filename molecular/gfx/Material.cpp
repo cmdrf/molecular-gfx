@@ -32,11 +32,13 @@ namespace gfx
 
 Material::~Material()
 {
-	assert(!mBound);
+
 }
 
 void Material::SetTexture(Hash hash, Hash textureFileName)
 {
+	// TODO
+/*
 	assert(!mBound);
 	auto asset = mTextureManager.GetAsset(textureFileName);
 	RenderCmdSink::Texture* texture = asset->GetAsset();
@@ -54,10 +56,18 @@ void Material::SetTexture(Hash hash, Hash textureFileName)
 	{
 		***static_cast<TextureBinding*>(mUniforms[index].binding.get()) = texture;
 	}
+*/
 }
 
-void Material::Bind(int lodLevel)
+void Material::Bind(Scope& scope, int lodLevel)
 {
+	assert(mNames.size() == mUniforms.size());
+	for(size_t i = 0; i < mNames.size(); ++i)
+	{
+		mUniforms[i]->Apply(scope, mNames[i]);
+	}
+	// TODO
+/*
 	assert(!mBound);
 	for(auto& uniform: mUniforms)
 	{
@@ -69,24 +79,14 @@ void Material::Bind(int lodLevel)
 		}
 	}
 	mBound = true;
-}
-
-void Material::Unbind()
-{
-	assert(mBound);
-	for(auto& uniform: mUniforms)
-	{
-		assert(uniform.binding);
-		uniform.binding->Unbind();
-	}
-	mBound = false;
+*/
 }
 
 int Material::FindEntry(Hash name)
 {
-	for(size_t i = 0; i < mUniforms.size(); ++i)
+	for(size_t i = 0; i < mNames.size(); ++i)
 	{
-		if(mUniforms[i].name == name)
+		if(mNames[i] == name)
 			return i;
 	}
 	return -1;

@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,13 +30,13 @@ namespace molecular
 namespace gfx
 {
 
-void RequestOutput::Execute()
+void RequestOutput::HandleExecute(Scope& scope)
 {
-	Binding<Output> fragmentColor(mOutput, this);
-	Binding<Output> glPosition("gl_Position"_H, this);
+	scope.Set(mOutput, Output());
+	scope.Set("gl_Position"_H, Output());
 
 	if(mCallee)
-		mCallee->Execute();
+		mCallee->Execute(&scope);
 }
 
 }

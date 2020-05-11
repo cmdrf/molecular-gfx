@@ -27,12 +27,17 @@ SOFTWARE.
 
 namespace molecular
 {
-void gfx::SetUniforms::Execute()
+namespace gfx
+{
+
+void SetUniforms::HandleExecute(Scope& scope)
 {
 	if(mCallee)
 	{
-		MaterialBinding binding(mUniforms);
-		mCallee->Execute();
+		mUniforms.Bind(scope);
+		mCallee->Execute(&scope);
 	}
+}
+
 }
 }

@@ -71,7 +71,6 @@ public:
 	void GetActiveAttrib(GLuint program, GLuint index, GLsizei bufSize, GLsizei* length, GLint* size, GLenum* type, GLchar* name) {glGetActiveAttrib(program, index, bufSize, length, size, type, name);}
 	void GetActiveUniform(GLuint program, GLuint index, GLsizei bufSize, GLsizei* length, GLint* size, GLenum* type, GLchar* name) {glGetActiveUniform(program, index, bufSize, length, size, type, name);}
 	GLint GetAttribLocation(GLuint program, const GLchar* name) {return glGetAttribLocation(program, name);}
-	void GetProgramInfoLog(	GLuint program, GLsizei maxLength, GLsizei* length,	GLchar* infoLog) {glGetProgramInfoLog(program, maxLength, length, infoLog);}
 	void GetProgramiv(GLuint program, GLenum pname, GLint* params) {glGetProgramiv(program, pname, params);}
 	void GetShaderInfoLog(GLuint shader, GLsizei bufSize, GLsizei* length, GLchar* infoLog) {glGetShaderInfoLog(shader, bufSize, length, infoLog);}
 	void GetShaderiv(GLuint shader, GLenum pname, GLint* params) {glGetShaderiv(shader, pname, params);}
