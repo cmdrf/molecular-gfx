@@ -28,7 +28,7 @@ add_library(molecular-gfx
 	molecular/gfx/RenderFunction.cpp
 	molecular/gfx/RenderFunction.h
 	molecular/gfx/RenderManager.h
-	molecular/gfx/Scoping.h
+	molecular/gfx/Scope.h
 	molecular/gfx/SkinProgramData.cpp
 	molecular/gfx/SkinProgramData.h
 	molecular/gfx/TetrahedronInterpolation.cpp
@@ -118,7 +118,6 @@ add_library(molecular-gfx
 	molecular/util/Box.cpp
 	molecular/util/Box.h
 	molecular/util/DummyFileLoader.h
-	molecular/util/DynamicScoping.h
 	molecular/util/FileServer.h
 	molecular/util/FileTypeIdentification.cpp
 	molecular/util/FileTypeIdentification.h
@@ -133,6 +132,7 @@ add_library(molecular-gfx
 	molecular/util/MtlFile.h
 	molecular/util/NmbFile.h
 	molecular/util/Plane.h
+	molecular/util/Scope.h
 	molecular/util/StringStore.cpp
 	molecular/util/StringStore.h
 	molecular/util/TextStream.h
