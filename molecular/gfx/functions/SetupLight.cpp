@@ -30,23 +30,17 @@ namespace molecular
 namespace gfx
 {
 
-void SetupLight::Execute()
+void SetupLight::HandleExecute(Scope& scope)
 {
-	Binding<Uniform<Hash>> blendMode("blendMode"_H, this);
-	**blendMode = "none"_H;
+	scope.Set<Uniform<Hash>>("blendMode"_H, "none"_H);
 
 	if(mDirectionalLightEnabled)
 	{
-		Binding<Uniform<Vector3> > lightDirection0("lightDirection0"_H, this);
-		Binding<Uniform<Vector3> > lightColor0("lightColor0"_H, this);
-
-		**lightDirection0 = mLightDirection;
-		**lightColor0 = mLightColor;
-
-		mCallee->Execute();
+		scope.Set<Uniform<Vector3>>("lightDirection0"_H, mLightDirection);
+		scope.Set<Uniform<Vector3>>("lightColor0"_H, mLightColor);
 	}
-	else
-		mCallee->Execute();
+
+	mCallee->Execute(&scope);
 }
 
 void SetupLight::SetDirectionalLight(bool enable, const Vector3& direction, const Vector3& color)

@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,14 +32,15 @@ namespace molecular
 namespace gfx
 {
 
-void SetShCoefficients::Execute()
+void SetShCoefficients::HandleExecute(Scope& scope)
 {
-	Binding<Uniform<Matrix4>> modelMatrix("modelMatrix"_H, this);
-	Vector3 position = (**modelMatrix).GetTranslation();
+	const Matrix4 modelMatrix = *scope.Get<Uniform<Matrix4>>("modelMatrix"_H);
+	const Vector3 position = modelMatrix.GetTranslation();
+
 	if(!position.IsAlmostZero()) // Hack to exclude static geometry
 	{
-		Binding<Uniform<Vector3, 9>> lightingShCoeffs("lightingShCoeffs"_H, this);
-		Matrix3 modelRotationInv = (**modelMatrix).GetUpperLeft3x3().GetRotation().Transposed();
+		Uniform<Vector3, 9>& lightingShCoeffs = scope.Bind<Uniform<Vector3, 9>>("lightingShCoeffs"_H);
+		const Matrix3 modelRotationInv = modelMatrix.GetUpperLeft3x3().GetRotation().Transposed();
 		Matrix<3, 9> coeffs = mInterpolation.GetShCoefficients(position, mTetrahedronIndex);
 
 		float factor = 0.5f / Math::kPi_f;// std::sqrt(kPi_f);
@@ -53,8 +54,7 @@ void SetShCoefficients::Execute()
 		SphericalHarmonics::RotateOrder3(blueTransformedCoeffs, coeffs[2], modelRotationInv);
 
 		for(int i = 0; i < 9; ++i)
-			(*lightingShCoeffs)[i] = Vector3(redTransformedCoeffs[i], greenTransformedCoeffs[i], blueTransformedCoeffs[i]);
-		mCallee->Execute();
+			lightingShCoeffs[i] = Vector3(redTransformedCoeffs[i], greenTransformedCoeffs[i], blueTransformedCoeffs[i]);
 
 #if 0
 		// Debug:
@@ -83,11 +83,11 @@ void SetShCoefficients::Execute()
 		}
 
 		**modelMatrix = Matrix4::Identity();
-		mDebugMesh.Execute();
+		mDebugMesh.Execute(&scope);
 #endif
 	}
-	else
-		mCallee->Execute();
+
+	mCallee->Execute(&scope);
 }
 
 }

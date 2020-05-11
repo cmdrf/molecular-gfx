@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_RENDERMANAGER_H
-#define MOLECULAR_RENDERMANAGER_H
+#ifndef MOLECULAR_GFX_RENDERMANAGER_H
+#define MOLECULAR_GFX_RENDERMANAGER_H
 
 #include "RenderCmdSink.h"
 #include "RenderFunction.h"
@@ -67,7 +67,7 @@ public:
 	RenderManagerT(RenderContext& context, FileServer& fileServer, TaskQueue& queue, RenderCmdSink& commandSink);
 
 	/// Main entry point for scene drawing
-	void DrawOneFrame(RenderFunction& function);
+	void DrawOneFrame(RenderFunction& function, Scope* scope = nullptr);
 
 	/// Load a program definition file
 	/** @see ProgramFile */
@@ -132,13 +132,13 @@ RenderManagerT<TFileServer, TTaskQueue>::RenderManagerT(RenderContext& context, 
 }
 
 template<class TFileServer, class TTaskQueue>
-void RenderManagerT<TFileServer, TTaskQueue>::DrawOneFrame(RenderFunction& function)
+void RenderManagerT<TFileServer, TTaskQueue>::DrawOneFrame(RenderFunction& function, Scope* scope)
 {
 	mTextureManager.Update(mFramecounter);
 	// Execute one task from the render thread queue
 	mGlTaskQueue.RunOneTask();
 	mFramecounter++;
-	function.Execute(nullptr);
+	function.Execute(scope);
 }
 
 template<class TFileServer, class TTaskQueue>
@@ -186,4 +186,4 @@ const util::AxisAlignedBox& RenderManagerT<TFileServer, TTaskQueue>::GetMeshFile
 } // gfx
 } // molecular
 
-#endif // MOLECULAR_RENDERMANAGER_H
+#endif // MOLECULAR_GFX_RENDERMANAGER_H

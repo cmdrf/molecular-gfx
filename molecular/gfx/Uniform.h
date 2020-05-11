@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -77,6 +77,8 @@ public:
 
 	T& operator*() {return mValues[0];}
 	const T& operator*() const {return mValues[0];}
+	T* operator->() {return &mValues[0];}
+	const T* operator->() const {return &mValues[0];}
 	T& operator[] (int i) {return mValues[i];}
 	const T& operator[] (int i) const {return mValues[i];}
 

@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -49,19 +49,21 @@ ShadowMapping::~ShadowMapping()
 
 #define SHADOW_TEST 0
 
-void ShadowMapping::Execute()
+void ShadowMapping::HandleExecute(Scope& scope)
 {
-	Binding<Output> glPosition("gl_Position"_H, this);
-	Binding<Uniform<Matrix4> > shadowViewProjMatrix0("shadowViewProjMatrix0"_H, this);
+	scope.Set("gl_Position"_H, Output());
+	Uniform<Matrix4>& shadowViewProjMatrix0 = scope.Bind<Uniform<Matrix4>>("shadowViewProjMatrix0"_H);
 
 	{
-		Binding<Uniform<Matrix4> > viewMatrix("viewMatrix"_H, this);
-		Binding<Uniform<Matrix4> > projMatrix("projectionMatrix"_H, this);
+		Scope shadowMappingScope(&scope);
+		Uniform<Matrix4>& viewMatrix = shadowMappingScope.Bind<Uniform<Matrix4>>("viewMatrix"_H);
+		Uniform<Matrix4>& projMatrix = shadowMappingScope.Bind<Uniform<Matrix4>>("projectionMatrix"_H);
 
-		if(const Uniform<Vector3>* lightDirection0 = GetVariable<Uniform<Vector3>>("lightDirection0"_H))
+		if(scope.Has("lightDirection0"_H))
 		{
-			**viewMatrix = Matrix4(Matrix3::LookAtZ(**lightDirection0 * -1).Transposed());
-			**projMatrix = Matrix4::ProjectionOrthographic(10, 10, -5, 5);
+			const Vector3 lightDirection0 = *scope.Get<Uniform<Vector3>>("lightDirection0"_H);
+			*viewMatrix = Matrix4(Matrix3::LookAtZ(lightDirection0 * -1).Transposed());
+			*projMatrix = Matrix4::ProjectionOrthographic(10, 10, -5, 5);
 		}
 		else // Point or spot light
 		{
@@ -70,7 +72,7 @@ void ShadowMapping::Execute()
 #if SHADOW_TEST
 		Binding<Output> fragmentColor("fragmentColor"_H, this);
 #else
-		**shadowViewProjMatrix0 =  Matrix4(kBiasMatrix) * **projMatrix * **viewMatrix;
+		*shadowViewProjMatrix0 =  Matrix4(kBiasMatrix) * *projMatrix * *viewMatrix;
 
 		RenderCmdSink::RenderTarget* oldTarget = mRenderer.GetTarget();
 		mRenderer.SetTarget(mRenderTarget);
@@ -78,19 +80,18 @@ void ShadowMapping::Execute()
 		mRenderer.SetRasterizationState(false, RenderCmdSink::kFront);
 #endif
 		if(mCallee)
-			mCallee->Execute();
+			mCallee->Execute(&scope);
 
 #if !SHADOW_TEST
 		mRenderer.SetTarget(oldTarget);
 	}
 	// Render scene normally
-	Binding<Uniform<RenderCmdSink::Texture*> > shadowTexture0("shadowTexture0"_H, this);
-	Binding<Output> fragmentColor("fragmentColor"_H, this);
+	scope.Set<Uniform<RenderCmdSink::Texture*>>("shadowTexture0"_H, mShadowMap);
+	scope.Set("fragmentColor"_H, Output());
 
-	**shadowTexture0 = mShadowMap;
 	mRenderer.SetRasterizationState(false, RenderCmdSink::kBack);
 	if(mCallee)
-		mCallee->Execute();
+		mCallee->Execute(&scope);
 #else
 	}
 #endif

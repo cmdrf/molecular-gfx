@@ -25,6 +25,8 @@ SOFTWARE.
 
 #include "CascadedShadowMapping.h"
 
+#include <array>
+
 namespace molecular
 {
 namespace gfx

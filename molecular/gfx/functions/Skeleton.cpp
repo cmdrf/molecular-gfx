@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,17 +31,15 @@ namespace molecular
 namespace gfx
 {
 
-void Skeleton::Execute()
+void Skeleton::HandleExecute(Scope& scope)
 {
 	if(mActive)
 	{
-		Binding<Uniform<Matrix4, CharacterAnimation::kBoneCount>> joints("bones"_H, this);
+		auto& joints = scope.Bind<Uniform<Matrix4, CharacterAnimation::kBoneCount>>("bones"_H);
 		for(int i = 0; i < CharacterAnimation::kBoneCount; i++)
-			(*joints)[i] = mJoints[i];
-		mCallee->Execute();
+			joints[i] = mJoints[i];
 	}
-	else
-		mCallee->Execute();
+	mCallee->Execute(&scope);
 }
 
 void Skeleton::SetJoints(const Matrix4 joints[CharacterAnimation::kBoneCount])

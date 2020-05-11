@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -106,12 +106,8 @@ void Run(int argc, char** argv)
 
 	humanSkin.SetStretchTexture("nv/FaceStretchXY.tga"_H);
 
-	Scoping& scoping = renderManager.GetScoping();
-//	Scoping::Binding<Uniform<float> > shininess(DefaultProgramData::kShininess, scoping);
-	Scoping::Binding<Uniform<Vector4>> specularColor("specularColor"_H, scoping);
-
-//	**shininess = 16;
-	**specularColor = Vector4(0.719795f, 0.575374f, 0.245268f, 1.0f);
+	gfx::Scope scope;
+	scope.Set<Uniform<Vector4>>("specularColor"_H, Vector4(0.719795f, 0.575374f, 0.245268f, 1.0f));
 
 	// Render:
 	glEnable(GL_BLEND);
@@ -126,7 +122,7 @@ void Run(int argc, char** argv)
 		transform.SetTransform(Matrix4::Scale(0.001f) * Matrix4::Translation(0,-0.65f, 0.0) * Matrix4::RotationY(angle));
 		glfwMakeContextCurrent(window.GetWindow());
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		renderManager.DrawOneFrame(viewSetup);
+		renderManager.DrawOneFrame(viewSetup, &scope);
 		glfwSwapBuffers(window.GetWindow());
 		glfwPollEvents();
 

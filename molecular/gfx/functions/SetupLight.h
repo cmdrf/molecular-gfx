@@ -46,12 +46,13 @@ public:
 	{
 	}
 
-	void Execute() override;
-
 	/// Set light parameters
 	void SetDirectionalLight(bool enable, const Vector3& direction = Vector3(1,-1,-1), const Vector3 &color = Vector3(1,1,1));
 
 	void Set(Hash key, bool value) override;
+
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	Vector3 mLightDirection = Vector3(1,-1,-1);

@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_SKELETON_H
-#define MOLECULAR_SKELETON_H
+#ifndef MOLECULAR_GFX_SKELETON_H
+#define MOLECULAR_GFX_SKELETON_H
 
 #include <molecular/gfx/RenderFunction.h>
 #include <molecular/util/CharacterAnimation.h>
@@ -42,11 +42,13 @@ public:
 	template<class TRenderManager>
 	Skeleton(TRenderManager& manager);
 
-	void Execute() override;
 	util::AxisAlignedBox GetBounds() const override {return mCallee->GetBounds();}
 
 	void SetJoints(const Matrix4 joints[CharacterAnimation::kBoneCount]);
 	void SetBindPose(const Matrix4 inverseBindPoseMatrices[CharacterAnimation::kBoneCount]);
+
+protected:
+	void HandleExecute(Scope& scope) override;
 
 private:
 	bool mActive = false;
@@ -64,4 +66,4 @@ Skeleton::Skeleton(TRenderManager& manager) :
 }
 }
 
-#endif // MOLECULAR_SKELETON_H
+#endif // MOLECULAR_GFX_SKELETON_H

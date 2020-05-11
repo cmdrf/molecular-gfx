@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,6 @@ public:
 		for(unsigned int i = 0; i < kMaxSplattingMaps; ++i)
 			mSplattingMaps[i].texture = nullptr;
 	}
-	void Execute() override;
 
 	void SetTextureScale(float scale) {mTextureScale = scale;}
 
@@ -66,9 +65,10 @@ public:
 	static const unsigned int kMaxSplattingMaps = 2;
 	static const unsigned int kMaxTextures = kMaxSplattingMaps * 4;
 
-private:
-	void BindMap1();
+protected:
+	void HandleExecute(Scope& scope) override;
 
+private:
 	struct SplattingMap
 	{
 		RenderCmdSink::Texture* texture;
