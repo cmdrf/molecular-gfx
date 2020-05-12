@@ -213,8 +213,16 @@ public:
 #endif
 	}
 
+	enum class GlslVersion
+	{
+		UNKNOWN,
+		V_150,
+		V_300_ES
+	};
+
 	/** @todo Private? Global? Singleton? Thread local? */
 	static GlFunctions gl;
+	static GlslVersion glslVersion;
 
 private:
 	static GLenum ToGlEnum(VertexAttributeInfo::Type type);

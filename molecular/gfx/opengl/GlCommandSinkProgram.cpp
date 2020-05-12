@@ -163,16 +163,17 @@ GlCommandSink::Program::Shader::Shader(ShaderType type)
 	}
 }
 
-bool GlCommandSink::Program::Shader::SourceCompile(const char* text, size_t length)
+bool GlCommandSink::Program::Shader::SourceCompile(const char* text, size_t length, bool reportError)
 {
-	/* Generated code is compatible with GLSL versions "150" and "300 es". Some desktop OpenGL
-		implementations however support "300 es" but not "150", so we always choose version
-		"300 es". If we encounter implementations that support "150" but not "300 es", we must
-		query the supported versions somehow and act accordingly. */
-	const char versionString[] = "#version 300 es\nprecision highp float;\n"; // TODO: selective precision
+	/* Generated code is compatible with GLSL versions "150" and "300 es". */
+	const char* versionString = "";
+	if(glslVersion == GlslVersion::V_150)
+		versionString = "#version 150\n";
+	else if(glslVersion == GlslVersion::V_300_ES)
+		versionString = "#version 300 es\nprecision highp float;\n"; // TODO: selective precision
 
 	const char* strings[] = {versionString, text};
-	GLint lengths[] = {sizeof(versionString) - 1, static_cast<GLint>(length)};
+	GLint lengths[] = {static_cast<GLint>(strlen(versionString)), static_cast<GLint>(length)};
 	gl.ShaderSource(mShader, 2, strings, lengths);
 	CheckError("glShaderSource", __LINE__, __FILE__);
 	gl.CompileShader(mShader);
@@ -185,7 +186,7 @@ bool GlCommandSink::Program::Shader::SourceCompile(const char* text, size_t leng
 		char error[1024];
 		GLsizei outLength = 0;
 		gl.GetShaderInfoLog(mShader, 1024, &outLength, error);
-		if(outLength > 0)
+		if(outLength > 0 && reportError)
 		{
 			LOG(ERROR) << std::string(error, outLength);
 			LOG(DEBUG) << text;

@@ -138,8 +138,8 @@ private:
 		Shader(Shader&& that) noexcept : mShader(that.mShader) {that.mShader = 0;}
 		~Shader() {if(mShader) gl.DeleteShader(mShader);}
 
-		bool SourceCompile(const char* text, size_t length);
-		bool SourceCompile(const std::string& source) {return SourceCompile(source.data(), source.size());}
+		bool SourceCompile(const char* text, size_t length, bool reportError = true);
+		bool SourceCompile(const std::string& source, bool reportError = true) {return SourceCompile(source.data(), source.size(), reportError);}
 
 		GLuint mShader;
 	};

@@ -35,6 +35,7 @@ namespace gfx
 {
 
 GlFunctions GlCommandSink::gl;
+GlCommandSink::GlslVersion GlCommandSink::glslVersion = GlCommandSink::GlslVersion::UNKNOWN;
 
 void GlCommandSink::Init()
 {
@@ -84,6 +85,14 @@ void GlCommandSink::Init()
 	LOG(INFO) << "GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING: " << GlConstantString(colorEncoding);
 
 #endif
+
+	// Determine supported GLSL version by compiling one-liners:
+	if(Program::Shader(Program::ShaderType::kVertexShader).SourceCompile("#version 300 es", 15, false))
+		glslVersion = GlslVersion::V_300_ES;
+	else if(Program::Shader(Program::ShaderType::kVertexShader).SourceCompile("#version 150", 12, false))
+		glslVersion = GlslVersion::V_150;
+	else
+		throw std::runtime_error("No supported GLSL version found");
 }
 
 void GlCommandSink::VertexBuffer::Store(const void* data, size_t size, bool stream)
