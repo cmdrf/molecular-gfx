@@ -49,75 +49,31 @@ public:
 	/// Construct Scope without parent
 	Scope() = default;
 
+	/// Create a variable and get a writable reference
 	template<class SubType>
 	SubType& Bind(Hash key);
 
+	/// Get value of variable
 	template<class SubType>
 	const SubType& Get(Hash key) const;
 
+	/// Set variable
 	template<class SubType>
-	void Set(Hash key, SubType&& value)
-	{
-		auto it = std::find(mKeys.begin(), mKeys.end(), key);
-		if(it != mKeys.end())
-			*mValues[std::distance(mKeys.begin(), it)] = value;
-		else
-		{
-			mKeys.push_back(key);
-			mValues.emplace_back(new SubType(value));
-		}
-	}
+	void Set(Hash key, SubType&& value);
 
+	/// Set variable
 	template<class SubType>
-	void Set(Hash key, const SubType& value)
-	{
-		auto it = std::find(mKeys.begin(), mKeys.end(), key);
-		if(it != mKeys.end())
-			*mValues[std::distance(mKeys.begin(), it)] = value;
-		else
-		{
-			mKeys.push_back(key);
-			mValues.emplace_back(new SubType(value));
-		}
-	}
+	void Set(Hash key, const SubType& value);
 
-	void Unset(Hash key)
-	{
-		auto it = std::find(mKeys.begin(), mKeys.end(), key);
-		if(it != mKeys.end())
-			mValues.at(std::distance(mKeys.begin(), it)).reset();
-		else
-		{
-			mValues.emplace_back();
-			mKeys.push_back(key);
-		}
-	}
+	/// Unset variable
+	/** Unsetting a variable also overrides that variable from parent scopes. */
+	void Unset(Hash key);
 
-	bool Has(Hash key) const
-	{
-		auto it = std::find(mKeys.begin(), mKeys.end(), key);
-		if(it != mKeys.end())
-			return true;
-		if(mParent)
-			return mParent->Has(key);
-		else
-			return false;
-	}
+	/// Determine if the variable is set in this or in parent scopes
+	bool Has(Hash key) const;
 
-	std::map<Hash, BaseType*> ToMap() const
-	{
-		std::map<Hash, BaseType*> out;
-		if(mParent)
-			out = mParent->ToMap();
-		for(size_t i = 0; i < mKeys.size(); ++i)
-		{
-			if(mValues[i])
-				out[mKeys[i]] = mValues[i].get();
-			else
-				out.erase(mKeys[i]); // Erase variable from parent scope if it was Unset() in this scope
-		}
-		return out;
-	}
+	/// Get all variables from this scope and its parents
+	std::map<Hash, BaseType*> ToMap() const;
 
 private:
 	std::vector<Hash> mKeys;
@@ -150,6 +106,80 @@ const SubType& Scope<BaseType>::Get(Hash key) const
 		return mParent->Get<SubType>(key);
 	else
 		throw std::runtime_error("Variable not declared");
+}
+
+template<class BaseType>
+template<class SubType>
+void Scope<BaseType>::Set(Hash key, SubType&& value)
+{
+	auto it = std::find(mKeys.begin(), mKeys.end(), key);
+	if(it != mKeys.end())
+		*mValues[std::distance(mKeys.begin(), it)] = value;
+	else
+	{
+		mKeys.push_back(key);
+		mValues.emplace_back(new SubType(value));
+	}
+}
+
+template<class BaseType>
+template<class SubType>
+void Scope<BaseType>::Set(Hash key, const SubType& value)
+{
+	auto it = std::find(mKeys.begin(), mKeys.end(), key);
+	if(it != mKeys.end())
+		*mValues[std::distance(mKeys.begin(), it)] = value;
+	else
+	{
+		mKeys.push_back(key);
+		mValues.emplace_back(new SubType(value));
+	}
+}
+
+template<class BaseType>
+void Scope<BaseType>::Unset(Hash key)
+{
+	auto it = std::find(mKeys.begin(), mKeys.end(), key);
+	if(it != mKeys.end())
+		mValues.at(std::distance(mKeys.begin(), it)).reset();
+	else
+	{
+		mValues.emplace_back();
+		mKeys.push_back(key);
+	}
+}
+
+template<class BaseType>
+bool Scope<BaseType>::Has(Hash key) const
+{
+	auto it = std::find(mKeys.begin(), mKeys.end(), key);
+	if(it != mKeys.end())
+	{
+		if(*it)
+			return true;
+		else
+			return false;
+	}
+	if(mParent)
+		return mParent->Has(key);
+	else
+		return false;
+}
+
+template<class BaseType>
+std::map<Hash, BaseType*> Scope<BaseType>::ToMap() const
+{
+	std::map<Hash, BaseType*> out;
+	if(mParent)
+		out = mParent->ToMap();
+	for(size_t i = 0; i < mKeys.size(); ++i)
+	{
+		if(mValues[i])
+			out[mKeys[i]] = mValues[i].get();
+		else
+			out.erase(mKeys[i]); // Erase variable from parent scope if it was Unset() in this scope
+	}
+	return out;
 }
 
 }
