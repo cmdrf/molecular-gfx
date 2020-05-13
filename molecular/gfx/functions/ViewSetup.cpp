@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -66,7 +66,7 @@ void ViewSetup::HandleExecute(Scope& scope)
 			projectionMatrix = CalculateProjectionMatrix(viewportAspectRatio);
 		}
 		scope.Set("projectionMatrix"_H, Uniform<Matrix4>(projectionMatrix));
-		mCallee->Execute(&scope);
+		mCallee->Execute(scope);
 	}
 
 }

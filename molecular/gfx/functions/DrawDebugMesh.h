@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -119,7 +119,7 @@ inline void DrawDebugMesh::HandleExecute(Scope& scope)
 	mTextTexCoordBuffer->Store(mTextTexCoordData.data(), mTextTexCoordData.size() * sizeof(Vector2));
 
 	{
-		Scope linesScope(&scope);
+		Scope linesScope(scope);
 		linesScope.Set("vertexPositionAttr"_H, Attribute(mLinePositionBuffer, mVector3Info));
 		linesScope.Set("vertexColorAttr"_H, Attribute(mLineColorBuffer, mVector3Info));
 
@@ -127,7 +127,7 @@ inline void DrawDebugMesh::HandleExecute(Scope& scope)
 		mRenderer.Draw(IndexBufferInfo::Mode::kLines, mLineVertexData.size());
 	}
 	{
-		Scope textScope(&scope);
+		Scope textScope(scope);
 		textScope.Set("vertexPositionAttr"_H, Attribute(mTextVertexBuffer, mVector3Info));
 		textScope.Set("vertexUv0Attr"_H, Attribute(mTextTexCoordBuffer, mVector2Info));
 		textScope.Set("diffuseColor"_H, Uniform<Vector3>(Vector3(1, 1, 1)));

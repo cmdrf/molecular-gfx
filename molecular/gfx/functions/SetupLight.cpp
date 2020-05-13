@@ -40,7 +40,7 @@ void SetupLight::HandleExecute(Scope& scope)
 		scope.Set<Uniform<Vector3>>("lightColor0"_H, mLightColor);
 	}
 
-	mCallee->Execute(&scope);
+	mCallee->Execute(scope);
 }
 
 void SetupLight::SetDirectionalLight(bool enable, const Vector3& direction, const Vector3& color)

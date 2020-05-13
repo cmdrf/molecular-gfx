@@ -91,7 +91,7 @@ void DrawMesh<TRenderManager>::HandleExecute(Scope& scope)
 //			mLastBoundsChange = mRenderManager.GetFramecounter();
 		}
 		scope.Set("pickingColor"_H, Uniform<unsigned int>(mPickingId));
-		data->Execute(&scope);
+		data->Execute(scope);
 	}
 }
 

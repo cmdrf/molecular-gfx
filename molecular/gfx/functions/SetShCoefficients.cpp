@@ -83,11 +83,11 @@ void SetShCoefficients::HandleExecute(Scope& scope)
 		}
 
 		**modelMatrix = Matrix4::Identity();
-		mDebugMesh.Execute(&scope);
+		mDebugMesh.Execute(scope);
 #endif
 	}
 
-	mCallee->Execute(&scope);
+	mCallee->Execute(scope);
 }
 
 }

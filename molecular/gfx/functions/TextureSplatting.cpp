@@ -58,7 +58,7 @@ void TextureSplatting::HandleExecute(Scope& scope)
 		else if(mSplattingMaps[1].components == 4)
 			scope.Set<Uniform<RenderCmdSink::Texture*>>("splattingMapRgba1"_H, mSplattingMaps[1].texture);
 	}
-	mCallee->Execute(&scope);
+	mCallee->Execute(scope);
 }
 
 void TextureSplatting::SetSplattingMap(unsigned int index, RenderCmdSink::Texture* map, unsigned int components)

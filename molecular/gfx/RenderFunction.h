@@ -47,7 +47,7 @@ public:
 	RenderFunction(RenderCmdSink& renderer) : mRenderer(renderer) {}
 
 	virtual ~RenderFunction() {}
-	void Execute(const Scope* parentScope);
+	void Execute(const Scope& parentScope);
 	virtual util::AxisAlignedBox GetBounds() const = 0;
 	virtual bool BoundsChangedSince(int /*framecounter*/) const {return false;}
 

@@ -30,7 +30,7 @@ namespace molecular
 namespace gfx
 {
 
-void RenderFunction::Execute(const Scope* parentScope)
+void RenderFunction::Execute(const Scope& parentScope)
 {
 	if(mVisible)
 	{

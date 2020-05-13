@@ -55,7 +55,7 @@ void ShadowMapping::HandleExecute(Scope& scope)
 	Uniform<Matrix4>& shadowViewProjMatrix0 = scope.Bind<Uniform<Matrix4>>("shadowViewProjMatrix0"_H);
 
 	{
-		Scope shadowMappingScope(&scope);
+		Scope shadowMappingScope(scope);
 		Uniform<Matrix4>& viewMatrix = shadowMappingScope.Bind<Uniform<Matrix4>>("viewMatrix"_H);
 		Uniform<Matrix4>& projMatrix = shadowMappingScope.Bind<Uniform<Matrix4>>("projectionMatrix"_H);
 
@@ -80,7 +80,7 @@ void ShadowMapping::HandleExecute(Scope& scope)
 		mRenderer.SetRasterizationState(false, RenderCmdSink::kFront);
 #endif
 		if(mCallee)
-			mCallee->Execute(&scope);
+			mCallee->Execute(scope);
 
 #if !SHADOW_TEST
 		mRenderer.SetTarget(oldTarget);
@@ -91,7 +91,7 @@ void ShadowMapping::HandleExecute(Scope& scope)
 
 	mRenderer.SetRasterizationState(false, RenderCmdSink::kBack);
 	if(mCallee)
-		mCallee->Execute(&scope);
+		mCallee->Execute(scope);
 #else
 	}
 #endif

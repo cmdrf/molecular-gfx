@@ -39,7 +39,7 @@ void Skeleton::HandleExecute(Scope& scope)
 		for(int i = 0; i < CharacterAnimation::kBoneCount; i++)
 			joints[i] = mJoints[i];
 	}
-	mCallee->Execute(&scope);
+	mCallee->Execute(scope);
 }
 
 void Skeleton::SetJoints(const Matrix4 joints[CharacterAnimation::kBoneCount])

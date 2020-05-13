@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -51,7 +51,7 @@ void DrawMeshData::HandleExecute(Scope& scope)
 
 	for(auto& mesh: mMeshes)
 	{
-		Scope meshScope(&scope);
+		Scope meshScope(scope);
 		if(mesh.material)
 			mesh.material->Bind(meshScope);
 
@@ -196,7 +196,7 @@ void DrawMeshData::Draw(Mesh& mesh, const Scope& scope)
 
 void DrawMeshData::BindAttributesAndDraw(Mesh& mesh, const std::vector<VertexAttributeInfo>& attributes, const Scope& parentScope)
 {
-	Scope scope(&parentScope);
+	Scope scope(parentScope);
 	for(auto& it: attributes)
 		scope.Set(it.semantic, Attribute(mVertexBuffers.at(it.buffer), it));
 

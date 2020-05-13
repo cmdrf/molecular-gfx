@@ -36,7 +36,7 @@ void RequestOutput::HandleExecute(Scope& scope)
 	scope.Set("gl_Position"_H, Output());
 
 	if(mCallee)
-		mCallee->Execute(&scope);
+		mCallee->Execute(scope);
 }
 
 }

@@ -38,11 +38,16 @@ namespace molecular
 namespace util
 {
 
+/// Stores variables and optionally has a parent
 template<class BaseType>
 class Scope
 {
 public:
-	Scope(const Scope* parent = nullptr) : mParent(parent) {}
+	/// Construct Scope with parent
+	Scope(const Scope& parent) : mParent(&parent) {}
+
+	/// Construct Scope without parent
+	Scope() = default;
 
 	template<class SubType>
 	SubType& Bind(Hash key);

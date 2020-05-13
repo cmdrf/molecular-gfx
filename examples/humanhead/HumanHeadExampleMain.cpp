@@ -122,7 +122,7 @@ void Run(int argc, char** argv)
 		transform.SetTransform(Matrix4::Scale(0.001f) * Matrix4::Translation(0,-0.65f, 0.0) * Matrix4::RotationY(angle));
 		glfwMakeContextCurrent(window.GetWindow());
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		renderManager.DrawOneFrame(viewSetup, &scope);
+		renderManager.DrawOneFrame(viewSetup, scope);
 		glfwSwapBuffers(window.GetWindow());
 		glfwPollEvents();
 

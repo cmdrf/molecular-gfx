@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,7 @@ void FlatScene::HandleExecute(Scope& scope)
 	{
 		auto bounds = func->GetBounds(); // TODO: Cache
 		if(frustum.Check(bounds) != util::Plane::kOutside)
-			func->Execute(&scope);
+			func->Execute(scope);
 	}
 }
 

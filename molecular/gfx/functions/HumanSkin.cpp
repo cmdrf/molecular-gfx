@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -38,11 +38,11 @@ void HumanSkin::HandleExecute(Scope& scope)
 		mRenderer.SetDepthState(false, false);
 
 		// Texture space render
-		Scope blurScope(&scope);
+		Scope blurScope(scope);
 		blurScope.Unset("projectionMatrix"_H);
 		mOldRenderTarget = mRenderer.GetTarget();
 		mStage4.Bind();
-		mCallee->Execute(&blurScope);
+		mCallee->Execute(blurScope);
 
 		Blur(mStage4, mStageTmp, false, 2.0f, blurScope);
 		Blur(mStageTmp, mStage0, true, 2.0f, blurScope);
@@ -73,12 +73,12 @@ void HumanSkin::HandleExecute(Scope& scope)
 		scope.Set("blur16Weight"_H, Uniform<Vector3>(Vector3(1.0f, 0.00618938f, 0.00618938f)));
 		scope.Set("blur32Weight"_H, Uniform<Vector3>(Vector3(0.220194f, 0.0f, 0.0f)));
 
-		mCallee->Execute(&scope);
+		mCallee->Execute(scope);
 	}
 	else
 	{
 		// Texture map render
-		mCallee->Execute(&scope);
+		mCallee->Execute(scope);
 	}
 }
 
@@ -118,7 +118,7 @@ void HumanSkin::Blur(BlurStage& from, BlurStage& to, bool y, float width, Scope&
 	scope.Set(gaussWidthVar, Uniform<float>(width));
 
 	to.Bind();
-	mDrawQuad.Execute(&scope);
+	mDrawQuad.Execute(scope);
 }
 
 }

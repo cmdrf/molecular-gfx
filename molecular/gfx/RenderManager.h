@@ -67,7 +67,10 @@ public:
 	RenderManagerT(RenderContext& context, FileServer& fileServer, TaskQueue& queue, RenderCmdSink& commandSink);
 
 	/// Main entry point for scene drawing
-	void DrawOneFrame(RenderFunction& function, Scope* scope = nullptr);
+	void DrawOneFrame(RenderFunction& function, Scope& rootScope);
+
+	/// Main entry point for scene drawing
+	void DrawOneFrame(RenderFunction& function);
 
 	/// Load a program definition file
 	/** @see ProgramFile */
@@ -132,13 +135,20 @@ RenderManagerT<TFileServer, TTaskQueue>::RenderManagerT(RenderContext& context, 
 }
 
 template<class TFileServer, class TTaskQueue>
-void RenderManagerT<TFileServer, TTaskQueue>::DrawOneFrame(RenderFunction& function, Scope* scope)
+void RenderManagerT<TFileServer, TTaskQueue>::DrawOneFrame(RenderFunction& function, Scope& rootScope)
 {
 	mTextureManager.Update(mFramecounter);
 	// Execute one task from the render thread queue
 	mGlTaskQueue.RunOneTask();
 	mFramecounter++;
-	function.Execute(scope);
+	function.Execute(rootScope);
+}
+
+template<class TFileServer, class TTaskQueue>
+void RenderManagerT<TFileServer, TTaskQueue>::DrawOneFrame(RenderFunction& function)
+{
+	Scope rootScope;
+	DrawOneFrame(function, rootScope);
 }
 
 template<class TFileServer, class TTaskQueue>

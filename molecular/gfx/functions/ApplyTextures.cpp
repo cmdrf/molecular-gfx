@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ void ApplyTextures::HandleExecute(Scope& scope)
 		scope.Set<Uniform<RenderCmdSink::Texture*>>(it.first, it.second->Use());
 
 	if(mCallee)
-		mCallee->Execute(&scope);
+		mCallee->Execute(scope);
 }
 
 void ApplyTextures::SetTexture(Hash variable, Hash file)

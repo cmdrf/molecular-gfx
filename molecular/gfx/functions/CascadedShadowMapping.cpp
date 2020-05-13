@@ -104,7 +104,7 @@ void CascadedShadowMapping::HandleExecute(Scope& scope)
 
 	CascadesInfo cascades;
 	{
-		Scope shadowMappingScope(&scope);
+		Scope shadowMappingScope(scope);
 		Uniform<Matrix4>& viewMatrix = shadowMappingScope.Bind<Uniform<Matrix4>>("viewMatrix"_H);
 		Uniform<Matrix4>& projMatrix = shadowMappingScope.Bind<Uniform<Matrix4>>("projectionMatrix"_H);
 		const Vector3 lightDirection0 = *shadowMappingScope.Get<Uniform<Vector3>>("lightDirection0"_H);
@@ -126,7 +126,7 @@ void CascadedShadowMapping::HandleExecute(Scope& scope)
 		   mRenderer.SetTarget(mRenderTargets[i]);
 		   mRenderer.Clear(false, true);
 
-		   mCallee->Execute(&shadowMappingScope);
+		   mCallee->Execute(shadowMappingScope);
 		}
 
 		mRenderer.SetTarget(oldTarget);
@@ -146,7 +146,7 @@ void CascadedShadowMapping::HandleExecute(Scope& scope)
 	}
 
 	mRenderer.SetRasterizationState(false, RenderCmdSink::kBack);
-	mCallee->Execute(&scope);
+	mCallee->Execute(scope);
 }
 
 void CascadedShadowMapping::SetupShadowResources()
