@@ -26,13 +26,18 @@ SOFTWARE.
 #include "GlCommandSink.h"
 #include "GlCommandSinkProgram.h"
 #include "PixelFormatConversion.h"
-#include <cassert>
+
 #include <molecular/util/Logging.h>
+
+#include <cassert>
+#include <string>
 
 namespace molecular
 {
 namespace gfx
 {
+
+using namespace std::string_literals;
 
 GlFunctions GlCommandSink::gl;
 GlCommandSink::GlslVersion GlCommandSink::glslVersion = GlCommandSink::GlslVersion::UNKNOWN;
@@ -86,10 +91,10 @@ void GlCommandSink::Init()
 
 #endif
 
-	// Determine supported GLSL version by compiling one-liners:
-	if(Program::Shader(Program::ShaderType::kVertexShader).SourceCompile("#version 300 es", 15, false))
+	// Determine supported GLSL version by compiling two-liners:
+	if(Program::Shader(Program::ShaderType::kVertexShader).SourceCompile("#version 300 es\nvoid main(){}\n"s, false))
 		glslVersion = GlslVersion::V_300_ES;
-	else if(Program::Shader(Program::ShaderType::kVertexShader).SourceCompile("#version 150", 12, false))
+	else if(Program::Shader(Program::ShaderType::kVertexShader).SourceCompile("#version 150\nvoid main(){}\n"s, false))
 		glslVersion = GlslVersion::V_150;
 	else
 		throw std::runtime_error("No supported GLSL version found");
