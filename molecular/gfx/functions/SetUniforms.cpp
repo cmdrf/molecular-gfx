@@ -33,10 +33,7 @@ namespace gfx
 void SetUniforms::HandleExecute(Scope& scope)
 {
 	if(mCallee)
-	{
-		mUniforms.Bind(scope);
 		mCallee->Execute(scope);
-	}
 }
 
 }

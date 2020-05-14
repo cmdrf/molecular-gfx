@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,11 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MOLECULAR_SETUNIFORMS_H
-#define MOLECULAR_SETUNIFORMS_H
+#ifndef MOLECULAR_GFX_SETUNIFORMS_H
+#define MOLECULAR_GFX_SETUNIFORMS_H
 
 #include <molecular/gfx/RenderFunction.h>
-#include <molecular/gfx/Material.h>
 
 namespace molecular
 {
@@ -35,31 +34,21 @@ namespace gfx
 {
 
 /// Sets arbitrary uniform variables before calling the callee
-/** Variables are stored as a Material. */
+/** @deprecated This functionality is now available in every RenderFunction. */
 class SetUniforms : public SingleCalleeRenderFunction
 {
 public:
 	template<class TRenderManager>
 	SetUniforms(TRenderManager& manager) :
-		SingleCalleeRenderFunction(manager),
-		mUniforms(manager)
+		SingleCalleeRenderFunction(manager)
 	{
-	}
-
-	template<class T>
-	void SetUniform(Hash hash, const T& variable)
-	{
-		mUniforms.SetUniform(hash, variable);
 	}
 
 protected:
 	void HandleExecute(Scope& scope) override;
-
-private:
-	Material mUniforms;
 };
 
 }
 }
 
-#endif // MOLECULAR_SETUNIFORMS_H
+#endif // MOLECULAR_GFX_SETUNIFORMS_H

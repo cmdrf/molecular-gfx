@@ -57,6 +57,13 @@ public:
 	/** This system is not finished. */
 	virtual void Set(Hash /*variable*/, bool /*value*/) {throw std::runtime_error("This RenderFunction does not have bool parameters");}
 
+	/// Set uniform with given name
+	template<class T>
+	void SetUniform(Hash name, const T& value)
+	{
+		mObjectScope.Set(name, Uniform<T>(value));
+	}
+
 protected:
 	virtual void HandleExecute(Scope& scope) = 0;
 
@@ -66,6 +73,9 @@ protected:
 	RenderCmdSink& mRenderer;
 //	int mBoundsChangedCounter;
 	bool mVisible = true;
+
+private:
+	Scope mObjectScope;
 };
 
 /// RenderFunction that calls a single other RenderFunction only

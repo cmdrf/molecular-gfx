@@ -35,6 +35,7 @@ void RenderFunction::Execute(const Scope& parentScope)
 	if(mVisible)
 	{
 		Scope scope(parentScope);
+		scope.SetSibling(mObjectScope);
 		HandleExecute(scope);
 	}
 }

@@ -49,6 +49,8 @@ public:
 	/// Construct Scope without parent
 	Scope() = default;
 
+	void SetSibling(const Scope& sibling);
+
 	/// Create a variable and get a writable reference
 	template<class SubType>
 	SubType& Bind(Hash key);
@@ -79,7 +81,14 @@ private:
 	std::vector<Hash> mKeys;
 	std::vector<std::unique_ptr<BaseType>> mValues;
 	const Scope* mParent = nullptr;
+	const Scope* mSibling = nullptr;
 };
+
+template<class BaseType>
+void Scope<BaseType>::SetSibling(const Scope& sibling)
+{
+	mSibling = &sibling;
+}
 
 template<class BaseType>
 template<class SubType>
@@ -88,7 +97,9 @@ SubType& Scope<BaseType>::Bind(Hash key)
 	assert(std::find(mKeys.begin(), mKeys.end(), key) == mKeys.end() && "Variable already bound in this scope");
 
 	mKeys.push_back(key);
-	if(mParent && mParent->Has(key))
+	if(mSibling && mSibling->Has(key))
+		mValues.emplace_back(new SubType(mSibling->Get<SubType>(key)));
+	else if(mParent && mParent->Has(key))
 		mValues.emplace_back(new SubType(mParent->Get<SubType>(key)));
 	else
 		mValues.emplace_back(new SubType());
@@ -102,6 +113,8 @@ const SubType& Scope<BaseType>::Get(Hash key) const
 	auto it = std::find(mKeys.begin(), mKeys.end(), key);
 	if(it != mKeys.end())
 		return static_cast<SubType&>(*mValues.at(std::distance(mKeys.begin(), it)));
+	if(mSibling && mSibling->Has(key))
+		return mSibling->Get<SubType>(key);
 	if(mParent)
 		return mParent->Get<SubType>(key);
 	else
@@ -160,7 +173,9 @@ bool Scope<BaseType>::Has(Hash key) const
 		else
 			return false;
 	}
-	if(mParent)
+	if(mSibling && mSibling->Has(key))
+		return true;
+	else if(mParent)
 		return mParent->Has(key);
 	else
 		return false;
@@ -172,6 +187,11 @@ std::map<Hash, BaseType*> Scope<BaseType>::ToMap() const
 	std::map<Hash, BaseType*> out;
 	if(mParent)
 		out = mParent->ToMap();
+	if(mSibling)
+	{
+		auto siblingMap = mSibling->ToMap();
+		out.insert(siblingMap.begin(), siblingMap.end());
+	}
 	for(size_t i = 0; i < mKeys.size(); ++i)
 	{
 		if(mValues[i])
