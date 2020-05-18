@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,18 +26,17 @@ SOFTWARE.
 #ifndef MOLECULAR_MATERIALMANAGER_H
 #define MOLECULAR_MATERIALMANAGER_H
 
+#include "Material.h"
+#include "TextureManager.h"
+
 #include <molecular/util/IniFile.h>
 #include <molecular/util/MtlFile.h>
 #include <molecular/util/Hash.h>
-#include "TextureManager.h"
 
 namespace molecular
 {
 namespace gfx
 {
-
-// Includes not possible here due to circular dependency
-class Material;
 
 /// Loads materials from ini files and provides them on request
 class MaterialManager

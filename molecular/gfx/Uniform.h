@@ -27,6 +27,8 @@ SOFTWARE.
 #define MOLECULAR_UNIFORM_H
 
 #include "RenderCmdSink.h"
+#include "TextureManager.h"
+
 #include <molecular/util/Scope.h>
 #include <assert.h>
 
@@ -43,9 +45,6 @@ public:
 
 	/// Feed to program
 	virtual void Apply(RenderCmdSink::Program* program, Hash name) const = 0;
-
-	// Transitional
-	virtual void Apply(util::Scope<Variable>& scope, Hash name) const = 0;
 
 	virtual unsigned int GetArraySize() const {return 0;}
 };
@@ -68,11 +67,6 @@ public:
 		program->SetUniform(name, mValues, arraySize);
 	}
 
-	void Apply(util::Scope<Variable>& scope, Hash name) const override
-	{
-		scope.Set(name, *this);
-	}
-
 	unsigned int GetArraySize() const override {return arraySize == 1 ? 0 : arraySize;}
 
 	T& operator*() {return mValues[0];}
@@ -84,6 +78,26 @@ public:
 
 private:
 	T mValues[arraySize];
+};
+
+template<class T>
+Uniform<T> MakeUniform(const T& v)
+{
+	return Uniform<T>(v);
+}
+
+class TextureUniform : public Variable
+{
+public:
+	TextureUniform() = default;
+	explicit TextureUniform(Hash textureName, TextureManager& textureManager);
+
+	void Apply(RenderCmdSink::Program* program, Hash name) const override;
+
+	void SetParameter(GlCommandSink::Texture::Parameter param, GlCommandSink::Texture::ParamValue value);
+
+private:
+	TextureManager::Asset* mAsset = nullptr;
 };
 
 /// Vertex attribute variable
@@ -101,11 +115,6 @@ public:
 	Attribute(RenderCmdSink::VertexBuffer* buffer, int components, VertexAttributeInfo::Type type = VertexAttributeInfo::kFloat, int stride = 0, int offset = 0);
 
 	void Apply(RenderCmdSink::Program* program, Hash name) const override;
-
-	void Apply(util::Scope<Variable>& scope, Hash name) const override
-	{
-		scope.Set<Attribute>(name, *this);
-	}
 
 private:
 	RenderCmdSink::VertexBuffer* mBuffer;
@@ -129,11 +138,6 @@ class Output : public Variable
 public:
 	/** This is never called. */
 	void Apply(RenderCmdSink::Program* /*program*/, Hash /*name*/) const override {}
-
-	void Apply(util::Scope<Variable>& scope, Hash name) const override
-	{
-		scope.Set(name, *this);
-	}
 };
 
 }

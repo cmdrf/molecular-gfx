@@ -33,26 +33,10 @@ namespace gfx
 
 void ApplyTextures::HandleExecute(Scope& scope)
 {
-	for(auto& it: mTextures)
-		scope.Set<Uniform<RenderCmdSink::Texture*>>(it.first, it.second->Use());
-
 	if(mCallee)
 		mCallee->Execute(scope);
 }
 
-void ApplyTextures::SetTexture(Hash variable, Hash file)
-{
-	mTextures[variable] = mTextureManager.GetAsset(file);
-}
-
-void ApplyTextures::SetParameter(Hash variable, RenderCmdSink::Texture::Parameter param, RenderCmdSink::Texture::ParamValue value)
-{
-	auto it = mTextures.find(variable);
-	if(it != mTextures.end())
-	{
-		it->second->GetAsset()->SetParameter(param, value);
-	}
-}
 
 }
 }

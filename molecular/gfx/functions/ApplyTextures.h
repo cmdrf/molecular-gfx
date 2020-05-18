@@ -35,33 +35,17 @@ namespace gfx
 {
 
 /// Set texture uniforms in subfunctions
+/** @deprecated Functionality is available in every RenderFunction now. */
 class ApplyTextures : public SingleCalleeRenderFunction
 {
 public:
 	template<class TRenderManager>
 	ApplyTextures(TRenderManager& manager) :
-		SingleCalleeRenderFunction(manager),
-		mTextureManager(manager.GetTextureManager())
+		SingleCalleeRenderFunction(manager)
 	{}
-
-	/// Add new texture or replace existing texture
-	/** @param variable Hashed uniform name to be used in the shader program
-		@param file Hashed file path that is passed to FileLoader */
-	void SetTexture(Hash variable, Hash file);
-
-	/// Remove all textures
-	void ClearTextures() {mTextures.clear();}
-
-	void SetParameter(Hash variable, RenderCmdSink::Texture::Parameter param, RenderCmdSink::Texture::ParamValue value);
 
 protected:
 	void HandleExecute(Scope& scope) override;
-
-private:
-	typedef std::map<Hash, TextureManager::Asset*> TextureMap;
-
-	TextureManager& mTextureManager;
-	TextureMap mTextures;
 };
 
 }

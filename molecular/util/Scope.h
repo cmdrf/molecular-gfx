@@ -94,7 +94,9 @@ template<class BaseType>
 template<class SubType>
 SubType& Scope<BaseType>::Bind(Hash key)
 {
-	assert(std::find(mKeys.begin(), mKeys.end(), key) == mKeys.end() && "Variable already bound in this scope");
+	auto it = std::find(mKeys.begin(), mKeys.end(), key);
+	if(it != mKeys.end())
+		return static_cast<SubType&>(*mValues.at(std::distance(mKeys.begin(), it)));
 
 	mKeys.push_back(key);
 	if(mSibling && mSibling->Has(key))

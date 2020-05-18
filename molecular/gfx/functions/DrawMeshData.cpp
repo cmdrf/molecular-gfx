@@ -53,7 +53,7 @@ void DrawMeshData::HandleExecute(Scope& scope)
 	{
 		Scope meshScope(scope);
 		if(mesh.material)
-			mesh.material->Bind(meshScope);
+			meshScope.SetSibling(*mesh.material);
 
 		auto& attributes = mVertexDataSets.at(mesh.info.vertexDataSet).attributes;
 		BindAttributesAndDraw(mesh, attributes, scope);

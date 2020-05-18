@@ -101,8 +101,8 @@ void Run(int argc, char** argv)
 	applyTextures.SetTexture("normalMapObjectSpaceTexture"_H, "nv/AdrianFinalNormal.tga"_H);
 	applyTextures.SetTexture("specularTexture"_H, "nv/AdrianSpec.tga"_H);
 	applyTextures.SetTexture("rhoDTexture"_H, "nv/rho_d.tga"_H);
-	applyTextures.SetParameter("rhoDTexture"_H, RenderCmdSink::Texture::kWrapS, RenderCmdSink::Texture::kClampToEdge);
-	applyTextures.SetParameter("rhoDTexture"_H, RenderCmdSink::Texture::kWrapT, RenderCmdSink::Texture::kClampToEdge);
+	applyTextures.SetTextureParameter("rhoDTexture"_H, RenderCmdSink::Texture::kWrapS, RenderCmdSink::Texture::kClampToEdge);
+	applyTextures.SetTextureParameter("rhoDTexture"_H, RenderCmdSink::Texture::kWrapT, RenderCmdSink::Texture::kClampToEdge);
 
 	humanSkin.SetStretchTexture("nv/FaceStretchXY.tga"_H);
 

@@ -40,6 +40,16 @@ void RenderFunction::Execute(const Scope& parentScope)
 	}
 }
 
+void RenderFunction::SetTexture(Hash name, Hash texture)
+{
+	mObjectScope.Set(name, TextureUniform(texture, mTextureManager));
+}
+
+void RenderFunction::SetTextureParameter(Hash variable, GlCommandSink::Texture::Parameter param, GlCommandSink::Texture::ParamValue value)
+{
+	mObjectScope.Bind<TextureUniform>(variable).SetParameter(param, value);
+}
+
 AxisAlignedBox MultipleCalleeRenderFunction::GetBounds() const
 {
 	// Create bounding box that encloses all boxes of the callees:

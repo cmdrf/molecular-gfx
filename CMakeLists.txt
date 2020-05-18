@@ -9,7 +9,6 @@ add_library(molecular-gfx
 	molecular/gfx/GfxUtils.h
 	molecular/gfx/MeshBoundsCollectionFile.h
 	molecular/gfx/MeshManager.h
-	molecular/gfx/Material.cpp
 	molecular/gfx/Material.h
 	molecular/gfx/MaterialManager.cpp
 	molecular/gfx/MaterialManager.h

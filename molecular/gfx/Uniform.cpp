@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ SOFTWARE.
 */
 
 #include "Uniform.h"
+
 #include <assert.h>
 
 namespace molecular
@@ -36,6 +37,24 @@ Variable::~Variable()
 
 }
 
+TextureUniform::TextureUniform(Hash textureName, TextureManager& textureManager) :
+	mAsset(textureManager.GetAsset(textureName))
+{
+
+}
+
+void TextureUniform::Apply(GlCommandSink::Program* program, Hash name) const
+{
+	assert(program);
+	assert(mAsset);
+	auto texture = mAsset->Use();
+	program->SetUniform(name, &texture);
+}
+
+void TextureUniform::SetParameter(GlCommandSink::Texture::Parameter param, GlCommandSink::Texture::ParamValue value)
+{
+	mAsset->GetAsset()->SetParameter(param, value);
+}
 
 Attribute::Attribute() :
 	mComponents(0),

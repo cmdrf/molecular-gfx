@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Fabian Herb
+Copyright (c) 2019-2020 Fabian Herb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,10 +24,11 @@ SOFTWARE.
 */
 
 #include "MaterialManager.h"
-#include "Material.h"
-#include <sstream>
+
 #include <molecular/util/MemoryStreamStorage.h>
 #include <molecular/util/Logging.h>
+
+#include <sstream>
 
 namespace molecular
 {
@@ -58,7 +59,7 @@ void MaterialManager::ReadFile(IniFile& file)
 	IniFile::SectionMap::const_iterator section = sections.begin();
 	while(section != sections.end())
 	{
-		Material* material = new Material(mTextureManager);
+		Material* material = new Material;
 		mMaterials[HashUtils::MakeHash(section->first)].reset(material);
 		IniFile::ValueMap::const_iterator it = section->second.begin();
 		while(it != section->second.end())
@@ -74,13 +75,13 @@ void MaterialManager::ReadFile(MtlFile& file)
 {
 	for(const MtlFile::Material& mat: file)
 	{
-		Material* material = new Material(mTextureManager);
+		Material* material = new Material;
 		if(mat.hasDiffuse)
-			material->SetUniform("diffuseColor"_H, Vector4(Vector3(mat.diffuse)));
+			material->Set("diffuseColor"_H, MakeUniform(Vector4(Vector3(mat.diffuse))));
 		if(mat.hasAmbient)
-			material->SetUniform("ambientColor"_H, Vector3(mat.ambient));
+			material->Set("ambientColor"_H, MakeUniform(Vector3(mat.ambient)));
 		if(mat.hasSpecular)
-			material->SetUniform("specularColor"_H, Vector3(mat.specular));
+			material->Set("specularColor"_H, MakeUniform(Vector3(mat.specular)));
 		mMaterials[HashUtils::MakeHash(mat.name)].reset(material);
 	}
 }
@@ -98,7 +99,7 @@ Material* MaterialManager::GetMaterial(const std::string& material) const
 {
 	Material* mat = GetMaterial(HashUtils::MakeHash(material));
 	if(!mat)
-		LOG(ERROR) << "Material \"" << material << "\" not found";
+		LOG(WARNING) << "MaterialManager: Material \"" << material << "\" not found";
 	return mat;
 }
 
@@ -127,58 +128,58 @@ void MaterialManager::AddVariable(Material* material, Hash key, const std::strin
 	{
 		float value = 0.0;
 		parametersIss >> value;
-		material->SetUniform(key, value);
+		material->Set(key, MakeUniform(value));
 	}
 	else if(function == "vec2")
 	{
 		Vector2 vec;
 		parametersIss >> vec[0] >> comma >> vec[1];
-		material->SetUniform(key, vec);
+		material->Set(key, MakeUniform(vec));
 	}
 	else if(function == "vec3")
 	{
 		Vector3 vec;
 		parametersIss >> vec[0] >> comma >> vec[1] >> comma >> vec[2];
-		material->SetUniform(key, vec);
+		material->Set(key, MakeUniform(vec));
 	}
 	else if(function == "vec4")
 	{
 		Vector4 vec;
 		parametersIss >> vec[0] >> comma >> vec[1] >> comma >> vec[2] >> comma >> vec[3];
-		material->SetUniform(key, vec);
+		material->Set(key, MakeUniform(vec));
 	}
 	else if(function == "texture")
 	{
-		material->SetTexture(key, HashUtils::MakeHash(parameters));
+		material->Set(key, TextureUniform(HashUtils::MakeHash(parameters), mTextureManager));
 	}
 	else if(function == "int")
 	{
 		int value = 0;
 		parametersIss >> value;
-		material->SetUniform(key, value);
+		material->Set(key, MakeUniform(value));
 	}
 	else if(function == "ivec2")
 	{
 		IntVector2 ivec;
 		parametersIss >> ivec[0] >> comma >> ivec[1];
-		material->SetUniform(key, ivec);
+		material->Set(key, MakeUniform(ivec));
 	}
 	else if(function == "ivec3")
 	{
 		IntVector3 ivec;
 		parametersIss >> ivec[0] >> comma >> ivec[1] >> comma >> ivec[2];
-		material->SetUniform(key, ivec);
+		material->Set(key, MakeUniform(ivec));
 	}
 	else if(function == "ivec4")
 	{
 		IntVector4 ivec;
 		parametersIss >> ivec[0] >> comma >> ivec[1] >> comma >> ivec[2] >> comma >> ivec[3];
-		material->SetUniform(key, ivec);
+		material->Set(key, MakeUniform(ivec));
 	}
 	else if(function == "enum")
 	{
 		Hash hash = HashUtils::MakeHash(parameters);
-		material->SetUniform(key, hash);
+		material->Set(key, MakeUniform(hash));
 	}
 }
 

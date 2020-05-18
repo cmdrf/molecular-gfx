@@ -42,9 +42,12 @@ class RenderFunction
 {
 public:
 	template<class TRenderManager>
-	explicit RenderFunction(TRenderManager& manager) : mRenderer(manager.GetRenderCmdSink()) {}
+	explicit RenderFunction(TRenderManager& manager) :
+		mRenderer(manager.GetRenderCmdSink()),
+		mTextureManager(manager.GetTextureManager())
+	{}
 
-	RenderFunction(RenderCmdSink& renderer) : mRenderer(renderer) {}
+//	RenderFunction(RenderCmdSink& renderer) : mRenderer(renderer)  {}
 
 	virtual ~RenderFunction() {}
 	void Execute(const Scope& parentScope);
@@ -64,6 +67,13 @@ public:
 		mObjectScope.Set(name, Uniform<T>(value));
 	}
 
+	/// Add new texture or replace existing texture
+	/** @param name Hashed uniform name to be used in the shader program
+		@param texture Hashed file path that is passed to FileLoader */
+	void SetTexture(Hash name, Hash texture);
+
+	void SetTextureParameter(Hash variable, RenderCmdSink::Texture::Parameter param, RenderCmdSink::Texture::ParamValue value);
+
 protected:
 	virtual void HandleExecute(Scope& scope) = 0;
 
@@ -71,6 +81,7 @@ protected:
 //	void BoundsChanged() {mBoundsChangedCounter = mRenderManager.GetFramecounter();}
 
 	RenderCmdSink& mRenderer;
+	TextureManager& mTextureManager;
 //	int mBoundsChangedCounter;
 	bool mVisible = true;
 
@@ -85,7 +96,7 @@ public:
 	template<class TRenderManager>
 	SingleCalleeRenderFunction(TRenderManager& manager) : RenderFunction(manager) {}
 
-	SingleCalleeRenderFunction(RenderCmdSink& renderer) : RenderFunction(renderer), mCallee(nullptr) {}
+//	SingleCalleeRenderFunction(RenderCmdSink& renderer) : RenderFunction(renderer), mCallee(nullptr) {}
 
 	molecular::util::AxisAlignedBox GetBounds() const override {return mCallee->GetBounds();}
 	bool BoundsChangedSince(int framecounter) const override {return mCallee->BoundsChangedSince(framecounter);}
@@ -108,7 +119,7 @@ public:
 	template<class TRenderManager>
 	MultipleCalleeRenderFunction (TRenderManager& manager) : RenderFunction(manager) {}
 
-	MultipleCalleeRenderFunction (RenderCmdSink& renderer) : RenderFunction(renderer){}
+//	MultipleCalleeRenderFunction (RenderCmdSink& renderer) : RenderFunction(renderer){}
 
 	molecular::util::AxisAlignedBox GetBounds() const override;
 
