@@ -41,8 +41,6 @@ add_library(molecular-gfx
 	molecular/gfx/Uniform.cpp
 	molecular/gfx/Uniform.h
 
-	molecular/gfx/functions/ApplyTextures.cpp
-	molecular/gfx/functions/ApplyTextures.h
 	molecular/gfx/functions/CascadedShadowMapping.cpp
 	molecular/gfx/functions/CascadedShadowMapping.h
 	molecular/gfx/functions/CpuParticleSystemImpl.h
@@ -69,8 +67,6 @@ add_library(molecular-gfx
 	molecular/gfx/functions/RequestOutput.h
 	molecular/gfx/functions/SetShCoefficients.cpp
 	molecular/gfx/functions/SetShCoefficients.h
-	molecular/gfx/functions/SetUniforms.cpp
-	molecular/gfx/functions/SetUniforms.h
 	molecular/gfx/functions/SetupLight.cpp
 	molecular/gfx/functions/SetupLight.h
 	molecular/gfx/functions/ShadowMapping.cpp

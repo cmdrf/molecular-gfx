@@ -33,7 +33,6 @@ SOFTWARE.
 #include <molecular/gfx/functions/ShadowMapping.h>
 #include <molecular/gfx/functions/SetupLight.h>
 #include <molecular/gfx/functions/DrawTerrain.h>
-#include <molecular/gfx/functions/ApplyTextures.h>
 #include <molecular/gfx/functions/HumanSkin.h>
 #include <molecular/gfx/functions/ViewSetup.h>
 #include <molecular/gfx/RenderManager.h>
@@ -79,15 +78,13 @@ void Run(int argc, char** argv)
 	SetupLight setupLight(renderManager);
 	ShadowMapping shadowMapping(renderManager);
 	Transform transform(renderManager);
-	ApplyTextures applyTextures(renderManager);
 	HumanSkin humanSkin(renderManager);
 	DrawMesh<RenderManager> drawMesh(renderManager);
 
 	viewSetup.SetCallee(&setupLight);
 	setupLight.SetCallee(&shadowMapping);
 	shadowMapping.SetCallee(&transform);
-	transform.SetCallee(&applyTextures);
-	applyTextures.SetCallee(&humanSkin);
+	transform.SetCallee(&humanSkin);
 	humanSkin.SetCallee(&drawMesh);
 
 	// Parameters:
@@ -97,12 +94,12 @@ void Run(int argc, char** argv)
 
 	drawMesh.SetMeshFile("nv/geo_Skin1.nmb"_H);
 
-	applyTextures.SetTexture("diffuseTexture"_H, "nv/AdrianAlbedo.tga"_H);
-	applyTextures.SetTexture("normalMapObjectSpaceTexture"_H, "nv/AdrianFinalNormal.tga"_H);
-	applyTextures.SetTexture("specularTexture"_H, "nv/AdrianSpec.tga"_H);
-	applyTextures.SetTexture("rhoDTexture"_H, "nv/rho_d.tga"_H);
-	applyTextures.SetTextureParameter("rhoDTexture"_H, RenderCmdSink::Texture::kWrapS, RenderCmdSink::Texture::kClampToEdge);
-	applyTextures.SetTextureParameter("rhoDTexture"_H, RenderCmdSink::Texture::kWrapT, RenderCmdSink::Texture::kClampToEdge);
+	humanSkin.SetTexture("diffuseTexture"_H, "nv/AdrianAlbedo.tga"_H);
+	humanSkin.SetTexture("normalMapObjectSpaceTexture"_H, "nv/AdrianFinalNormal.tga"_H);
+	humanSkin.SetTexture("specularTexture"_H, "nv/AdrianSpec.tga"_H);
+	humanSkin.SetTexture("rhoDTexture"_H, "nv/rho_d.tga"_H);
+	humanSkin.SetTextureParameter("rhoDTexture"_H, RenderCmdSink::Texture::kWrapS, RenderCmdSink::Texture::kClampToEdge);
+	humanSkin.SetTextureParameter("rhoDTexture"_H, RenderCmdSink::Texture::kWrapT, RenderCmdSink::Texture::kClampToEdge);
 
 	humanSkin.SetStretchTexture("nv/FaceStretchXY.tga"_H);
 
