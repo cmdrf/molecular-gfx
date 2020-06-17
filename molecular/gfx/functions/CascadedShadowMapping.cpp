@@ -190,6 +190,29 @@ CascadedShadowMapping::CascadesInfo CascadedShadowMapping::CalculateCascades(con
 	const float range = maxZ - minZ;
 	const float ratio = maxZ / minZ;
 
+	std::array<Eigen::Vector3f, 8> frustumCorners = {
+		Eigen::Vector3f(-1.0f,  1.0f, -1.0f),
+		Eigen::Vector3f( 1.0f,  1.0f, -1.0f),
+		Eigen::Vector3f( 1.0f, -1.0f, -1.0f),
+		Eigen::Vector3f(-1.0f, -1.0f, -1.0f),
+		Eigen::Vector3f(-1.0f,  1.0f,  1.0f),
+		Eigen::Vector3f( 1.0f,  1.0f,  1.0f),
+		Eigen::Vector3f( 1.0f, -1.0f,  1.0f),
+		Eigen::Vector3f(-1.0f, -1.0f,  1.0f),
+	};
+
+	// Project frustum corners into world space
+	Eigen::Matrix4f invCam = (projectionMatrix * viewMatrix).Inverse().ToEigen();
+
+	for (int i = 0; i < 8; i++)
+	{
+		Eigen::Vector4f currentCorner;
+		currentCorner << frustumCorners[i], 1.0f;
+		Eigen::Vector4f invCorner = invCam * currentCorner;
+		frustumCorners[i] = invCorner.head(3) / invCorner(3);
+	}
+	auto currentCascadeFrustumCorners = frustumCorners;
+	
 	CascadesInfo out;
 
 	// Calculate split depths based on view camera furstum
@@ -202,58 +225,33 @@ CascadedShadowMapping::CascadesInfo CascadedShadowMapping::CalculateCascades(con
 		const float d = mCascadeSplitLambda * (log - uniform) + uniform;
 		const float splitDist = (d - nearClip) / clipRange;
 
-		Eigen::Vector3f frustumCorners[8] = {
-			Eigen::Vector3f(-1.0f,  1.0f, -1.0f),
-			Eigen::Vector3f( 1.0f,  1.0f, -1.0f),
-			Eigen::Vector3f( 1.0f, -1.0f, -1.0f),
-			Eigen::Vector3f(-1.0f, -1.0f, -1.0f),
-			Eigen::Vector3f(-1.0f,  1.0f,  1.0f),
-			Eigen::Vector3f( 1.0f,  1.0f,  1.0f),
-			Eigen::Vector3f( 1.0f, -1.0f,  1.0f),
-			Eigen::Vector3f(-1.0f, -1.0f,  1.0f),
-		};
-
-		// Project frustum corners into world space
-		Eigen::Matrix4f invCam = (projectionMatrix * viewMatrix).Inverse().ToEigen();
-
-		for (int i = 0; i < 8; i++)
-		{
-			Eigen::Vector4f currentCorner;
-			currentCorner << frustumCorners[i], 1.0f;
-			Eigen::Vector4f invCorner = invCam * currentCorner;
-			frustumCorners[i] = invCorner.head(3) / invCorner(3);
-		}
-
 		for (int i = 0; i < 4; i++)
 		{
 			const Eigen::Vector3f dist = frustumCorners[i + 4] - frustumCorners[i];
-			frustumCorners[i + 4] = frustumCorners[i] + (dist * splitDist);
+			currentCascadeFrustumCorners[i + 4] = currentCascadeFrustumCorners[i] + (dist * splitDist);
 		}
 
 		// Get frustum center
 		Eigen::Vector3f frustumCenter = Eigen::Vector3f::Zero();
 		for (int i = 0; i < 8; i++)
-			frustumCenter += frustumCorners[i];
+			frustumCenter += currentCascadeFrustumCorners[i];
 
 		frustumCenter /= 8.0f;
 
 		float radius = 0.0f;
 		for (int i = 0; i < 8; i++)
 		{
-			float distance = (frustumCorners[i] - frustumCenter).norm();
+			float distance = (currentCascadeFrustumCorners[i] - frustumCenter).norm();
 			radius = std::max(radius, distance);
 		}
 		radius = std::ceil(radius * 16.0f) / 16.0f;
 
-		const Vector3 maxExtents(radius, radius, radius);
-		const Vector3 minExtents = -maxExtents;
-
 		const Eigen::Vector3f lightDir{lightDirection.X(), lightDirection.Y(), lightDirection.Z()};
-		const Eigen::Matrix4f lightViewMatrix = LookAtMatrix(frustumCenter + (lightDir * minExtents.Z()), lightDir, Eigen::Vector3f(0.0f, 0.0f, 1.0f));
+		const Eigen::Matrix4f lightViewMatrix = LookAtMatrix(frustumCenter - lightDir * radius, lightDir, Eigen::Vector3f(0.0f, 0.0f, 1.0f));
 
 		// Store split distance and matrix in cascade
 		out.cascadeSplit(cascade) = (nearClip + splitDist * clipRange) * -1.0f;
-		out.globalShadowProj[cascade] = ProjectionOrthographicBox(minExtents.X(), maxExtents.X(), minExtents.Y(), maxExtents.Y(), 0.0f, maxExtents.Z() - minExtents.Z());
+		out.globalShadowProj[cascade] = ProjectionOrthographicBox(-radius, radius, -radius, radius, 0.0f, 2*radius);
 		out.globalShadowViews[cascade] = Matrix4(lightViewMatrix);
 	}
 	return out;
