@@ -153,18 +153,21 @@ template<class TRenderManager>
 void TextureLoader<TRenderManager>::StoreTgaTexture(TextureManager::Asset& target, Blob& blob, unsigned int /*minLevel*/, unsigned int /*maxLevel*/)
 {
 	TgaFile2 file(blob.GetData(), blob.GetSize());
+	const uint8_t* imageData = static_cast<const uint8_t*>(file.GetImageData());
+	std::vector<uint8_t> rotatedData;
 	if(file.IsUpsideDown())
 	{
+		rotatedData.resize(file.GetImageSize());
 		// TODO: Do in separate task
 		const uint8_t* inputData = static_cast<const uint8_t*>(file.GetImageData());
-		Blob rotatedData(file.GetImageSize());
 		// Read image bottom-up
 		size_t lineSize = file.GetWidth() * file.GetBytesPerPixel();
 		unsigned int height = file.GetHeight();
 		for(size_t line = 0; line < height; ++line)
-			memcpy(rotatedData.GetBytes() + (height - line - 1) * lineSize, inputData + line * lineSize, lineSize);
+			memcpy(rotatedData.data() + (height - line - 1) * lineSize, inputData + line * lineSize, lineSize);
+		imageData = rotatedData.data();
 	}
-	target.GetAsset()->Store(file.GetWidth(), file.GetHeight(), file.GetImageData(), file.GetFormat());
+	target.GetAsset()->Store(file.GetWidth(), file.GetHeight(), imageData, file.GetFormat());
 	target.GetAsset()->GenerateMipmaps();
 	for(unsigned int i = 0; i < +kLodLevels; ++i)
 		target.SetState(i, TextureManager::Asset::kLoaded);
