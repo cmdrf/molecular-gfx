@@ -117,7 +117,7 @@ public:
 	const void* GetImageData() const
 	{
 		const Header* header = static_cast<const Header*>(mData);
-		return static_cast<const uint8_t*>(mData) + header->idLength + header->paletteEntrySize;
+		return static_cast<const uint8_t*>(mData) + header->idLength + header->paletteEntrySize + sizeof(Header);
 	}
 
 	size_t GetImageSize() const
