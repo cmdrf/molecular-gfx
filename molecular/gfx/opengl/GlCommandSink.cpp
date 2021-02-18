@@ -92,7 +92,9 @@ void GlCommandSink::Init()
 #endif
 
 	// Determine supported GLSL version by compiling two-liners:
-	if(Program::Shader(Program::ShaderType::kVertexShader).SourceCompile("#version 300 es\nvoid main(){}\n"s, false))
+	if(Program::Shader(Program::ShaderType::kVertexShader).SourceCompile("#version 330 core\nvoid main(){}\n"s, false))
+		glslVersion = GlslVersion::V_330;
+	else if(Program::Shader(Program::ShaderType::kVertexShader).SourceCompile("#version 300 es\nvoid main(){}\n"s, false))
 		glslVersion = GlslVersion::V_300_ES;
 	else if(Program::Shader(Program::ShaderType::kVertexShader).SourceCompile("#version 150\nvoid main(){}\n"s, false))
 		glslVersion = GlslVersion::V_150;

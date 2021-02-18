@@ -41,8 +41,8 @@ void SkinProgramData::FeedToGenerator(ProgramGenerator& generator)
 
 	ProgramGenerator::Function specularBrightness;
 	specularBrightness.stage = ProgramGenerator::Function::Stage::kFragmentStage;
-	specularBrightness.source =
-			"specularBrightness = texture(specularBrightnessTexture, vertexUv0).r;";
+	specularBrightness.source.push_back(
+			"specularBrightness = texture(specularBrightnessTexture, vertexUv0).r;");
 	specularBrightness.inputs.push_back("specularBrightnessTexture"_H);
 	specularBrightness.inputs.push_back("vertexUv0"_H);
 	specularBrightness.output = "specularBrightness"_H;
@@ -50,7 +50,7 @@ void SkinProgramData::FeedToGenerator(ProgramGenerator& generator)
 
 	ProgramGenerator::Function specular;
 	specular.stage = ProgramGenerator::Function::Stage::kFragmentStage;
-	specular.source =
+	specular.source.push_back(
 		"float specularResult = 0.0;\n"
 		"\tfloat ndotl = dot( normalize(normal), -normalize(lightDirection0) );\n"
 		"\tif( ndotl > 0.0 )\n"
@@ -65,7 +65,7 @@ void SkinProgramData::FeedToGenerator(ProgramGenerator& generator)
 		"\t\tfloat frSpec = max( PH * F / dot( h, h ), 0 );\n"
 		"\t\tspecularResult = ndotl * frSpec * 0.75;\n" // BRDF * dot(N,L) * rho_s
 		"\t}\n"
-		"\tspecularLighting = specularResult * incomingLight0;";
+		"\tspecularLighting = specularResult * incomingLight0;");
 	specular.inputs.push_back("lightDirection0"_H);
 	specular.inputs.push_back("normal"_H);
 	specular.inputs.push_back("eyeDirection"_H);

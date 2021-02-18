@@ -64,7 +64,7 @@ public:
 
 	/// Compile source code
 	/** Legacy interface. */
-	void Store(const std::string& vertexShaderSource, const std::string& pixelShaderSource);
+	void Store(const std::string& vertexShaderSource, const std::string& geometryShaderSource, const std::string& pixelShaderSource);
 
 	/// Compile source code
 	void Store(const ShaderSourceItem items[], size_t count, const char** transformFeedbackOutputs = nullptr, unsigned int tfOutputsCount = 0);

@@ -36,13 +36,13 @@ void DefaultProgramData::FeedToGenerator(ProgramGenerator& generator)
 {
 	ProgramGenerator::Function specularArray;
 	specularArray.stage = ProgramGenerator::Function::Stage::kFragmentStage;
-	specularArray.source =
+	specularArray.source.push_back(
 			"specularLighting = vec3(0.0, 0.0, 0.0);\n"
 			"\tfor(int i = 0; i < lightColorArray.length(); i++)\n"
 			"\t{\n"
 			"\t\tvec3 reflected = reflect(lightDirectionArray[i], normalize(normal));\n"
 			"\t\tspecularLighting += pow(max(0.0, dot(reflected, eyeDirection)), shininess) * lightColorArray[i];\n"
-			"\t}";
+			"\t}");
 	specularArray.inputs.push_back("lightDirectionArray"_H);
 	specularArray.inputs.push_back("normal"_H);
 	specularArray.inputs.push_back("eyeDirection"_H);
@@ -53,7 +53,7 @@ void DefaultProgramData::FeedToGenerator(ProgramGenerator& generator)
 
 	ProgramGenerator::Function clipPlane;
 	clipPlane.stage = ProgramGenerator::Function::Stage::kVertexStage;
-	clipPlane.source = "gl_ClipDistance[0] = dot(modelMatrix * vertexPosition, clipPlane0);";
+	clipPlane.source.push_back("gl_ClipDistance[0] = dot(modelMatrix * vertexPosition, clipPlane0);");
 	clipPlane.inputs.push_back("modelMatrix"_H);
 	clipPlane.inputs.push_back("vertexPosition"_H);
 	clipPlane.inputs.push_back("clipPlane0"_H);
@@ -62,7 +62,7 @@ void DefaultProgramData::FeedToGenerator(ProgramGenerator& generator)
 
 	ProgramGenerator::Function lightOnly;
 	lightOnly.stage = ProgramGenerator::Function::Stage::kFragmentStage;
-	lightOnly.source = "fragmentColor = vec4(diffuseLighting, 1.0);";
+	lightOnly.source.push_back("fragmentColor = vec4(diffuseLighting, 1.0);");
 	lightOnly.inputs.push_back("diffuseLighting"_H);
 	lightOnly.output = "fragmentColor"_H;
 	lightOnly.priority = -1;
@@ -70,11 +70,11 @@ void DefaultProgramData::FeedToGenerator(ProgramGenerator& generator)
 
 	ProgramGenerator::Function lightDirectionArray;
 	lightDirectionArray.stage = ProgramGenerator::Function::Stage::kVertexStage;
-	lightDirectionArray.source =
+	lightDirectionArray.source.push_back(
 			"for(int i = 0; i < lightDirectionArray.length(); i++)\n"
 			"\t{\n"
 			"\t\tlightDirectionArray[i] = -normalize(lightPositionArray[i].xyz - (modelMatrix * vertexPosition).xyz);\n"
-			"\t}";
+			"\t}");
 	lightDirectionArray.inputs.push_back("lightPositionArray"_H);
 	lightDirectionArray.inputs.push_back("vertexPosition"_H);
 	lightDirectionArray.inputs.push_back("modelViewMatrix"_H);

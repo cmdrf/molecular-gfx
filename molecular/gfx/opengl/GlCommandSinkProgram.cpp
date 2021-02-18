@@ -31,14 +31,26 @@ namespace molecular
 namespace gfx
 {
 
-void GlCommandSink::Program::Store(const std::string& vertexShaderSource, const std::string& pixelShaderSource)
+void GlCommandSink::Program::Store(const std::string& vertexShaderSource, const std::string& geometryShaderSource, const std::string& pixelShaderSource)
 {
-	ShaderSourceItem items[2] =
+	if(geometryShaderSource.empty())
 	{
-		{kVertexShader, vertexShaderSource.data(), vertexShaderSource.size()},
-		{kFragmentShader, pixelShaderSource.data(), pixelShaderSource.size()}
-	};
-	Store(items, 2);
+		ShaderSourceItem items[2] =
+		{
+			{kVertexShader, vertexShaderSource.data(), vertexShaderSource.size()},
+			{kFragmentShader, pixelShaderSource.data(), pixelShaderSource.size()}
+		};
+		Store(items, 2);
+	}
+	else {
+		ShaderSourceItem items[3] =
+		{
+			{kVertexShader, vertexShaderSource.data(), vertexShaderSource.size()},
+			{kGeometryShader, geometryShaderSource.data(), geometryShaderSource.size()},
+			{kFragmentShader, pixelShaderSource.data(), pixelShaderSource.size()}
+		};
+		Store(items, 3);
+	}
 }
 
 void GlCommandSink::Program::Store(const ShaderSourceItem items[], size_t count, const char** transformFeedbackOutputs,  unsigned int tfOutputsCount)
@@ -171,6 +183,8 @@ bool GlCommandSink::Program::Shader::SourceCompile(const char* text, size_t leng
 		versionString = "#version 150\n";
 	else if(glslVersion == GlslVersion::V_300_ES)
 		versionString = "#version 300 es\nprecision highp float;\n"; // TODO: selective precision
+	else if(glslVersion == GlslVersion::V_330)
+		versionString = "#version 330\n";
 
 	const char* strings[] = {versionString, text};
 	GLint lengths[] = {static_cast<GLint>(strlen(versionString)), static_cast<GLint>(length)};
