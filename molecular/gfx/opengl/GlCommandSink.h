@@ -217,7 +217,8 @@ public:
 	{
 		UNKNOWN,
 		V_150,
-		V_300_ES
+		V_300_ES,
+		V_330,
 	};
 
 	/** @todo Private? Global? Singleton? Thread local? */

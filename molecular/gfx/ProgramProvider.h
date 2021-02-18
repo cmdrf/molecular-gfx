@@ -84,7 +84,7 @@ RenderCmdSink::Program* ProgramProvider::GetProgram(Iterator varsBegin, Iterator
 		}
 		programgenerator::ProgramGenerator::ProgramText text = mGenerator.GenerateProgram(varsBegin, varsEnd, mArraySizes);
 		RenderCmdSink::Program* program = mRenderer.CreateProgram();
-		program->Store(text.vertexShader, text.fragmentShader);
+		program->Store(text.vertexShader, text.geometryShader, text.fragmentShader);
 		mGeneratedPrograms[hash] = program;
 		return program;
 	}

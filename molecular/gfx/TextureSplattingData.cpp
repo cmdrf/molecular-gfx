@@ -52,7 +52,7 @@ void TextureSplattingData::FeedToGenerator(ProgramGenerator& generator)
 	rgb2.inputs.push_back("splattingScale"_H);
 	rgb2.inputs.push_back("vertexUv0"_H);
 	rgb2.output = "diffuseColor"_H;
-	rgb2.source =
+	rgb2.source.push_back(
 			"vec3 cov0 = texture(splattingMapRgb0, vertexUv0).rgb;\n"
 			"\tvec3 cov1 = texture(splattingMapRgb1, vertexUv0).rgb;\n"
 			"\tvec2 scaledCoord = vertexUv0 * splattingScale;\n"
@@ -62,7 +62,7 @@ void TextureSplattingData::FeedToGenerator(ProgramGenerator& generator)
 			"\t\t+ texture(splattingTexturesArray[2], scaledCoord).rgb * cov0.z\n"
 			"\t\t+ texture(splattingTexturesArray[3], scaledCoord).rgb * cov1.x\n"
 			"\t\t+ texture(splattingTexturesArray[4], scaledCoord).rgb * cov1.y\n"
-			"\t\t+ texture(splattingTexturesArray[5], scaledCoord).rgb * cov1.z);";
+			"\t\t+ texture(splattingTexturesArray[5], scaledCoord).rgb * cov1.z);");
 	generator.AddFunction(rgb2);
 }
 
