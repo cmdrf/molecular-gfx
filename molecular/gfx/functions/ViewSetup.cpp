@@ -50,6 +50,10 @@ void ViewSetup::HandleExecute(Scope& scope)
 
 		const Matrix4 viewMatrix = (mCamera * mRenderContext.GetHeadToEyeTransform(eye)).Inverse();
 		scope.Set("viewMatrix"_H, Uniform<Matrix4>(viewMatrix));
+		/*Some shaders require camera position, which can be retreived from view matrix.
+		But e.g. in the scope of shadow pass the viewMatrix is rewriten,
+		thus need to save the camera view matrix in another variable*/
+		scope.Set("cameraViewMatrix"_H, Uniform<Matrix4>(viewMatrix));
 
 		mRenderer.SetBaseTarget(viewport, renderTarget);
 		mRenderer.Clear(true, true);
