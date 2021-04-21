@@ -46,7 +46,7 @@ void DrawTerrain::HandleExecute(Scope& scope)
 	if(mHeightmapWidth == 0 || mHeightmapHeight == 0)
 		return;
 
-	const Matrix4 viewMatrix = *scope.Get<Uniform<Matrix4>>("viewMatrix"_H);
+	const Matrix4 viewMatrix = *scope.Get<Uniform<Matrix4>>("cameraViewMatrix"_H);
 	const Matrix4 modelMatrix = *scope.Get<Uniform<Matrix4>>("modelMatrix"_H);
 
 	scope.Set("terrainVertex"_H, Attribute(mPatchVertices, 2, VertexAttributeInfo::kUInt16));
@@ -56,11 +56,14 @@ void DrawTerrain::HandleExecute(Scope& scope)
 
 	Uniform<IntVector2>& start = scope.Bind<Uniform<IntVector2>>("terrainStart"_H);
 	Uniform<Vector3>& scale = scope.Bind<Uniform<Vector3>>("terrainScale"_H);
+	//dbgPatchCounter for debug purposes to draw patch borders
+	Uniform<int>& dbgPatchCounter = scope.Bind<Uniform<int>>("dbgPatchCounter"_H);
 
 	*scale = Vector3(mXSize / mHeightmapWidth, mHeightScale, mYSize / mHeightmapHeight);
 
 	RenderCmdSink::Program* program = PrepareProgram(scope);
 
+	int patch = 0;
 	for(unsigned int y = 0; y <= mHeightmapHeight - kPatchSize; y += kPatchSize - 1)
 	{
 		for(unsigned int x = 0; x <= mHeightmapWidth - kPatchSize; x += kPatchSize - 1)
@@ -76,7 +79,10 @@ void DrawTerrain::HandleExecute(Scope& scope)
 				lodLevel = 0;
 
 			*start = IntVector2(x, y);
+			*dbgPatchCounter = (patch % 10);
+			patch++;
 			start.Apply(program, "terrainStart"_H);
+			dbgPatchCounter.Apply(program, "dbgPatchCounter"_H);
 			mRenderer.Draw(mPatchIndices[lodLevel], mPatchInfos[lodLevel]);
 		}
 	}
@@ -184,7 +190,7 @@ void DrawTerrain::SetTestData(unsigned int width, unsigned int height)
 	{
 		for(unsigned int x = 0; x < width; x++)
 		{
-			data[y * width + x] = sin(x * 0.1f) * sin(y * 0.1f);
+			data[y * width + x] = sin(x * 0.1f) * sin(y * 0.1f) * 20;
 		}
 	}
 	SetHeightmapData(width, height, &data[0]);
@@ -206,10 +212,10 @@ void DrawTerrain::BuildIndices(int lodLevel, std::vector<uint16_t>& indices, Ind
 		for(uint16_t x = 0; x < kPatchSize-1; x += skip)
 		{
 			indices.push_back(y * kPatchSize + x);
-			indices.push_back((y+skip) * kPatchSize + x);
-			indices.push_back(y * kPatchSize + (x+skip));
 			indices.push_back(y * kPatchSize + (x+skip));
 			indices.push_back((y+skip) * kPatchSize + x);
+			indices.push_back((y+skip) * kPatchSize + x);
+			indices.push_back(y * kPatchSize + (x+skip));
 			indices.push_back((y+skip) * kPatchSize + (x+skip));
 
 			info.count += 6;

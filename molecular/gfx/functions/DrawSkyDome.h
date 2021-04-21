@@ -108,7 +108,7 @@ void DrawSkyDome<TRenderManager>::HandleExecute(Scope& scope)
 			}
 		}
 		mVertexBuffer = mRenderer.CreateVertexBuffer();
-		mVertexBuffer->Store(vertexData.data(), 5 *  vertexData.size());
+		mVertexBuffer->Store(vertexData.data(), 5 *  vertexData.size() * sizeof (float));
 		mPositionInfo.components = 3;
 		mPositionInfo.stride = 5 * sizeof(float);
 		mPositionInfo.type = VertexAttributeInfo::kFloat;
@@ -153,7 +153,7 @@ void DrawSkyDome<TRenderManager>::HandleExecute(Scope& scope)
 
 	if(mTexture)
 		scope.Set("diffuseTexture"_H, Uniform<RenderCmdSink::Texture*>(mTexture->Use()));
-	mRenderer.SetDepthState(true, false, RenderCmdSink::kEqual);
+	mRenderer.SetDepthState(true, false, RenderCmdSink::kLessOrEqual);
 	PrepareProgram(scope);
 	mRenderer.Draw(mIndexBuffer, mIndexInfo);
 	mRenderer.SetDepthState(true, true);
