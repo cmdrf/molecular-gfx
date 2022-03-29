@@ -35,13 +35,17 @@ namespace util
 
 /// Iterator adapter that dereferences to the first value of a pair iterator
 template<class PairIterator>
-class PairFirstIterator : public std::iterator<std::input_iterator_tag, typename PairIterator::value_type::first_type>
+class PairFirstIterator
 {
 public:
 	PairFirstIterator() {}
 	PairFirstIterator(PairIterator it) : mIt(it) {}
 
-	typedef typename PairIterator::value_type::first_type value_type;
+	using iterator_category = std::input_iterator_tag;
+	using value_type = typename PairIterator::value_type::first_type;
+	using difference_type = std::ptrdiff_t;
+	using pointer = value_type*;
+	using reference = value_type&;
 
 	PairFirstIterator& operator++() {++mIt; return *this;}
 	const value_type& operator*() const {return mIt->first;}
@@ -55,13 +59,17 @@ private:
 
 /// Iterator adapter that dereferences to the second value of a pair iterator
 template<class PairIterator>
-class PairSecondIterator : public std::iterator<std::input_iterator_tag, typename PairIterator::value_type::second_type>
+class PairSecondIterator
 {
 public:
 	PairSecondIterator() {}
 	PairSecondIterator(PairIterator it) : mIt(it) {}
 
-	typedef typename PairIterator::value_type::second_type value_type;
+	using iterator_category = std::input_iterator_tag;
+	using value_type = typename PairIterator::value_type::second_type;
+	using difference_type = std::ptrdiff_t;
+	using pointer = value_type*;
+	using reference = value_type&;
 
 	PairSecondIterator& operator++() {++mIt; return *this;}
 	const value_type& operator*() const {return mIt->second;}
@@ -76,10 +84,14 @@ private:
 /// Iterator that skips certain positions
 /** Skips all elements for which the predicate returns true */
 template<class Iterator, class Predicate>
-class SkippingIterator : public std::iterator<std::input_iterator_tag, typename Iterator::value_type>
+class SkippingIterator
 {
 public:
-	typedef typename Iterator::value_type value_type;
+	using iterator_category = std::input_iterator_tag;
+	using value_type = typename Iterator::value_type;
+	using difference_type = std::ptrdiff_t;
+	using pointer = value_type*;
+	using reference = value_type&;
 
 	SkippingIterator() {}
 	SkippingIterator(Iterator it, Iterator end, Predicate pred) :
