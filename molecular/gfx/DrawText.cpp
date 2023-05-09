@@ -82,12 +82,10 @@ void DrawText(
 	float penY = start[1] / scale;
 
 	typename TString::value_type previousChar = 0;
-	int currentLine = 0;
 	for(auto it = text.begin(); it != text.end(); ++it)
 	{
 		if(*it == L'\n')
 		{
-			currentLine++;
 			penY -= textHeight;
 			penX = start[0] / scale;
 		}
